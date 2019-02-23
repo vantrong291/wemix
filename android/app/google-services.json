@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "798230100417",
+    "firebase_url": "https://rnmob-55ae3.firebaseio.com",
+    "project_id": "rnmob-55ae3",
+    "storage_bucket": "rnmob-55ae3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798230100417:android:e9e3cc443d82f79b",
+        "android_client_info": {
+          "package_name": "com.nanaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798230100417-kt0h8lob1labe1i1dadovslr8v78h9pq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS3eOF5IZtl7rfJFgDIJc5QOp7Wd6HJv8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
