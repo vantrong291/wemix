@@ -1,0 +1,49 @@
+{
+  "name": "EnV",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "native-base": "^2.12.0",
+    "react": "16.5.0",
+    "react-native": "0.57.0",
+    "react-native-button": "^2.3.0",
+    "react-native-firebase": "^5.0.0",
+    "react-navigation": "3.3.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.1",
+    "redux-saga": "^0.16.2",
+    "color": "1.0.3",
+    "lodash": "4.17.10",
+    "moment": "2.13.0",
+    "prop-types": "^15.6.2",
+    "react-native-gesture-handler": "^1.0.15",
+    "react-native-vector-icons": "^6.3.0",
+    "scheduler": "^0.12.0",
+    "styled-components": "^3.4.5"
+  },
+  "devDependencies": {
+    "babel-jest": "23.6.0",
+    "jest": "23.6.0",
+    "metro-react-native-babel-preset": "0.45.3",
+    "react-test-renderer": "16.5.0",
+    "babel-eslint": "7.2.3",
+    "eslint": "4.4.1",
+    "eslint-plugin-flowtype": "2.35.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-prettier": "2.1.2",
+    "eslint-plugin-react": "7.1.0",
+    "eslint-plugin-react-native": "3.0.1",
+    "flow-bin": "0.78.0",
+    "flow-typed": "2.5.1",
+    "husky": "0.14.3",
+    "prettier": "1.5.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
