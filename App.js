@@ -28,7 +28,7 @@ const AppNavigation = createSwitchNavigator (
         Main
     },
     {
-        initialRouteName: 'Main'
+        initialRouteName: 'Login'
     }
 );
 
