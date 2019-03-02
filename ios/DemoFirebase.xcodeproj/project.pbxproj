@@ -38,10 +38,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		2812B175BCA742BA85569969 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 404030D1AF7A4491B213B5D6 /* libRNFirebase.a */; };
-<<<<<<< HEAD
 		2D36CF5DBA734C8FBDF83A22 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2EF4FDF883145319F9B3294 /* libRNGestureHandler.a */; };
-=======
->>>>>>> cbfce53f2119761bab04f098ee4ef3e931919034
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1574,4 +1571,3 @@
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
-s
