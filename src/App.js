@@ -1,8 +1,12 @@
-import React from "react";
+import React, {Component} from "react";
 import { Root } from "native-base";
-// import { StackNavigator, DrawerNavigator } from "react-navigation";
-import { createDrawerNavigator, createStackNavigator, createAppContainer } from "react-navigation";
+import { SafeAreaView } from "react-native";
+import { createDrawerNavigator, createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+import Icon from "react-native-vector-icons/Ionicons";
 
+import Login from "./screens/login";
+import Signup from "./screens/signup";
 import Header from "./screens/Header/";
 import Header1 from "./screens/Header/1";
 import Header2 from "./screens/Header/2";
@@ -138,9 +142,82 @@ import Actionsheet from "./screens/actionsheet";
 import NHAccordion from "./screens/accordion/";
 import NHDatePicker from "./screens/datepicker/";
 
+import TabOne from "./screens/tab/tabOne";
+import TabTwo from "./screens/tab/tabTwo";
+import TabThree from "./screens/tab/tabThree";
+
+// const tinColor = "#f5f5f5";
+
+const Switcher = createMaterialTopTabNavigator(
+    {
+        Home : {
+            screen: TabOne,
+            navigationOptions: {
+                tabBarLabel: "Trang chủ",
+                tabBarIcon: ({tintColor}) => (
+                <Icon name="ios-home" color={tintColor} size={24}/>
+            )
+            }
+        },
+        BXH : {
+            screen: TabTwo,
+            navigationOptions: {
+                tabBarLabel: "BXH",
+                tabBarIcon: ({tintColor}) => (
+                  <Icon name="ios-stats" color={tintColor} size={24}/>
+                )
+            }
+            },
+        Search: {
+            screen: TabThree,
+            navigationOptions: {
+                tabBarLabel: "Tìm kiếm",
+                tabBarIcon: ({tintColor}) => (
+                  <Icon name="ios-search" color={tintColor} size={24}/>
+                )
+            }
+        }
+    },
+    {
+        initialRouteName: "Home",
+        // order: ["Home", "BXH", "Search"],
+        // activeTintColor: "#e91d62",
+        // shifting:true
+        tabBarPosition: "bottom",
+        swipeEnabled: true,
+        animationEnabled: false,
+        tabBarOptions: {
+            activeTintColor: "#e91d62",
+            inactiveTintColor: "grey",
+            style : {
+                backgroundColor: "#f5f5f5",
+                borderTopWidth: 0.5,
+                borderTopColor: "grey"
+            },
+            indicatorStyle: {
+                height: 0
+            },
+            showIcon: true
+        }
+    }
+);
+
+class AppSwitcher extends Component {
+    render() {
+        return (
+            <SafeAreaView style={{flex:1, backgroundColor: "#f5f5f5"}}>
+                <Switcher/>
+            </SafeAreaView>
+        )
+    }
+}
+
 const Drawer = createDrawerNavigator(
   {
-    Home: { screen: Home },
+    // Login: { screen: Login },
+    // Signup: { screen: Signup },
+      Switcher: {screen: Switcher},
+      Home: {screen: Home},
     Anatomy: { screen: Anatomy },
     Header: { screen: Header },
     Footer: { screen: Footer },
@@ -169,7 +246,7 @@ const Drawer = createDrawerNavigator(
     NHDatePicker: { screen: NHDatePicker }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Switcher",
     contentOptions: {
       activeTintColor: "#e91e63"
     },
@@ -180,8 +257,9 @@ const Drawer = createDrawerNavigator(
 const AppNavigator = createStackNavigator(
   {
     Drawer: { screen: Drawer },
-
-    Header1: { screen: Header1 },
+      Login: { screen: Login },
+      Signup: { screen: Signup },
+      Header1: { screen: Header1 },
     Header2: { screen: Header2 },
     Header3: { screen: Header3 },
     Header4: { screen: Header4 },
@@ -314,5 +392,5 @@ const AppContainer = createAppContainer(AppNavigator);
 
 export default () =>
   <Root>
-    <AppContainer />
+    <AppContainer/>
   </Root>;

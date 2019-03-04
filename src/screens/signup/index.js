@@ -3,7 +3,7 @@ import {StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput} from 're
 import {Container, Header, Content, Form, Item, Input, Label, Button, Text, H2, Spinner} from 'native-base';
 import firebase from 'react-native-firebase'
 
-const launchscreenBg = require("../assets/launchscreen-bg.png");
+const launchscreenBg = require("../../assets/launchscreen-bg.png");
 
 export default class SignUp extends React.Component {
     state = {email: '', password: '', errorMessage: null, loading: false}
@@ -17,7 +17,7 @@ export default class SignUp extends React.Component {
                 .createUserWithEmailAndPassword(email, password)
                 .then((res) => {
                     this.setState({loading: false });
-                    user => this.props.navigation.navigate('Main')
+                    user => this.props.navigation.navigate('Drawer')
                 })
                 .catch((err) => {
                     this.setState({loading: false });

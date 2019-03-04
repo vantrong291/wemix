@@ -11,7 +11,7 @@ import {
   Right,
   Left,
   Body,
-  TabHeading
+  TabHeading, Content, Footer, FooterTab
 } from "native-base";
 import TabOne from "./tabOne";
 import TabTwo from "./tabTwo";
@@ -32,7 +32,11 @@ class ConfigTab extends Component {
           </Body>
           <Right />
         </Header>
-        <Tabs style={{ elevation: 3 }}>
+        <Content padder />
+
+        <Footer>
+          {/*<FooterTab style={{ backgroundColor: "#f5f5f5" }}>*/}
+            <Tabs style={{ elevation: 3 }}>
           <Tab
             heading={
               <TabHeading>
@@ -62,9 +66,11 @@ class ConfigTab extends Component {
             <TabThree />
           </Tab>
         </Tabs>
+          {/*</FooterTab>*/}
+        </Footer>
       </Container>
     );
   }
-}
+  }
 
 export default ConfigTab;

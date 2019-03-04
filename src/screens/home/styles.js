@@ -20,9 +20,42 @@ export default {
     width: 280,
     height: 100
   },
+  // text: {
+  //   color: "#D8D8D8",
+  //   bottom: 6,
+  //   marginTop: 5
+  // },
+  container: {
+    backgroundColor: "#FFF"
+  },
   text: {
-    color: "#D8D8D8",
-    bottom: 6,
-    marginTop: 5
+    alignSelf: "center",
+    marginBottom: 7
+  },
+  mb: {
+    marginBottom: 15
+  },
+  button: {
+    backgroundColor: '#f5f5f5'
+  },
+  buttonPress: {
+    backgroundColor: "#f5f5f5",
+    color: '#e91d62'
+  },
+  textActive: {
+    alignSelf: "center",
+    color: '#e91d62',
+    fontSize: 10
+  },
+  textButton: {
+    alignSelf: "center",
+    fontSize: 10
+  },
+  iconActive: {
+    alignSelf: "center",
+    color: '#e91d62'
+  },
+  iconButton: {
+    alignSelf: "center",
   }
 };

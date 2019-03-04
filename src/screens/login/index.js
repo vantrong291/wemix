@@ -3,12 +3,12 @@ import {StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput} from 're
 import {Container, Header, Content, Form, Item, Input, Label, Button, Text, H2, Spinner} from 'native-base';
 import firebase from 'react-native-firebase'
 // import Button from 'react-native-button'
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 
-import * as ActionTypes from './../redux/actionTypes'
+// import * as ActionTypes from '../../redux/actionTypes'
 // import styles from "../screens/home/styles";
 
-const launchscreenBg = require("../assets/launchscreen-bg.png");
+const launchscreenBg = require("../../assets/launchscreen-bg.png");
 
 class Login extends React.Component {
     state = {loaded: false, email: '', password: '', errorMessage: null, loading: false}
@@ -38,11 +38,19 @@ class Login extends React.Component {
                 .then((res) => {
                     console.log(res);
                     this.setState({loading: false });
-                    this.props.navigation.navigate('Main')
+                    this.props.navigation.navigate('Drawer')
                 })
                 .catch((err) => {
+                    Alert.alert(
+                      'Error',
+                      err.message,
+                      [
+                          {text: 'OK', onPress: () => console.log('OK Pressed')},
+                      ],
+                      {cancelable: true}
+                    );
                     this.setState({loading: false });
-                    console.log(err);
+                    console.log(err.message);
                 })
         } else {
             Alert.alert(
@@ -60,7 +68,7 @@ class Login extends React.Component {
     componentWillReceiveProps(nextProps) {
         console.log('login componentWillReceiveProps', JSON.stringify(nextProps.user))
         if (nextProps.user.userInfo) {
-            this.props.navigation.navigate('Main')
+            this.props.navigation.navigate('Drawer')
         }
     };
 
@@ -111,7 +119,7 @@ class Login extends React.Component {
                                     rounded
                                     info
                                     style={{marginLeft: 3}}
-                                    onPress={() => this.props.navigation.navigate('SignUp')}
+                                    onPress={() => this.props.navigation.navigate('Signup')}
                                 ><Text>Đăng ký</Text></Button>
                             </View>
                         </Form>
@@ -135,12 +143,13 @@ const customStyles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = state => ({
-    user: state.user
-})
+// const mapStateToProps = state => ({
+//     user: state.user
+// })
+//
+// const mapDispatchToProps = dispatch => ({
+//     dispatch: dispatch
+// })
 
-const mapDispatchToProps = dispatch => ({
-    dispatch: dispatch
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+// export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login;
