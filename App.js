@@ -33,10 +33,12 @@ sagaMiddleware.run(rootSaga)
 // );
 //
 // const AppNavigation = createAppContainer(RootSwitch);
+import SplashScreen from 'react-native-splash-screen';
 
 
 class App extends Component {
     async componentDidMount() {
+        SplashScreen.hide();
         this.checkPermission();
         this.createNotificationListeners(); //add this line
     }

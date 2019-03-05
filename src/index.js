@@ -1,9 +1,14 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { Root } from "native-base";
 import { SafeAreaView } from "react-native";
-import { createDrawerNavigator, createStackNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
+import {
+  createDrawerNavigator,
+  createStackNavigator,
+  createAppContainer,
+  createMaterialTopTabNavigator
+} from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
-import Icon from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/AntDesign";
 
 import Login from "./screens/login";
 import Signup from "./screens/signup";
@@ -113,7 +118,7 @@ import AccordionIconStyle from "./screens/accordion/accordion-icon-style";
 import AccordionHeaderContentStyle from "./screens/accordion/accordion-header-content-style";
 import AccordionCustomHeaderContent from "./screens/accordion/accordion-custom-header-content";
 
-import Home from "./screens/home/";
+// import Home from "./screens/home/";
 import Anatomy from "./screens/anatomy/";
 import Footer from "./screens/footer/";
 import NHBadge from "./screens/badge/";
@@ -142,82 +147,102 @@ import Actionsheet from "./screens/actionsheet";
 import NHAccordion from "./screens/accordion/";
 import NHDatePicker from "./screens/datepicker/";
 
-import TabOne from "./screens/tab/tabOne";
-import TabTwo from "./screens/tab/tabTwo";
-import TabThree from "./screens/tab/tabThree";
+import Home from "./screens/home";
+import Chart from "./screens/chart";
+import Search from "./screens/search";
+import Playlist from "./screens/playlist";
 
 // const tinColor = "#f5f5f5";
 
+import variables from "./theme/variables/commonColor"
+
 const Switcher = createMaterialTopTabNavigator(
-    {
-        Home : {
-            screen: TabOne,
-            navigationOptions: {
-                tabBarLabel: "Trang chủ",
-                tabBarIcon: ({tintColor}) => (
-                <Icon name="ios-home" color={tintColor} size={24}/>
-            )
-            }
-        },
-        BXH : {
-            screen: TabTwo,
-            navigationOptions: {
-                tabBarLabel: "BXH",
-                tabBarIcon: ({tintColor}) => (
-                  <Icon name="ios-stats" color={tintColor} size={24}/>
-                )
-            }
-            },
-        Search: {
-            screen: TabThree,
-            navigationOptions: {
-                tabBarLabel: "Tìm kiếm",
-                tabBarIcon: ({tintColor}) => (
-                  <Icon name="ios-search" color={tintColor} size={24}/>
-                )
-            }
-        }
+  {
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        tabBarLabel: "Trang chủ",
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="home" color={tintColor} size={24}/>
+        )
+      }
     },
-    {
-        initialRouteName: "Home",
-        // order: ["Home", "BXH", "Search"],
-        // activeTintColor: "#e91d62",
-        // shifting:true
-        tabBarPosition: "bottom",
-        swipeEnabled: true,
-        animationEnabled: false,
-        tabBarOptions: {
-            activeTintColor: "#e91d62",
-            inactiveTintColor: "grey",
-            style : {
-                backgroundColor: "#f5f5f5",
-                borderTopWidth: 0.5,
-                borderTopColor: "grey"
-            },
-            indicatorStyle: {
-                height: 0
-            },
-            showIcon: true
-        }
+    BXH: {
+      screen: Chart,
+      navigationOptions: {
+        tabBarLabel: "BXH",
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="barschart" color={tintColor} size={24}/>
+        )
+      }
+    },
+    Search: {
+      screen: Search,
+      navigationOptions: {
+        tabBarLabel: "Tìm kiếm",
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="search1" color={tintColor} size={24}/>
+        )
+      }
+    },
+    Playlist: {
+      screen: Playlist,
+      navigationOptions: {
+        tabBarLabel: "Playlist",
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="bars" color={tintColor} size={24}/>
+        )
+      }
     }
+  },
+  {
+    initialRouteName: "Home",
+    // order: ["Home", "BXH", "Search"],
+    // activeTintColor: "#e91d62",
+    // barStyle: { backgroundColor: '#f5f5f5' },
+    // shifting:true
+
+
+    tabBarPosition: "bottom",
+    swipeEnabled: true,
+    animationEnabled: true,
+    tabBarOptions: {
+      activeTintColor: variables.primaryColor,
+      inactiveTintColor: "grey",
+      labelStyle: {
+        fontSize: 10,
+        marginTop: 2
+      },
+      style: {
+        backgroundColor: "#fff",
+        borderTopWidth: 0.5,
+        borderTopColor: "grey",
+        height: 55
+      },
+      indicatorStyle: {
+        height: 0
+      },
+      showIcon: true
+    }
+  }
 );
 
-class AppSwitcher extends Component {
-    render() {
-        return (
-            <SafeAreaView style={{flex:1, backgroundColor: "#f5f5f5"}}>
-                <Switcher/>
-            </SafeAreaView>
-        )
-    }
-}
+// class AppSwitcher extends Component {
+//   render() {
+//     return (
+//       <SafeAreaView style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
+//         <Switcher/>
+//       </SafeAreaView>
+//     );
+//   }
+// }
 
 const Drawer = createDrawerNavigator(
   {
     // Login: { screen: Login },
     // Signup: { screen: Signup },
-      Switcher: {screen: Switcher},
-      Home: {screen: Home},
+    Switcher: { screen: Switcher },
+    Home: { screen: Home },
     Anatomy: { screen: Anatomy },
     Header: { screen: Header },
     Footer: { screen: Footer },
@@ -257,9 +282,9 @@ const Drawer = createDrawerNavigator(
 const AppNavigator = createStackNavigator(
   {
     Drawer: { screen: Drawer },
-      Login: { screen: Login },
-      Signup: { screen: Signup },
-      Header1: { screen: Header1 },
+    Login: { screen: Login },
+    Signup: { screen: Signup },
+    Header1: { screen: Header1 },
     Header2: { screen: Header2 },
     Header3: { screen: Header3 },
     Header4: { screen: Header4 },
@@ -383,7 +408,7 @@ const AppNavigator = createStackNavigator(
     AccordionCustomHeaderContent: { screen: AccordionCustomHeaderContent }
   },
   {
-    initialRouteName: "Drawer",
+    initialRouteName: "Login",
     headerMode: "none"
   }
 );

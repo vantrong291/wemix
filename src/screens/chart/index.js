@@ -15,7 +15,7 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
 import variables from "../../theme/variables/commonColor"
 
-class Home extends Component {
+class Chart extends Component {
   render() {
     return (
       <Container style={styles.container}>
@@ -31,7 +31,7 @@ class Home extends Component {
             </Button>
           </Left>
           <Body style={{alignItems:"center", justifyContent: "center"}}>
-              <Title style={{width: 300, color: "#FFF", marginLeft: 60 }}>Trang chủ</Title>
+          <Title style={{width: 300, color: "#FFF", marginLeft: 60 }}>Bảng xếp hạng</Title>
           </Body>
           <Right>
             <Button transparent>
@@ -49,4 +49,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Chart;

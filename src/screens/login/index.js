@@ -82,7 +82,7 @@ class Login extends React.Component {
     render() {
         return (
             <Container>
-                <StatusBar barStyle="light-content"/>
+                <StatusBar backgroundColor="transparent" barStyle="light-content" />
                 <ImageBackground source={launchscreenBg} style={customStyles.imageContainer}>
                     <Content style={customStyles.content}>
                         <View style={{flex: 1, flexDirection: 'row', marginBottom: 20, alignSelf: "center"}}>

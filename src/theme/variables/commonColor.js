@@ -11,9 +11,18 @@ const platformStyle = undefined;
 const isIphoneX =
   platform === "ios" && (deviceHeight === 812 || deviceWidth === 812 || deviceHeight === 896 || deviceWidth === 896);
 
+//primaryColor
+const primaryColor = "#21B540";
+const secondaryColor = "#21b540";
+// const primaryColor = "#e91d62c9";
+// const secondaryColor = "#e91d62";
+
 export default {
   platformStyle,
   platform,
+
+  primaryColor: primaryColor,
+  secondaryColor: secondaryColor,
 
   //Accordion
   headerStyle: "#edebed",
@@ -149,7 +158,7 @@ export default {
 
   // Header
   toolbarBtnColor: platform === "ios" ? "#007aff" : "#fff",
-  toolbarDefaultBg: platform === "ios" ? "#F8F8F8" : "#3F51B5",
+  toolbarDefaultBg: platform === "ios" ? "#F8F8F8" : primaryColor,
   toolbarHeight: platform === "ios" ? 64 : 56,
   toolbarSearchIconSize: platform === "ios" ? 20 : 23,
   toolbarInputColor: platform === "ios" ? "#CECDD2" : "#fff",

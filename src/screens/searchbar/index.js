@@ -15,7 +15,7 @@ class NHSearchbar extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <Header searchBar rounded>
+        <Header span searchBar rounded>
           <Item>
             <Icon active name="search" />
             <Input placeholder="Search" />
