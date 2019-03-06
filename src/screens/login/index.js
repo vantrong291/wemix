@@ -8,7 +8,8 @@ import firebase from 'react-native-firebase'
 // import * as ActionTypes from '../../redux/actionTypes'
 // import styles from "../screens/home/styles";
 
-const launchscreenBg = require("../../assets/launchscreen-bg.png");
+// const launchscreenBg = require("../../assets/launchscreen-bg.png");
+const launchscreenBg = require("../../assets/bg.jpg");
 
 class Login extends React.Component {
     state = {loaded: false, email: '', password: '', errorMessage: null, loading: false}
@@ -82,14 +83,14 @@ class Login extends React.Component {
     render() {
         return (
             <Container>
-                <StatusBar backgroundColor="transparent" barStyle="light-content" />
-                <ImageBackground source={launchscreenBg} style={customStyles.imageContainer}>
-                    <Content style={customStyles.content}>
+                <StatusBar backgroundColor="#21B540" barStyle="light-content" />
+                <ImageBackground source={launchscreenBg} style={styles.imageContainer}>
+                    <Content contentContainerStyle={styles.content}>
                         <View style={{flex: 1, flexDirection: 'row', marginBottom: 20, alignSelf: "center"}}>
                             <H2 style={{color: "#fff"}}>Đăng nhập</H2>
                         </View>
-                        <Form>
-                            <Item>
+                        <Form style={styles.form}>
+                            <Item rounded style={styles.loginInput}>
                                 {/*<Label>Email</Label>*/}
                                 <Input
                                     style={{color: "#f5f5f5", paddingLeft: 10, paddingRight: 10}}
@@ -100,7 +101,7 @@ class Login extends React.Component {
                                     value={this.state.email}
                                 />
                             </Item>
-                            <Item>
+                            <Item rounded style={styles.loginInput}>
                                 {/*<Label>Password</Label>*/}
                                 <Input
                                     style={{color: "#fff", paddingLeft: 10, paddingRight: 10}}
@@ -112,35 +113,64 @@ class Login extends React.Component {
                                     value={this.state.password}
                                 />
                             </Item>
-                            <View style={{flex: 1, flexDirection: 'row', marginTop: 20, alignSelf: "center"}}>
-                                {/*<Button rounded success style={{marginRight: 3}} onPress={this.handleLogin}><Text>Đăng nhập</Text></Button>*/}
-                                {this.renderButtonOrLoading()}
-                                <Button
-                                    rounded
-                                    info
-                                    style={{marginLeft: 3}}
-                                    onPress={() => this.props.navigation.navigate('Signup')}
-                                ><Text>Đăng ký</Text></Button>
-                            </View>
                         </Form>
                     </Content>
+
+                        <View  style={styles.buttonRow}>
+                            {/*<Button rounded success style={{marginRight: 3}} onPress={this.handleLogin}><Text>Đăng nhập</Text></Button>*/}
+                            <View>
+                                {this.renderButtonOrLoading()}
+                            </View>
+                            <View>
+                                <Button
+                                  rounded
+                                  info
+                                  style={{marginLeft: 3}}
+                                  onPress={() => this.props.navigation.navigate('Signup')}
+                                ><Text>Đăng ký</Text></Button>
+                            </View>
+                        </View>
+
                 </ImageBackground>
             </Container>
         )
     }
 }
 
-const customStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     content: {
-        paddingTop: 180,
-        paddingLeft: 10,
-        paddingRight: 30,
+        // bottom: 200,
+        // paddingTop: 180,
+        // paddingLeft: 10,
+        // paddingRight: 30,
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center'
     },
     imageContainer: {
         flex: 1,
         width: null,
         height: null
     },
+    loginInput: {
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginBottom: 10,
+        backgroundColor: "#fff",
+        height: 50
+    },
+    form: {
+        width: "90%"
+    },
+    buttonRow: {
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 20,
+        alignSelf: "center",
+        justifyContent: "center"
+    }
 });
 
 // const mapStateToProps = state => ({

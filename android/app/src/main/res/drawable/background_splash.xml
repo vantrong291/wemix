@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/green"/>
+<selector xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/green" tools:ignore="StateListReachable" />
     <item
-        android:width="200dp"
-        android:height="200dp"
+        android:width="90dp"
+        android:height="90dp"
         android:drawable="@mipmap/icon"
         android:gravity="center" />
 </selector>
