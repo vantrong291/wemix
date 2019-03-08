@@ -1,7 +1,23 @@
-import React from 'react'
-import {StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput} from 'react-native'
-import {Container, Header, Content, Form, Item, Input, Label, Button, Text, H2, Spinner} from 'native-base';
-import firebase from 'react-native-firebase'
+import React from "react";
+import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput } from "react-native";
+import {
+  Container,
+  Header,
+  Content,
+  Form,
+  Item,
+  Input,
+  Label,
+  Button,
+  Text,
+  H2,
+  Spinner,
+  Icon as NBIcon
+} from "native-base";
+import firebase from "react-native-firebase";
+import Icon from "react-native-vector-icons/FontAwesome5";
+import { Keyboard } from "react-native";
+import SocialLogin from "../../components/socialLogin";
 // import Button from 'react-native-button'
 // import {connect} from 'react-redux'
 
@@ -10,167 +26,238 @@ import firebase from 'react-native-firebase'
 
 // const launchscreenBg = require("../../assets/launchscreen-bg.png");
 const launchscreenBg = require("../../assets/bg.jpg");
+const emotion = require("../../assets/splashicon.svg");
+
+const RN = require("react-native");
+const { Dimensions, Platform } = RN;
+const deviceHeight = Dimensions.get("window").height;
+
 
 class Login extends React.Component {
-    state = {loaded: false, email: '', password: '', errorMessage: null, loading: false}
+  constructor(props) {
+    super(props);
+    this.keyboardWillShow = this.keyboardWillShow.bind(this);
+    this.keyboardWillHide = this.keyboardWillHide.bind(this);
+    this.state = { loaded: false, email: "", password: "", errorMessage: null, loading: false, isVisible: true };
+  }
 
-    handleLogin = () => {
-        // console.log("Press");
-        // let userInfo = {
-        //     email: this.state.email,
-        //     password: this.state.password
-        // };
-        // if (userInfo.email.trim() != "" && userInfo.password.trim() != "") {
-        //     this.props.dispatch({type: ActionTypes.LOGIN, userInfo})
-        // } else {
-        //     Alert.alert(
-        //         'Warning',
-        //         'Bạn chưa nhập Email hoặc Mật khẩu. Vui lòng xem lại',
-        //         [
-        //             {text: 'OK', onPress: () => console.log('OK Pressed')},
-        //         ],
-        //         {cancelable: true}
-        //     )
-        // }
-        this.setState({loading: true });
-        if (this.state.email.trim() != "" && this.state.password.trim() != "") {
-            firebase.auth()
-                .signInWithEmailAndPassword(this.state.email, this.state.password)
-                .then((res) => {
-                    console.log(res);
-                    this.setState({loading: false });
-                    this.props.navigation.navigate('Drawer')
-                })
-                .catch((err) => {
-                    Alert.alert(
-                      'Error',
-                      err.message,
-                      [
-                          {text: 'OK', onPress: () => console.log('OK Pressed')},
-                      ],
-                      {cancelable: true}
-                    );
-                    this.setState({loading: false });
-                    console.log(err.message);
-                })
-        } else {
-            Alert.alert(
-                'Warning',
-                'Bạn chưa nhập Email hoặc Mật khẩu. Vui lòng xem lại',
-                [
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                {cancelable: true}
-            );
-            this.setState({loading: false });
-        }
-    };
-
-    componentWillReceiveProps(nextProps) {
-        console.log('login componentWillReceiveProps', JSON.stringify(nextProps.user))
-        if (nextProps.user.userInfo) {
-            this.props.navigation.navigate('Drawer')
-        }
-    };
-
-    renderButtonOrLoading() {
-        if (this.state.loading) {
-            return <Button rounded success style={{marginRight: 3, width: 110}}><Spinner color='#fff' style={{marginLeft: 40}} /></Button>
-        }
-        return <Button rounded success style={{marginRight: 3}} onPress={this.handleLogin}><Text>Đăng nhập</Text></Button>;
+  handleLogin = () => {
+    // console.log("Press");
+    // let userInfo = {
+    //     email: this.state.email,
+    //     password: this.state.password
+    // };
+    // if (userInfo.email.trim() != "" && userInfo.password.trim() != "") {
+    //     this.props.dispatch({type: ActionTypes.LOGIN, userInfo})
+    // } else {
+    //     Alert.alert(
+    //         'Warning',
+    //         'Bạn chưa nhập Email hoặc Mật khẩu. Vui lòng xem lại',
+    //         [
+    //             {text: 'OK', onPress: () => console.log('OK Pressed')},
+    //         ],
+    //         {cancelable: true}
+    //     )
+    // }
+    this.setState({ loading: true });
+    if (this.state.email.trim() !== "" && this.state.password.trim() !== "") {
+      firebase.auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then((res) => {
+          console.log(res);
+          this.setState({ loading: false });
+          this.props.navigation.navigate("Drawer");
+        })
+        .catch((err) => {
+          Alert.alert(
+            "Error",
+            err.message,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: true }
+          );
+          this.setState({ loading: false });
+          console.log(err.message);
+        });
+    } else {
+      Alert.alert(
+        "Warning",
+        "Bạn chưa nhập Email hoặc Mật khẩu. Vui lòng xem lại",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: true }
+      );
+      this.setState({ loading: false });
     }
+  };
 
-    render() {
-        return (
-            <Container>
-                <StatusBar backgroundColor="#21B540" barStyle="light-content" />
-                <ImageBackground source={launchscreenBg} style={styles.imageContainer}>
-                    <Content contentContainerStyle={styles.content}>
-                        <View style={{flex: 1, flexDirection: 'row', marginBottom: 20, alignSelf: "center"}}>
-                            <H2 style={{color: "#fff"}}>Đăng nhập</H2>
-                        </View>
-                        <Form style={styles.form}>
-                            <Item rounded style={styles.loginInput}>
-                                {/*<Label>Email</Label>*/}
-                                <Input
-                                    style={{color: "#f5f5f5", paddingLeft: 10, paddingRight: 10}}
-                                    autoCapitalize="none"
-                                    placeholder="Email"
-                                    placeholderTextColor="#fff"
-                                    onChangeText={email => this.setState({email})}
-                                    value={this.state.email}
-                                />
-                            </Item>
-                            <Item rounded style={styles.loginInput}>
-                                {/*<Label>Password</Label>*/}
-                                <Input
-                                    style={{color: "#fff", paddingLeft: 10, paddingRight: 10}}
-                                    secureTextEntry
-                                    placeholder="Mật khẩu"
-                                    placeholderTextColor="#f5f5f5"
-                                    autoCapitalize="none"
-                                    onChangeText={password => this.setState({password})}
-                                    value={this.state.password}
-                                />
-                            </Item>
-                        </Form>
-                    </Content>
+  componentWillMount() {
+    this.keyboardWillShowSub = Keyboard.addListener("keyboardDidShow", this.keyboardWillShow);
+    this.keyboardWillHideSub = Keyboard.addListener("keyboardDidHide", this.keyboardWillHide);
+    // firebase.auth().onAuthStateChanged(user => {
+    //   this.props.navigation.navigate(user ? 'Drawer' : 'Login')
+    // });
+  }
 
-                        <View  style={styles.buttonRow}>
-                            {/*<Button rounded success style={{marginRight: 3}} onPress={this.handleLogin}><Text>Đăng nhập</Text></Button>*/}
-                            <View>
-                                {this.renderButtonOrLoading()}
-                            </View>
-                            <View>
-                                <Button
-                                  rounded
-                                  info
-                                  style={{marginLeft: 3}}
-                                  onPress={() => this.props.navigation.navigate('Signup')}
-                                ><Text>Đăng ký</Text></Button>
-                            </View>
-                        </View>
+  componentWillUnmount() {
+    this.keyboardWillShowSub.remove();
+    this.keyboardWillHideSub.remove();
+  }
 
-                </ImageBackground>
-            </Container>
-        )
+  keyboardWillShow = event => {
+    this.setState({
+      isVisible: false
+    });
+  };
+
+  keyboardWillHide = event => {
+    this.setState({
+      isVisible: true
+    });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    console.log("login componentWillReceiveProps", JSON.stringify(nextProps.user));
+    if (nextProps.user.userInfo) {
+      this.props.navigation.navigate("Drawer");
     }
+  };
+
+  goHomeAfterSignin = (done) => {
+    return done ? this.props.navigation.navigate("Drawer") : console.log(this.state.finishFBSignin);
+  };
+
+  renderButtonOrLoading() {
+    return (this.state.loading) ?
+      <Button rounded block success style={styles.loginButton}><Spinner color='#fff'/></Button> :
+      <Button rounded block success style={styles.loginButton} onPress={this.handleLogin}><Text>Đăng nhập</Text></Button>;
+  }
+
+  renderSocialButton() {
+    return (this.state.isVisible) ?
+      <View>
+        <View style={{ flexDirection: "row", marginBottom: 10, paddingTop: 30, alignSelf: "center" }}>
+          <Text>hoặc</Text>
+        </View>
+        <SocialLogin goHomeAfterSignin={this.goHomeAfterSignin}/>
+      </View>
+      : null;
+  };
+
+  renderSignupLink() {
+    return (this.state.isVisible) ?
+      <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
+        <Text style={{ color: "#fff", marginBottom: 5 }} onPress={() => this.props.navigation.navigate("Signup")}>Chưa
+          có tài khoản? Đăng ký ngay </Text>
+      </View>
+      : null;
+  }
+
+  render() {
+    return (
+      <Container>
+        <StatusBar backgroundColor="#21B540" barStyle="light-content"/>
+        <ImageBackground source={launchscreenBg} style={styles.imageContainer}>
+          <Content contentContainerStyle={styles.content}>
+            {/*<View style={styles.logoContainer}>*/}
+            {/*<ImageBackground source={emotion} style={styles.logo} />*/}
+            {/*</View>*/}
+            <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
+              <H2 style={{ color: "#333" }}>Đăng nhập</H2>
+            </View>
+            <Form style={styles.form}>
+              <Item style={styles.loginInput}>
+                <Icon active name="user-circle" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
+                <Input
+                  style={styles.inputText}
+                  autoCapitalize="none"
+                  placeholder="Email"
+                  placeholderTextColor="#949090"
+                  onChangeText={email => this.setState({ email })}
+                  value={this.state.email}
+                />
+              </Item>
+              <Item style={styles.loginInput}>
+                <Icon active name="lock" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
+                <Input
+                  style={styles.inputText}
+                  secureTextEntry
+                  placeholder="Mật khẩu"
+                  placeholderTextColor="#949090"
+                  autoCapitalize="none"
+                  onChangeText={password => this.setState({ password })}
+                  value={this.state.password}
+                />
+              </Item>
+            </Form>
+            <View style={styles.loginButtonView}>
+              {this.renderButtonOrLoading()}
+            </View>
+            {this.renderSocialButton()}
+          </Content>
+          {this.renderSignupLink()}
+        </ImageBackground>
+      </Container>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    content: {
-        // bottom: 200,
-        // paddingTop: 180,
-        // paddingLeft: 10,
-        // paddingRight: 30,
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'center'
-    },
-    imageContainer: {
-        flex: 1,
-        width: null,
-        height: null
-    },
-    loginInput: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 5,
-        paddingBottom: 5,
-        marginBottom: 10,
-        backgroundColor: "#fff",
-        height: 50
-    },
-    form: {
-        width: "90%"
-    },
-    buttonRow: {
-        flex: 1,
-        flexDirection: 'row',
-        marginTop: 20,
-        alignSelf: "center",
-        justifyContent: "center"
-    }
+  content: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center"
+  },
+  imageContainer: {
+    flex: 1,
+    width: null,
+    height: null
+  },
+  loginInput: {
+    elevation: 3,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 15,
+    paddingBottom: 5,
+    marginBottom: 10,
+    backgroundColor: "#fff",
+    height: 48,
+    borderRadius: 100,
+    marginLeft: 0
+  },
+  inputText: { color: "#333", paddingLeft: 10, paddingRight: 10, fontSize: 16 },
+  form: {
+    width: "85%"
+  },
+  socialButton: {
+    flexDirection: "row",
+    // width: "85%",
+    marginTop: 10,
+    marginBottom: 10,
+    alignSelf: "center",
+    justifyContent: "center"
+  },
+  loginButtonView: {
+    marginTop: 15,
+    alignSelf: "center",
+    justifyContent: "center"
+  },
+  loginButton: {
+    width: "85%"
+  },
+  logoContainer: {
+    marginTop: deviceHeight / 8,
+    marginBottom: 30
+  },
+  logo: {
+    position: "absolute",
+    left: Platform.OS === "android" ? 40 : 50,
+    top: Platform.OS === "android" ? 35 : 60,
+    width: 280,
+    height: 100
+  }
 });
 
 // const mapStateToProps = state => ({

@@ -9,10 +9,10 @@ import firebase from 'react-native-firebase';
 import rootSaga from './src/redux/sagas'
 import allReducers from './src/redux/reducers'
 // import the different screens
-import Loading from './src/screen/Loading'
+// import Loading from './src/screen/Loading'
 // import SignUp from './src/screen/SignUp'
 // import Login from './src/screen/Login'
-import Main from './src/screens/home'
+// import Main from './src/screens/home'
 // create our app's navigation stack
 import Setup from "./src/boot/setup";
 
@@ -42,6 +42,7 @@ class App extends Component {
         this.checkPermission();
         this.createNotificationListeners(); //add this line
     }
+
 
     async checkPermission() {
         const enabled = await firebase.messaging().hasPermission();

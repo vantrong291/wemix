@@ -11,11 +11,45 @@ import {
   Text
 } from "native-base";
 import {View} from "react-native";
+import TrackPlayer from 'react-native-track-player';
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
 import variables from "../../theme/variables/commonColor"
 
+
 class Home extends Component {
+  componentDidMount(): void {
+    let then = TrackPlayer.setupPlayer();
+    TrackPlayer.setupPlayer();
+    TrackPlayer.updateOptions({
+      stopWithApp: true,
+      capabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+        TrackPlayer.CAPABILITY_STOP
+      ],
+      compactCapabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE
+      ]
+    }).then(async () => {
+      // Adds a track to the queue
+      await TrackPlayer.add({
+        id: 'trackId',
+        url: 'http://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/9b2342ce73899ad7c398/4664869573405175877?authen=exp=1552115428~acl=/9b2342ce73899ad7c398/*~hmac=7285d6395384c5c62bdc2e9a1727a297',
+        title: 'Track Title',
+        artist: 'Track Artist',
+        artwork: require('../../assets/camera.png')
+      });
+    });
+    }
+
+  onPlay = () => {
+    TrackPlayer.play();
+  };
+
   render() {
     return (
       <Container style={styles.container}>
@@ -42,7 +76,8 @@ class Home extends Component {
         </Header>
 
         <Content padder>
-          <Text>Header with Custom background color</Text>
+          {/*<Text>Header with Custom background color</Text>*/}
+          <Button onPress={this.onPlay}><Text>Play</Text></Button>
         </Content>
       </Container>
     );
