@@ -5,6 +5,8 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import styles from "./style";
 import firebase from "react-native-firebase";
 import {GoogleSignin} from "react-native-google-signin";
+import {connect} from "react-redux";
+import {fbLoginSuccess, ggLoginSuccess} from '../../redux/actions'
 
 const FBSDK = require("react-native-fbsdk");
 const {
@@ -12,7 +14,7 @@ const {
   AccessToken
 } = FBSDK;
 
-export default class SocialLogin extends Component {
+class SocialLogin extends Component {
   constructor(props) {
     super(props);
   }
@@ -38,6 +40,7 @@ export default class SocialLogin extends Component {
                 firebase.auth().signInWithCredential(credential)
                   .then((res) => {
                     const user = firebase.auth().currentUser;
+                    this.props.dispatch(fbLoginSuccess(user))
                     Toast.show({
                       text: "Xin chào " + user.email,
                       textStyle: { color: "yellow" },
@@ -73,6 +76,7 @@ export default class SocialLogin extends Component {
     }).then((currentUser) => {
       console.log(`Google user:  ${JSON.stringify(currentUser)}`);
       const user = firebase.auth().currentUser;
+      this.props.dispatch(ggLoginSuccess(user))
       Toast.show({
         text: "Xin chào " + currentUser.additionalUserInfo.profile.name,
         textStyle: { color: "yellow" },
@@ -110,4 +114,15 @@ export default class SocialLogin extends Component {
       </View>
     );
   }
-}
+};
+
+const mapStateToProps = state => ({
+  auth: state.user
+});
+//
+const mapDispatchToProps = dispatch => ({
+  dispatch: dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SocialLogin);
+

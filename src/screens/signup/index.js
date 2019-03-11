@@ -4,7 +4,10 @@ import { Container, Header, Content, Form, Item, Input, Label, Button, Text, H2,
 import firebase from "react-native-firebase";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import SocialLogin from "../../components/socialLogin";
+import {connect} from 'react-redux'
 
+
+import { loginSuccess, signupSuccess } from "../../redux/actions";
 const launchscreenBg = require("../../assets/bg.jpg");
 const emotion = require("../../assets/splashicon.svg");
 
@@ -12,7 +15,7 @@ const RN = require("react-native");
 const { Dimensions, Platform } = RN;
 const deviceHeight = Dimensions.get("window").height;
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.keyboardWillShow = this.keyboardWillShow.bind(this);
@@ -37,6 +40,7 @@ export default class SignUp extends React.Component {
         .auth()
         .createUserWithEmailAndPassword(mstate.email, mstate.password1)
         .then((res) => {
+          this.props.dispatch(signupSuccess(res.user));
           this.setState({ loading: false });
           this.props.navigation.navigate("Drawer");
         })
@@ -231,3 +235,13 @@ const styles = StyleSheet.create({
     width: "85%"
   }
 });
+
+const mapStateToProps = state => ({
+  auth: state.user
+});
+//
+const mapDispatchToProps = dispatch => ({
+  dispatch: dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

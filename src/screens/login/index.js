@@ -18,10 +18,10 @@ import firebase from "react-native-firebase";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { Keyboard } from "react-native";
 import SocialLogin from "../../components/socialLogin";
-// import Button from 'react-native-button'
-// import {connect} from 'react-redux'
+import {connect} from 'react-redux'
 
-// import * as ActionTypes from '../../redux/actionTypes'
+
+import {loginSuccess, syncAuthStatus} from '../../redux/actions'
 // import styles from "../screens/home/styles";
 
 // const launchscreenBg = require("../../assets/launchscreen-bg.png");
@@ -38,7 +38,7 @@ class Login extends React.Component {
     super(props);
     this.keyboardWillShow = this.keyboardWillShow.bind(this);
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
-    this.state = { loaded: false, email: "", password: "", errorMessage: null, loading: false, isVisible: true };
+    this.state = { loaded: false, email: "123@gmail.com", password: "123456", errorMessage: null, loading: false, isVisible: true };
   }
 
   handleLogin = () => {
@@ -64,7 +64,8 @@ class Login extends React.Component {
       firebase.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
+          this.props.dispatch(loginSuccess(res.user));
           this.setState({ loading: false });
           this.props.navigation.navigate("Drawer");
         })
@@ -96,9 +97,11 @@ class Login extends React.Component {
   componentWillMount() {
     this.keyboardWillShowSub = Keyboard.addListener("keyboardDidShow", this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener("keyboardDidHide", this.keyboardWillHide);
-    // firebase.auth().onAuthStateChanged(user => {
-    //   this.props.navigation.navigate(user ? 'Drawer' : 'Login')
-    // });
+    firebase.auth().onAuthStateChanged(user => {
+      // console.log(user);
+      this.props.dispatch(syncAuthStatus(user));
+      this.props.navigation.navigate(user ? 'Drawer' : 'Login')
+    });
   }
 
   componentWillUnmount() {
@@ -118,12 +121,12 @@ class Login extends React.Component {
     });
   };
 
-  componentWillReceiveProps(nextProps) {
-    console.log("login componentWillReceiveProps", JSON.stringify(nextProps.user));
-    if (nextProps.user.userInfo) {
-      this.props.navigation.navigate("Drawer");
-    }
-  };
+  // componentWillReceiveProps(nextProps) {
+  //   console.log("login componentWillReceiveProps", JSON.stringify(nextProps.user));
+  //   if (nextProps.user.userInfo) {
+  //     this.props.navigation.navigate("Drawer");
+  //   }
+  // };
 
   goHomeAfterSignin = (done) => {
     return done ? this.props.navigation.navigate("Drawer") : console.log(this.state.finishFBSignin);
@@ -156,6 +159,7 @@ class Login extends React.Component {
   }
 
   render() {
+    // console.log(this.props);
     return (
       <Container>
         <StatusBar backgroundColor="#21B540" barStyle="light-content"/>
@@ -177,6 +181,7 @@ class Login extends React.Component {
                   placeholderTextColor="#949090"
                   onChangeText={email => this.setState({ email })}
                   value={this.state.email}
+                  // value="123@gmail.com"
                 />
               </Item>
               <Item style={styles.loginInput}>
@@ -189,6 +194,7 @@ class Login extends React.Component {
                   autoCapitalize="none"
                   onChangeText={password => this.setState({ password })}
                   value={this.state.password}
+                  // value="123456"
                 />
               </Item>
             </Form>
@@ -260,13 +266,13 @@ const styles = StyleSheet.create({
   }
 });
 
-// const mapStateToProps = state => ({
-//     user: state.user
-// })
+const mapStateToProps = state => ({
+    auth: state.user
+});
 //
-// const mapDispatchToProps = dispatch => ({
-//     dispatch: dispatch
-// })
+const mapDispatchToProps = dispatch => ({
+    dispatch: dispatch
+});
 
 // export default connect(mapStateToProps, mapDispatchToProps)(Login)
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

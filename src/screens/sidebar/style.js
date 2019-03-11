@@ -12,13 +12,23 @@ export default {
     position: "relative",
     marginBottom: 10
   },
-  drawerImage: {
+  drawerUserContainer: {
     position: "absolute",
-    left: Platform.OS === "android" ? deviceWidth / 10 : deviceWidth / 9,
+    // left: Platform.OS === "android" ? deviceWidth / 10 : deviceWidth / 9,
+    left: 20,
     top: Platform.OS === "android" ? deviceHeight / 13 : deviceHeight / 12,
     width: 210,
     height: 75,
     resizeMode: "cover"
+  },
+  username: {
+    color:"#fff",
+    marginTop: 12
+  },
+  small: {
+    fontSize: 14,
+    color: "#fff",
+    marginTop: 5
   },
   text: {
     fontWeight: Platform.OS === "ios" ? "500" : "400",

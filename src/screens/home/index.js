@@ -40,7 +40,7 @@ class Home extends Component {
       // Adds a track to the queue
       await TrackPlayer.add({
         id: 'trackId',
-        url: 'http://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/9b2342ce73899ad7c398/4664869573405175877?authen=exp=1552115428~acl=/9b2342ce73899ad7c398/*~hmac=7285d6395384c5c62bdc2e9a1727a297',
+        url: 'http://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/14033a2d036aea34b37b/3492656630613786320?authen=exp=1552183878~acl=/14033a2d036aea34b37b/*~hmac=e4912828945d0921a39893f189d34acf',
         title: 'Track Title',
         artist: 'Track Artist',
         artwork: require('../../assets/camera.png')
