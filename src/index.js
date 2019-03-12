@@ -78,7 +78,7 @@ const Switcher = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: "Home",
-    // order: ["Home", "BXH", "Search"],
+    // order: ["Home", "BXH", "Search", "Playlist"],
     // activeTintColor: "#e91d62",
     // barStyle: { backgroundColor: '#f5f5f5' },
     // shifting:true
@@ -87,9 +87,14 @@ const Switcher = createMaterialTopTabNavigator(
     tabBarPosition: "bottom",
     swipeEnabled: true,
     animationEnabled: true,
+    lazy: true,
+    optimizationsEnabled: true,
     tabBarOptions: {
       activeTintColor: variables.primaryColor,
       inactiveTintColor: "grey",
+      upperCaseLabel: false,
+      // pressColor: "#e91d62",
+      pressOpacity: 1,
       labelStyle: {
         fontSize: 10,
         marginTop: 2
@@ -100,6 +105,7 @@ const Switcher = createMaterialTopTabNavigator(
         borderTopColor: "grey",
         height: 55
       },
+      iconStyle: {},
       indicatorStyle: {
         height: 0
       },
