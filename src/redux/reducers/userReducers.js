@@ -47,7 +47,6 @@ const userReducers = (auth = initState, action) =>  {
     default:
       return auth
   }
-
 };
 
 export default userReducers;

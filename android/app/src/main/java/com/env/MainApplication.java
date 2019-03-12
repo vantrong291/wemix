@@ -3,6 +3,8 @@ package com.env;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.yonahforst.rnpermissions.RNPermissionsPackage;
+import com.cinder92.musicfiles.RNReactNativeGetMusicFilesPackage;
 import com.guichaguri.trackplayer.TrackPlayer;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -41,7 +43,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new TrackPlayer(),
+          new RNPermissionsPackage(),
+          new RNReactNativeGetMusicFilesPackage(),
+          new TrackPlayer(),
           new RNGoogleSigninPackage(),
           //new FBSDKPackage(),
           new SplashScreenReactPackage(),

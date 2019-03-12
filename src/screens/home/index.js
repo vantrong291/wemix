@@ -15,37 +15,115 @@ import TrackPlayer from 'react-native-track-player';
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
 import variables from "../../theme/variables/commonColor"
+import { check, checkMultiple, ANDROID_PERMISSIONS, RESULTS } from "react-native-permissions";
+import MusicFiles from "react-native-get-music-files";
+
+import {connect} from 'react-redux'
+import {queryLocalSong} from '../../redux/actions'
 
 
 class Home extends Component {
-  componentDidMount(): void {
-    let then = TrackPlayer.setupPlayer();
-    TrackPlayer.setupPlayer();
-    TrackPlayer.updateOptions({
-      stopWithApp: true,
-      capabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-        TrackPlayer.CAPABILITY_STOP,
-        TrackPlayer.CAPABILITY_SEEK_TO
+  constructor(props) {
+    super(props);
+    this.state = {
+      storagePermission: ""
+    }
+  };
 
-      ],
-      compactCapabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE
-      ]
-    }).then(async () => {
-      // Adds a track to the queue
-      await TrackPlayer.add({
-        id: 'trackId',
-        url: 'http://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/14033a2d036aea34b37b/3492656630613786320?authen=exp=1552183878~acl=/14033a2d036aea34b37b/*~hmac=e4912828945d0921a39893f189d34acf',
-        title: 'Track Title',
-        artist: 'Track Artist',
-        artwork: require('../../assets/camera.png')
+  _getSongs = () => {
+    // Alert.alert('seen')
+    MusicFiles.getAll({}).then(tracks => {
+      this.props.dispatch(queryLocalSong(tracks));
+    }).then(() => {
+      // console.log(this.props.allTracks);
+      TrackPlayer.setupPlayer();
+      TrackPlayer.updateOptions({
+        stopWithApp: true,
+        capabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+          TrackPlayer.CAPABILITY_STOP,
+          TrackPlayer.CAPABILITY_SEEK_TO
+        ],
+        compactCapabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE
+        ]
+      }).then(async () => {
+        // Adds a track to the queue
+        const localSongs = this.props.allTracks.tracks;
+        console.log(localSongs);
+        if(!localSongs.isEmpty){
+          localSongs.forEach(async (song, index) => {
+            console.log(song.duration);
+            await TrackPlayer.add({
+              id: song.duration,
+              url: song.path,
+              title: song.title,
+              artist: 'Track Artist',
+              artwork: require('../../assets/camera.png')
+            });
+          });
+        }
       });
+    }).catch(error => {
+      console.log(error);
     });
+  };
+
+  // componentWillMount(): void {
+  //   this._getSongs();
+  // }
+
+  componentDidMount(): void {
+    check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then(response => {
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      // console.log(response);
+      this.setState({ storagePermission: response });
+    });
+    this._getSongs();
+
+    // console.log(this.props);
+
+
+    // let then = TrackPlayer.setupPlayer();
+    // TrackPlayer.setupPlayer();
+    // TrackPlayer.updateOptions({
+    //   stopWithApp: true,
+    //   capabilities: [
+    //     TrackPlayer.CAPABILITY_PLAY,
+    //     TrackPlayer.CAPABILITY_PAUSE,
+    //     TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+    //     TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+    //     TrackPlayer.CAPABILITY_STOP,
+    //     TrackPlayer.CAPABILITY_SEEK_TO
+    //
+    //   ],
+    //   compactCapabilities: [
+    //     TrackPlayer.CAPABILITY_PLAY,
+    //     TrackPlayer.CAPABILITY_PAUSE
+    //   ]
+    // }).then(async () => {
+    //   // Adds a track to the queue
+    //   const localSongs = this.props.allTracks.tracks;
+    //   console.log(localSongs);
+    //   if(!localSongs.isEmpty){
+    //
+    //     localSongs.forEach((song, index) => {
+    //       console.log(song.duration);
+    //     });
+    //     await TrackPlayer.add({
+    //       id: 'trackId',
+    //       url: 'http://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/14033a2d036aea34b37b/3492656630613786320?authen=exp=1552183878~acl=/14033a2d036aea34b37b/*~hmac=e4912828945d0921a39893f189d34acf',
+    //       title: 'Track Title',
+    //       artist: 'Track Artist',
+    //       artwork: require('../../assets/camera.png')
+    //     });
+    //   }
+    //   });
+
     }
 
   onPlay = () => {
@@ -86,4 +164,14 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    allTracks: state.localTracks
+  }
+};
+//
+const mapDispatchToProps = dispatch => ({
+  dispatch: dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

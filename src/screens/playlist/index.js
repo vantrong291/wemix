@@ -10,12 +10,40 @@ import {
   Body,
   Text
 } from "native-base";
-import {View} from "react-native";
+import {View, Alert} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
 import variables from "../../theme/variables/commonColor"
+import MusicFiles from "react-native-get-music-files"
+import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-permissions"
+// const Permissions = require('react-native-permissions').default;
 
 class Playlist extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      storagePermission: ""
+    }
+  }
+
+  componentDidMount() {
+    check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then(response => {
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      // console.log(response);
+      this.setState({ photoPermission: response })
+    })
+  }
+
+  _getSongs =() =>{
+    // Alert.alert('seen')
+    MusicFiles.getAll({
+    }).then(tracks => {
+      console.log(tracks)
+    }).catch(error => {
+      console.log(error);
+    })
+  };
+
   render() {
     return (
       <Container style={styles.container}>
@@ -42,7 +70,9 @@ class Playlist extends Component {
         </Header>
 
         <Content padder>
-          <Text>Header with Custom background color</Text>
+          <View style={{flex:1,justifyContent:'center', alignItems:'center'}}>
+            <Text onPress={this._getSongs}>get songs</Text>
+          </View>
         </Content>
       </Container>
     );

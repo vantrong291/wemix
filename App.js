@@ -5,11 +5,7 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import firebase from "react-native-firebase";
 import Setup from "./src/boot/setup";
-import rootReducers from "./src/redux/reducers"
-
-// const sagaMiddleware = createSagaMiddleware()
-// let store = createStore(allReducers, applyMiddleware(sagaMiddleware))
-// sagaMiddleware.run(rootSaga)
+import rootReducers from "./src/redux/reducers";
 
 const store = createStore(rootReducers);
 
@@ -17,12 +13,15 @@ import SplashScreen from "react-native-splash-screen";
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   async componentDidMount() {
     SplashScreen.hide();
     this.checkPermission();
     this.createNotificationListeners(); //add this line
   }
-
 
   async checkPermission() {
     const enabled = await firebase.messaging().hasPermission();
@@ -117,4 +116,7 @@ class App extends Component {
   }
 }
 
+
 export default App;
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);

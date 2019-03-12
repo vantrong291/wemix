@@ -19,12 +19,8 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import { Keyboard } from "react-native";
 import SocialLogin from "../../components/socialLogin";
 import {connect} from 'react-redux'
-
-
 import {loginSuccess, syncAuthStatus} from '../../redux/actions'
-// import styles from "../screens/home/styles";
 
-// const launchscreenBg = require("../../assets/launchscreen-bg.png");
 const launchscreenBg = require("../../assets/bg.jpg");
 const emotion = require("../../assets/splashicon.svg");
 

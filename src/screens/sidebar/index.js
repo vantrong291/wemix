@@ -79,7 +79,7 @@ class SideBar extends Component {
   };
 
   render() {
-    console.log(this.props.auth.user);
+    // console.log(this.props.auth.user);
     const u = "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png";
     return (
       <Container>

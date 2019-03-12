@@ -1,10 +1,10 @@
 import {combineReducers} from "redux"
 import userReducers from "./userReducers"
-import projectReducers from  "./projectReducers"
+import localTrackReducers from "./localTrackReducers"
 
 const rootReducers = combineReducers({
   user: userReducers,
-  project: projectReducers
+  localTracks: localTrackReducers
 });
 
 export default rootReducers;
