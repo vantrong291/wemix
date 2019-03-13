@@ -21,7 +21,7 @@ import MusicFiles from "react-native-get-music-files";
 
 import {connect} from 'react-redux'
 import {queryLocalSong} from '../../redux/actions'
-
+import MiniPlayer from "../../components/miniPlayer"
 
 class Home extends Component {
   constructor(props) {
@@ -67,9 +67,9 @@ class Home extends Component {
         const localSongs = this.props.allTracks.tracks;
         // console.log(localSongs);
         if(!localSongs.isEmpty){
-          localSongs.forEach(async (song, index) => {
+          localSongs.forEach((song, index) => {
             // console.log(song.duration);
-            await TrackPlayer.add({
+            TrackPlayer.add({
               id: song.id,
               url: song.path,
               title: song.title,
@@ -92,15 +92,21 @@ class Home extends Component {
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       this.setState({ storagePermission: response });
       if(response === "granted") {
-        this._getSongs();
-        console.log("done")
+        // this._getSongs();
+        console.log("done");
       }
     });
-    // this._getSongs();
+    this._getSongs();
   }
 
   onPlay = () => {
     TrackPlayer.play();
+    // TrackPlayer.getCurrentTrack().then(value => {
+    //   console.log(value)
+    // });
+    // TrackPlayer.getState().then(value => {
+    //   console.log(value)
+    // })
   };
 
   render() {
@@ -132,6 +138,7 @@ class Home extends Component {
           {/*<Text>Header with Custom background color</Text>*/}
           <Button onPress={this.onPlay}><Text>Play Music</Text></Button>
         </Content>
+        <MiniPlayer/>
       </Container>
     );
   }

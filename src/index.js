@@ -87,7 +87,7 @@ const Switcher = createMaterialTopTabNavigator(
     tabBarPosition: "bottom",
     swipeEnabled: true,
     animationEnabled: true,
-    lazy: true,
+    // lazy: true,
     optimizationsEnabled: true,
     tabBarOptions: {
       activeTintColor: variables.primaryColor,

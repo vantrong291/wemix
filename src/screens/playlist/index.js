@@ -18,6 +18,8 @@ import MusicFiles from "react-native-get-music-files"
 import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-permissions"
 // const Permissions = require('react-native-permissions').default;
 
+import TrackPlayer from "../../components/trackPlayer";
+
 class Playlist extends Component {
   constructor(props) {
     super(props);
@@ -35,13 +37,7 @@ class Playlist extends Component {
   }
 
   _getSongs =() =>{
-    // Alert.alert('seen')
-    MusicFiles.getAll({
-    }).then(tracks => {
-      console.log(tracks)
-    }).catch(error => {
-      console.log(error);
-    })
+    TrackPlayer.skipToNext()
   };
 
   render() {

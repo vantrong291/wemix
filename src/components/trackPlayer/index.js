@@ -18,5 +18,6 @@ TrackPlayer.updateOptions({
     TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
   ]
 });
+TrackPlayer.reset();
 
 export default TrackPlayer;
