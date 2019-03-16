@@ -1,13 +1,14 @@
 import React from "react";
-import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput, Keyboard } from "react-native";
+import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput, Keyboard, ScrollView } from "react-native";
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, H2, Spinner } from "native-base";
 import firebase from "react-native-firebase";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import SocialLogin from "../../components/socialLogin";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 
 
 import { loginSuccess, signupSuccess } from "../../redux/actions";
+
 const launchscreenBg = require("../../assets/bg.jpg");
 const emotion = require("../../assets/splashicon.svg");
 
@@ -118,13 +119,14 @@ class SignUp extends React.Component {
   };
 
   goHomeAfterSignin = (done) => {
-    return done ? this.props.navigation.navigate('Drawer') : console.log(this.state.finishFBSignin);
+    return done ? this.props.navigation.navigate("Drawer") : console.log(this.state.finishFBSignin);
   };
 
   renderLoginLink() {
     if (this.state.isVisible) {
       return <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
-        <Text style={{ color: "#fff", marginBottom: 5 }} onPress={() => this.props.navigation.navigate("Login")}>Đăng nhập </Text>
+        <Text style={{ color: "#fff", marginBottom: 5 }} onPress={() => this.props.navigation.navigate("Login")}>Đăng
+          nhập </Text>
       </View>;
     }
     return null;
@@ -135,55 +137,62 @@ class SignUp extends React.Component {
       <Container>
         <StatusBar backgroundColor="#21B540" barStyle="light-content"/>
         <ImageBackground source={launchscreenBg} style={styles.imageContainer}>
-          <Content contentContainerStyle={styles.content}>
-            {/*<View style={styles.logoContainer}>*/}
-            {/*<ImageBackground source={emotion} style={styles.logo} />*/}
-            {/*</View>*/}
-            <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
-              <H2 style={{ color: "#333" }}>Đăng ký</H2>
-            </View>
-            <Form style={styles.form}>
-              <Item style={styles.loginInput}>
-                <Icon active name="user-circle" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
-                <Input
-                  style={styles.inputText}
-                  autoCapitalize="none"
-                  placeholder="Email"
-                  placeholderTextColor="#949090"
-                  onChangeText={email => this.setState({ email })}
-                  value={this.state.email}
-                />
-              </Item>
-              <Item style={styles.loginInput}>
-                <Icon active name="lock" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
-                <Input
-                  style={styles.inputText}
-                  secureTextEntry
-                  placeholder="Mật khẩu"
-                  placeholderTextColor="#949090"
-                  autoCapitalize="none"
-                  onChangeText={password1 => this.setState({ password1 })}
-                  value={this.state.password1}
-                />
-              </Item>
-              <Item style={styles.loginInput}>
-                <Icon active name="lock" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
-                <Input
-                  style={styles.inputText}
-                  secureTextEntry
-                  placeholder="Nhập lại mật khẩu"
-                  placeholderTextColor="#949090"
-                  autoCapitalize="none"
-                  onChangeText={password2 => this.setState({ password2 })}
-                  value={this.state.password2}
-                />
-              </Item>
-            </Form>
-            <View style={styles.loginButtonView}>
-              {this.renderButtonOrLoading()}
-            </View>
-            {this.renderSocialButton()}
-          </Content>
+          <ScrollView contentContainerStyle={{
+            flex: 1,
+            justifyContent: "space-between",
+            paddingTop: 20,
+            paddingBottom: 20
+          }}>
+            <Content contentContainerStyle={styles.content}>
+              {/*<View style={styles.logoContainer}>*/}
+              {/*<ImageBackground source={emotion} style={styles.logo} />*/}
+              {/*</View>*/}
+              <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
+                <H2 style={{ color: "#333" }}>Đăng ký</H2>
+              </View>
+              <Form style={styles.form}>
+                <Item style={styles.loginInput}>
+                  <Icon active name="user-circle" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
+                  <Input
+                    style={styles.inputText}
+                    autoCapitalize="none"
+                    placeholder="Email"
+                    placeholderTextColor="#949090"
+                    onChangeText={email => this.setState({ email })}
+                    value={this.state.email}
+                  />
+                </Item>
+                <Item style={styles.loginInput}>
+                  <Icon active name="lock" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
+                  <Input
+                    style={styles.inputText}
+                    secureTextEntry
+                    placeholder="Mật khẩu"
+                    placeholderTextColor="#949090"
+                    autoCapitalize="none"
+                    onChangeText={password1 => this.setState({ password1 })}
+                    value={this.state.password1}
+                  />
+                </Item>
+                <Item style={styles.loginInput}>
+                  <Icon active name="lock" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
+                  <Input
+                    style={styles.inputText}
+                    secureTextEntry
+                    placeholder="Nhập lại mật khẩu"
+                    placeholderTextColor="#949090"
+                    autoCapitalize="none"
+                    onChangeText={password2 => this.setState({ password2 })}
+                    value={this.state.password2}
+                  />
+                </Item>
+              </Form>
+              <View style={styles.loginButtonView}>
+                {this.renderButtonOrLoading()}
+              </View>
+              {this.renderSocialButton()}
+            </Content>
+          </ScrollView>
           {this.renderLoginLink()}
         </ImageBackground>
       </Container>
@@ -194,8 +203,7 @@ class SignUp extends React.Component {
 const styles = StyleSheet.create({
   content: {
     alignItems: "center",
-    flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   imageContainer: {
     flex: 1,

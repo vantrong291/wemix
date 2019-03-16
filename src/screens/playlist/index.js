@@ -17,8 +17,8 @@ import variables from "../../theme/variables/commonColor"
 import MusicFiles from "react-native-get-music-files"
 import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-permissions"
 // const Permissions = require('react-native-permissions').default;
-
 import TrackPlayer from "../../components/trackPlayer";
+import MiniPlayer from "../../components/miniPlayer";
 
 class Playlist extends Component {
   constructor(props) {
@@ -70,6 +70,7 @@ class Playlist extends Component {
             <Text onPress={this._getSongs}>get songs</Text>
           </View>
         </Content>
+        {/*<MiniPlayer/>*/}
       </Container>
     );
   }

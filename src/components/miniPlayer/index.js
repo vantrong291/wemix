@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { View, Alert } from "react-native";
 import { Button, Text, Toast, Thumbnail } from "native-base";
+import {MaterialTopTabBar, BottomTabBar
+} from "react-navigation";
 import Icon from "react-native-vector-icons/Entypo";
 import styles from "./style";
 import TrackPlayer from "../trackPlayer";
@@ -15,7 +17,7 @@ export default class MiniPlayer extends Component {
     this.state = {
       playerState : 1,
       currentTrack: {},
-      playing: false
+      playing: true
     }
   };
 
@@ -86,7 +88,7 @@ export default class MiniPlayer extends Component {
     return (this.state.playerState === 3) ? (
       <View style={styles.miniPlayer}>
         <View style={styles.artworkView}>
-          <Thumbnail source={{uri: artwork}} style={styles.artwork} />
+          <Thumbnail square source={{uri: artwork}} style={styles.artwork} />
         </View>
         <View style={styles.songInfoView}>
           <Text style={styles.songTitle}>{title}</Text>
@@ -97,6 +99,7 @@ export default class MiniPlayer extends Component {
           {this.renderPlayPause(this.state.playing)}
           <Icon button name="controller-next" style={styles.controlIcon} onPress={this.onSkipNext}/>
         </View>
+        {/*<MaterialTopTabBar/>*/}
       </View>
     ) : null;
   }

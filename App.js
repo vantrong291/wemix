@@ -10,6 +10,7 @@ import rootReducers from "./src/redux/reducers";
 const store = createStore(rootReducers);
 
 import SplashScreen from "react-native-splash-screen";
+import MiniPlayer from "./src/components/miniPlayer";
 
 
 class App extends Component {
@@ -106,6 +107,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Setup/>
+        {/*<MiniPlayer/>*/}
       </Provider>
     );
     // (

@@ -1,3 +1,9 @@
+const RN = require("react-native");
+const { Dimensions, Platform } = RN;
+const deviceHeight = Dimensions.get("window").height;
+const deviceWidth = Dimensions.get("window").width;
+const artWorkWidth = 65;
+
 export default {
   miniPlayer: {
     width: "100%",
@@ -5,25 +11,24 @@ export default {
     backgroundColor: "#f5f5f5",
     left: 0,
     bottom: 0,
-    elevation: 5,
+    // elevation: 5,
     borderTopColor: "#888",
     borderTopWidth: 0.5,
-    // flex: 1,
     flexDirection: "row"
   },
   artworkView: {
-    width: "20%",
-    // backgroundColor: "#000",
-    // height: "100%"
+    width: artWorkWidth,
   },
   songInfoView: {
     width: "40%",
-    paddingTop: 5,
+    paddingTop: 12,
+    // left: artWorkWidth,
     // backgroundColor: "red",
     // height: "100%"
   },
   songControlView: {
     width: "40%",
+    // right: 0,
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 10,
@@ -44,7 +49,7 @@ export default {
   },
   controlIcon: {
     width: "33%",
-    fontSize: 30,
+    fontSize: 26,
     alignItems: "center"
   }
 }

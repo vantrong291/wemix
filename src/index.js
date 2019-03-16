@@ -5,7 +5,7 @@ import {
   createDrawerNavigator,
   createStackNavigator,
   createAppContainer,
-  createMaterialTopTabNavigator
+  createMaterialTopTabNavigator, MaterialTopTabBar, BottomTabBar
 } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -33,9 +33,21 @@ import Chart from "./screens/chart";
 import Search from "./screens/search";
 import Playlist from "./screens/playlist";
 
+import MiniPlayer from "./components/miniPlayer"
 // const tinColor = "#f5f5f5";
 
+
 import variables from "./theme/variables/commonColor"
+
+class MyTabBar extends Component {
+  render() {
+    return (
+      <MaterialTopTabBar>
+        <MiniPlayer/>
+      </MaterialTopTabBar>
+    )
+  }
+}
 
 const Switcher = createMaterialTopTabNavigator(
   {
@@ -83,7 +95,7 @@ const Switcher = createMaterialTopTabNavigator(
     // barStyle: { backgroundColor: '#f5f5f5' },
     // shifting:true
 
-
+    // tabBarComponent: MyTabBar,
     tabBarPosition: "bottom",
     swipeEnabled: true,
     animationEnabled: true,
@@ -114,15 +126,27 @@ const Switcher = createMaterialTopTabNavigator(
   }
 );
 
-// class AppSwitcher extends Component {
+
+// class MySwitchera extends Component {
 //   render() {
 //     return (
-//       <SafeAreaView style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
-//         <Switcher/>
-//       </SafeAreaView>
+//       <View>
+//         <MiniPlayer>
+//           <Switcher/>
+//         </MiniPlayer>
+//       </View>
 //     );
 //   }
 // }
+
+
+// const AppSwitcher = createStackNavigator({
+//   Home: {
+//     screen: Switcher
+//   }
+// });
+
+// const MySwitcher = createAppContainer(AppSwitcher);
 
 const Drawer = createDrawerNavigator(
   {
@@ -170,5 +194,7 @@ const AppContainer = createAppContainer(AppNavigator);
 
 export default () =>
   <Root>
-    <AppContainer/>
+    <AppContainer>
+    </AppContainer>
+    <MiniPlayer/>
   </Root>;

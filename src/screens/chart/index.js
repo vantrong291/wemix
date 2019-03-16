@@ -14,6 +14,8 @@ import {View} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
 import variables from "../../theme/variables/commonColor"
+import MiniPlayer from "../../components/miniPlayer";
+
 
 class Chart extends Component {
   render() {
@@ -44,6 +46,8 @@ class Chart extends Component {
         <Content padder>
           <Text>Header with Custom background color</Text>
         </Content>
+
+        {/*<MiniPlayer/>*/}
       </Container>
     );
   }

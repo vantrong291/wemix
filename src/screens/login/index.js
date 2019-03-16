@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput } from "react-native";
+import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput, ScrollView } from "react-native";
 import {
   Container,
   Header,
@@ -18,8 +18,8 @@ import firebase from "react-native-firebase";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { Keyboard } from "react-native";
 import SocialLogin from "../../components/socialLogin";
-import {connect} from 'react-redux'
-import {loginSuccess, syncAuthStatus} from '../../redux/actions'
+import { connect } from "react-redux";
+import { loginSuccess, syncAuthStatus } from "../../redux/actions";
 
 const launchscreenBg = require("../../assets/bg.jpg");
 const emotion = require("../../assets/splashicon.svg");
@@ -34,7 +34,14 @@ class Login extends React.Component {
     super(props);
     this.keyboardWillShow = this.keyboardWillShow.bind(this);
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
-    this.state = { loaded: false, email: "123@gmail.com", password: "123456", errorMessage: null, loading: false, isVisible: true };
+    this.state = {
+      loaded: false,
+      email: "123@gmail.com",
+      password: "123456",
+      errorMessage: null,
+      loading: false,
+      isVisible: true
+    };
   }
 
   handleLogin = () => {
@@ -96,7 +103,7 @@ class Login extends React.Component {
     firebase.auth().onAuthStateChanged(user => {
       // console.log(user);
       this.props.dispatch(syncAuthStatus(user));
-      this.props.navigation.navigate(user ? 'Drawer' : 'Login')
+      this.props.navigation.navigate(user ? "Drawer" : "Login");
     });
   }
 
@@ -131,7 +138,8 @@ class Login extends React.Component {
   renderButtonOrLoading() {
     return (this.state.loading) ?
       <Button rounded block success style={styles.loginButton}><Spinner color='#fff'/></Button> :
-      <Button rounded block success style={styles.loginButton} onPress={this.handleLogin}><Text>Đăng nhập</Text></Button>;
+      <Button rounded block success style={styles.loginButton} onPress={this.handleLogin}><Text>Đăng
+        nhập</Text></Button>;
   }
 
   renderSocialButton() {
@@ -147,7 +155,7 @@ class Login extends React.Component {
 
   renderSignupLink() {
     return (this.state.isVisible) ?
-      <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
+      <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center", bottom: 0 }}>
         <Text style={{ color: "#fff", marginBottom: 5 }} onPress={() => this.props.navigation.navigate("Signup")}>Chưa
           có tài khoản? Đăng ký ngay </Text>
       </View>
@@ -155,50 +163,56 @@ class Login extends React.Component {
   }
 
   render() {
-    // console.log(this.props);
+    // console.log(this.state.isVisible);
     return (
       <Container>
         <StatusBar backgroundColor="#21B540" barStyle="light-content"/>
         <ImageBackground source={launchscreenBg} style={styles.imageContainer}>
-          <Content contentContainerStyle={styles.content}>
-            {/*<View style={styles.logoContainer}>*/}
-            {/*<ImageBackground source={emotion} style={styles.logo} />*/}
-            {/*</View>*/}
-            <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
-              <H2 style={{ color: "#333" }}>Đăng nhập</H2>
-            </View>
-            <Form style={styles.form}>
-              <Item style={styles.loginInput}>
-                <Icon active name="user-circle" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
-                <Input
-                  style={styles.inputText}
-                  autoCapitalize="none"
-                  placeholder="Email"
-                  placeholderTextColor="#949090"
-                  onChangeText={email => this.setState({ email })}
-                  value={this.state.email}
-                  // value="123@gmail.com"
-                />
-              </Item>
-              <Item style={styles.loginInput}>
-                <Icon active name="lock" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
-                <Input
-                  style={styles.inputText}
-                  secureTextEntry
-                  placeholder="Mật khẩu"
-                  placeholderTextColor="#949090"
-                  autoCapitalize="none"
-                  onChangeText={password => this.setState({ password })}
-                  value={this.state.password}
-                  // value="123456"
-                />
-              </Item>
-            </Form>
-            <View style={styles.loginButtonView}>
-              {this.renderButtonOrLoading()}
-            </View>
-            {this.renderSocialButton()}
-          </Content>
+          <ScrollView contentContainerStyle={{
+            flex: 1,
+            justifyContent: 'space-between',
+            paddingTop: 20,
+            paddingBottom: 20
+          }}>
+            <Content contentContainerStyle={styles.content}>
+              {/*<View style={styles.logoContainer}>*/}
+              {/*<ImageBackground source={emotion} style={styles.logo} />*/}
+              {/*</View>*/}
+              <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
+                <H2 style={{ color: "#333" }}>Đăng nhập</H2>
+              </View>
+              <Form style={styles.form}>
+                <Item style={styles.loginInput}>
+                  <Icon active name="user-circle" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
+                  <Input
+                    style={styles.inputText}
+                    autoCapitalize="none"
+                    placeholder="Email"
+                    placeholderTextColor="#949090"
+                    onChangeText={email => this.setState({ email })}
+                    value={this.state.email}
+                  />
+                </Item>
+                <Item style={styles.loginInput}>
+                  <Icon active name="lock" style={{ color: "#21B540", paddingBottom: 10 }} size={18}/>
+                  <Input
+                    style={styles.inputText}
+                    secureTextEntry
+                    placeholder="Mật khẩu"
+                    placeholderTextColor="#949090"
+                    autoCapitalize="none"
+                    onChangeText={password => this.setState({ password })}
+                    value={this.state.password}
+                    // value="123456"
+                  />
+                </Item>
+              </Form>
+              <View style={styles.loginButtonView}>
+                {this.renderButtonOrLoading()}
+              </View>
+              {this.renderSocialButton()}
+            </Content>
+          </ScrollView>
           {this.renderSignupLink()}
         </ImageBackground>
       </Container>
@@ -209,8 +223,7 @@ class Login extends React.Component {
 const styles = StyleSheet.create({
   content: {
     alignItems: "center",
-    flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   imageContainer: {
     flex: 1,
@@ -263,11 +276,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    auth: state.user
+  auth: state.user
 });
 //
 const mapDispatchToProps = dispatch => ({
-    dispatch: dispatch
+  dispatch: dispatch
 });
 
 // export default connect(mapStateToProps, mapDispatchToProps)(Login)

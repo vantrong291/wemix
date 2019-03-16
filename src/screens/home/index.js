@@ -77,7 +77,7 @@ class Home extends Component {
               artwork: song.cover,
               album: song.album ? song.album : "Chưa xác định",
               genre: song.genre ? song.genre : "Chưa xác định",
-              duration: song.duration,
+               duration: song.duration,
             });
           });
         }
@@ -97,6 +97,7 @@ class Home extends Component {
       }
     });
     this._getSongs();
+    // this.onPlay();
   }
 
   onPlay = () => {
@@ -138,7 +139,7 @@ class Home extends Component {
           {/*<Text>Header with Custom background color</Text>*/}
           <Button onPress={this.onPlay}><Text>Play Music</Text></Button>
         </Content>
-        <MiniPlayer/>
+        {/*<MiniPlayer/>*/}
       </Container>
     );
   }
