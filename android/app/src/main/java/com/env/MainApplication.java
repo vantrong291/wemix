@@ -11,7 +11,6 @@ import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
@@ -51,7 +50,6 @@ public class MainApplication extends Application implements ReactApplication {
           new SplashScreenReactPackage(),
           new FBSDKPackage(mCallbackManager),
           new VectorIconsPackage(),
-          new RNGestureHandlerPackage(),
           new RNFirebasePackage(),
           new RNFirebaseAuthPackage(),
           new RNFirebaseMessagingPackage(),

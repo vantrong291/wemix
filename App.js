@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import firebase from "react-native-firebase";
 import Setup from "./src/boot/setup";
 import rootReducers from "./src/redux/reducers";
+import AppNavigator from "./src/index"
 
 const store = createStore(rootReducers);
 
@@ -106,8 +107,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Setup/>
+        {/*<Setup/>*/}
         {/*<MiniPlayer/>*/}
+        <AppNavigator/>
       </Provider>
     );
     // (

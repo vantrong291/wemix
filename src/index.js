@@ -4,10 +4,9 @@ import { SafeAreaView } from "react-native";
 import {
   createDrawerNavigator,
   createStackNavigator,
-  createAppContainer,
   createMaterialTopTabNavigator, MaterialTopTabBar, BottomTabBar
 } from "react-navigation";
-import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+// import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from "react-native-vector-icons/AntDesign";
 
 import Login from "./screens/login";
@@ -190,11 +189,13 @@ const AppNavigator = createStackNavigator(
   }
 );
 
-const AppContainer = createAppContainer(AppNavigator);
+// const AppContainer = createAppContainer(AppNavigator);
+//
+// export default () =>
+//   <Root>
+//     <AppContainer>
+//     </AppContainer>
+//     <MiniPlayer/>
+//   </Root>;
 
-export default () =>
-  <Root>
-    <AppContainer>
-    </AppContainer>
-    <MiniPlayer/>
-  </Root>;
+export default AppNavigator;

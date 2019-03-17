@@ -1,9 +1,6 @@
 package com.env;
 
 import com.facebook.react.ReactActivity;
-import com.facebook.react.ReactActivityDelegate;
-import com.facebook.react.ReactRootView;
-import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import org.devio.rn.splashscreen.SplashScreen; // import this
 import android.os.Bundle; // import this
 import android.content.Intent;
@@ -19,16 +16,6 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "EnV";
-    }
-
-    @Override
-    protected ReactActivityDelegate createReactActivityDelegate() {
-        return new ReactActivityDelegate(this, getMainComponentName()) {
-            @Override
-            protected ReactRootView createRootView() {
-                return new RNGestureHandlerEnabledRootView(MainActivity.this);
-            }
-        };
     }
 
     @Override
