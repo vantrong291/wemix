@@ -191,11 +191,11 @@ const AppNavigator = createStackNavigator(
 
 // const AppContainer = createAppContainer(AppNavigator);
 //
-// export default () =>
-//   <Root>
-//     <AppContainer>
-//     </AppContainer>
-//     <MiniPlayer/>
-//   </Root>;
+export default () =>
+  <Root>
+    <AppNavigator>
+    </AppNavigator>
+    <MiniPlayer/>
+  </Root>;
 
-export default AppNavigator;
+// export default AppNavigator;

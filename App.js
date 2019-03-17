@@ -107,9 +107,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        {/*<Setup/>*/}
+        <Setup/>
         {/*<MiniPlayer/>*/}
-        <AppNavigator/>
+        {/*<AppNavigator/>*/}
       </Provider>
     );
     // (
