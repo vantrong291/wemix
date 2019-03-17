@@ -108,19 +108,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Setup/>
-        {/*<MiniPlayer/>*/}
-        {/*<AppNavigator/>*/}
       </Provider>
     );
-    // (
-    //     <Provider store={store}>
-    //         <AppNavigation/>
-    //     </Provider>
-    //     )
   }
 }
 
 
 export default App;
-
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
