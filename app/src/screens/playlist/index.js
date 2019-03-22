@@ -34,21 +34,30 @@ class Playlist extends Component {
     }
   }
 
+
+  _isMounted = false;
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   componentDidMount() {
+    this._isMounted = true;
     // check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then(response => {
     //   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
     //   // console.log(response);
     //   this.setState({ storagePermission: response })
     // });
     AsyncStorage.getItem("localSongs").then(tracks => {
-      this.setState({ localSongs: JSON.parse(tracks)});
+      this._isMounted &&  this.setState({ localSongs: JSON.parse(tracks)});
     }).then(() => {
       // console.log(this.state.localSongs);
     });
   };
 
   renderLocalList = (lists) => {
-    if(lists.length !== 0) {
+    console.log("LENGTH" + lists.length);
+    if(lists.length != 0 && lists[0]) {
       const listContent = lists.map((item) => (
         <ListItem style={{marginLeft: 13 }} thumbnail key={item.id}>
           <Left>

@@ -41,27 +41,32 @@ class Search extends Component {
 
   onSearch = (keyword) => {
     let self = this;
-    this.setState({keyword: keyword});
-    axios.get('http://testrec.keeng.net/solr/media/select/?group=true&group.limit=20&group.field=type&sort=score%20desc,%20listen_no%20desc&wt=json&', {
-      params: {
-        indent: true,
-        q: keyword,
-      }
-    }).then((res) => {
-      const all_group = (res.data.grouped.type.groups);
-      if(self._isMounted) {
-        const songs = Object.values(all_group).filter(group => group.groupValue === 'song')[0].doclist.docs;
-        self.setState({ song_result: songs });
-        const singers = Object.values(all_group).filter(group => group.groupValue === 'singer')[0].doclist.docs;
-        self.setState({ singer_result: singers });
-        const albums = Object.values(all_group).filter(group => group.groupValue === 'album')[0].doclist.docs;
-        self.setState({ album_result: albums });
-        const playlists = Object.values(all_group).filter(group => group.groupValue === 'playlist')[0].doclist.docs;
-        self.setState({ playlist_result: playlists });
-      }
-    }).catch((res) => {
-      console.log(res);
-    })
+    let _timeout;
+    this._isMounted && this.setState({keyword: keyword});
+    clearTimeout(_timeout);
+    _timeout = setTimeout(() => {
+      axios.get('http://testrec.keeng.net/solr/media/select/?group=true&group.limit=20&group.field=type&sort=score%20desc,%20listen_no%20desc&wt=json&', {
+        params: {
+          indent: true,
+          q: keyword,
+        }
+      }).then((res) => {
+        const all_group = (res.data.grouped.type.groups);
+        if(self._isMounted) {
+          const songs = Object.values(all_group).filter(group => group.groupValue === 'song')[0].doclist.docs;
+          self.setState({ song_result: songs });
+          const singers = Object.values(all_group).filter(group => group.groupValue === 'singer')[0].doclist.docs;
+          self.setState({ singer_result: singers });
+          const albums = Object.values(all_group).filter(group => group.groupValue === 'album')[0].doclist.docs;
+          self.setState({ album_result: albums });
+          const playlists = Object.values(all_group).filter(group => group.groupValue === 'playlist')[0].doclist.docs;
+          self.setState({ playlist_result: playlists });
+        }
+      }).catch((res) => {
+        console.log(res);
+      })
+    },1000);
+
   };
 
   renderResult = (result) => {

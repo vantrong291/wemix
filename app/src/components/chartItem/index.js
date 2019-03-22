@@ -26,11 +26,19 @@ class ChartItem extends Component {
     }
   }
 
+
+  _isMounted = false;
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   componentDidMount() {
+    this._isMounted = true;
     axios.get('http://vip.service.keeng.vn:8080/KeengWSRestful/ws/common/getRankDetail?item_type=1&rank_type=50')
       .then((res) => {
-        this.setState({loading: false});
-        this.setState({chart: res.data});
+        this._isMounted && this.setState({loading: false});
+        this._isMounted && this.setState({chart: res.data});
       })
   };
 

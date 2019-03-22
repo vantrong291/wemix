@@ -21,38 +21,45 @@ export default class MiniPlayer extends Component {
     }
   };
 
+  _isMounted = false;
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   onPlay = () => {
     let playing = !this.state.playing;
-    this.setState({playing: playing});
+    this._isMounted && this.setState({playing: playing});
     // console.log(this.state.playing);
     TrackPlayer.play();
   };
 
   onPause = () => {
     let playing = !this.state.playing;
-    this.setState({playing: playing});
+    this._isMounted && this.setState({playing: playing});
     TrackPlayer.pause();
   };
 
   onSkipNext = () => {
-    this.setState({playing: false});
+    this._isMounted && this.setState({playing: false});
     TrackPlayer.skipToNext().then((res) => {
       // console.log(res);
-      this.setState({playing: true});
+      this._isMounted && this.setState({playing: true});
     });
   };
 
   onSkipPrevious = () => {
-    this.setState({playing: false});
+    this._isMounted && this.setState({playing: false});
     TrackPlayer.skipToPrevious().then(res => {
-      this.setState({playing: true});
+      this._isMounted && this.setState({playing: true});
     });
   };
 
   componentDidMount(){
+    this._isMounted = true;
     TrackPlayer.addEventListener("playback-track-changed", (track, position, nextTrack) => {
       console.log(nextTrack);
-      this.setState({currentTrack: nextTrack});
+      this._isMounted && this.setState({currentTrack: nextTrack});
     })
   }
 
@@ -63,12 +70,12 @@ export default class MiniPlayer extends Component {
   render() {
     TrackPlayer.addEventListener("playback-state", (state)=> {
       if(this.state.playerState != 3 && this.state.playerState != state.state) {
-        this.setState({playerState: state.state});
+        this._isMounted && this.setState({playerState: state.state});
         if (this.state.playerState === 3) {
           TrackPlayer.getCurrentTrack().then(value => {
             TrackPlayer.getTrack(value).then(track => {
               // console.log(track);
-              this.setState({currentTrack: track});
+              this._isMounted && this.setState({currentTrack: track});
             });
           });
         }

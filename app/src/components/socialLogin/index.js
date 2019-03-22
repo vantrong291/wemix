@@ -28,7 +28,7 @@ class SocialLogin extends Component {
   onFacebookLogin = () => {
     let self = this;
     // return (dispatch) => {
-    LoginManager.logInWithReadPermissions(["public_profile", "user_friends", "email"])
+    LoginManager.logInWithReadPermissions(["public_profile", "email"])
       .then(
         (result) => {
           if (result.isCancelled) {

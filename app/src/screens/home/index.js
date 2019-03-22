@@ -32,6 +32,13 @@ class Home extends Component {
     }
   };
 
+
+  _isMounted = false;
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   _getSongs = () => {
     // Alert.alert('seen')
     MusicFiles.getAll({
@@ -96,9 +103,10 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then((response) => {
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-      this.setState({ storagePermission: response });
+      this._isMounted && this.setState({ storagePermission: response });
       if(response === "granted") {
         // this._getSongs();
         console.log("done");

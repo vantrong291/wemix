@@ -48,7 +48,7 @@ class SignUp extends React.Component {
         .createUserWithEmailAndPassword(mstate.email, mstate.password1)
         .then((res) => {
           this.props.dispatch(signupSuccess(res.user));
-          this.setState({ loading: false });
+          this._isMounted && this.setState({ loading: false });
           this.props.navigation.navigate("Drawer");
         })
         .catch((err) => {

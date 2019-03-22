@@ -44,6 +44,13 @@ class Login extends React.Component {
     };
   }
 
+
+  _isMounted = false;
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
   handleLogin = () => {
     // console.log("Press");
     // let userInfo = {
@@ -62,14 +69,14 @@ class Login extends React.Component {
     //         {cancelable: true}
     //     )
     // }
-    this.setState({ loading: true });
+    this._isMounted && this.setState({ loading: true });
     if (this.state.email.trim() !== "" && this.state.password.trim() !== "") {
       firebase.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           // console.log(res);
           this.props.dispatch(loginSuccess(res.user));
-          this.setState({ loading: false });
+          this._isMounted && this.setState({ loading: false });
           this.props.navigation.navigate("Drawer");
         })
         .catch((err) => {
@@ -81,7 +88,7 @@ class Login extends React.Component {
             ],
             { cancelable: true }
           );
-          this.setState({ loading: false });
+          this._isMounted && this.setState({ loading: false });
           console.log(err.message);
         });
     } else {
@@ -93,7 +100,7 @@ class Login extends React.Component {
         ],
         { cancelable: true }
       );
-      this.setState({ loading: false });
+      this._isMounted && this.setState({ loading: false });
     }
   };
 
@@ -108,18 +115,19 @@ class Login extends React.Component {
   }
 
   componentWillUnmount() {
+    this._isMounted = false;
     this.keyboardWillShowSub.remove();
     this.keyboardWillHideSub.remove();
   }
 
   keyboardWillShow = event => {
-    this.setState({
+    this._isMounted && this.setState({
       isVisible: false
     });
   };
 
   keyboardWillHide = event => {
-    this.setState({
+    this._isMounted && this.setState({
       isVisible: true
     });
   };

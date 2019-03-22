@@ -28,7 +28,15 @@ class Personal extends Component {
     }
   }
 
+
+  _isMounted = false;
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   componentDidMount() {
+    this._isMounted = true;
     check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then(response => {
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       // console.log(response);
