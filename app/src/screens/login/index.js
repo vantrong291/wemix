@@ -73,11 +73,19 @@ class Login extends React.Component {
     if (this.state.email.trim() !== "" && this.state.password.trim() !== "") {
       firebase.auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then((res) => {
+        .then( async (res) => {
           // console.log(res);
-          this.props.dispatch(loginSuccess(res.user));
-          this._isMounted && this.setState({ loading: false });
-          this.props.navigation.navigate("Drawer");
+          await this.props.dispatch(loginSuccess(res.user));
+          await this._isMounted && this.setState({ loading: false });
+          await this.props.navigation.navigate("Home");
+          // Alert.alert(
+          //   "Success",
+          //   res.message,
+          //   [
+          //     { text: "OK", onPress: () => console.log("OK Pressed") }
+          //   ],
+          //   { cancelable: true }
+          // );
         })
         .catch((err) => {
           Alert.alert(
@@ -107,11 +115,11 @@ class Login extends React.Component {
   componentWillMount() {
     this.keyboardWillShowSub = Keyboard.addListener("keyboardDidShow", this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener("keyboardDidHide", this.keyboardWillHide);
-    firebase.auth().onAuthStateChanged(user => {
-      // console.log(user);
-      this.props.dispatch(syncAuthStatus(user));
-      this.props.navigation.navigate(user ? "Drawer" : "Login");
-    });
+    // firebase.auth().onAuthStateChanged(user => {
+    //   // console.log(user);
+    //   this.props.dispatch(syncAuthStatus(user));
+    //   this.props.navigation.navigate(user ? "Drawer" : "Login");
+    // });
   }
 
   componentWillUnmount() {

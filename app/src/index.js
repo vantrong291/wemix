@@ -183,6 +183,7 @@ const AppNavigator = createStackNavigator(
     Drawer: { screen: Drawer },
     Login: { screen: Login },
     Signup: { screen: Signup },
+    Home: { screen: Home},
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
     Header3: { screen: Header3 },

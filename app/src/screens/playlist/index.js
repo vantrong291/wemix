@@ -30,7 +30,7 @@ class Playlist extends Component {
     this.state = {
       storagePermission: "",
       loading: true,
-      localSongs: []
+      localSongs: null
     }
   }
 
@@ -56,31 +56,34 @@ class Playlist extends Component {
   };
 
   renderLocalList = (lists) => {
-    console.log("LENGTH" + lists.length);
-    if(lists.length != 0 && lists[0]) {
-      const listContent = lists.map((item) => (
-        <ListItem style={{marginLeft: 13 }} thumbnail key={item.id}>
-          <Left>
-            <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover}/>
-          </Left>
-          <Body>
-          <Text numberOfLines={1}>
-            {item.title}
-          </Text>
-          <Text numberOfLines={1} note>
-            {item.author}
-          </Text>
-          </Body>
-          <Right style={{flexDirection: "row", alignItems: "center"}}>
-            <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
-            <Icon name="plus" size={20}/>
-            {/*<Button transparent>*/}
-              {/*<Icon name="play" size={16}/>*/}
-            {/*</Button>*/}
-          </Right>
-        </ListItem>
-      ));
-      return listContent;
+    if(lists != null) {
+      console.log("LENGTH" + lists.length);
+      if(lists && lists.length != 0 && lists[0]) {
+        const listContent = lists.map((item) => (
+          <ListItem style={{marginLeft: 13 }} thumbnail key={item.id}>
+            <Left>
+              <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover}/>
+            </Left>
+            <Body>
+            <Text numberOfLines={1}>
+              {item.title}
+            </Text>
+            <Text numberOfLines={1} note>
+              {item.author}
+            </Text>
+            </Body>
+            <Right style={{flexDirection: "row", alignItems: "center"}}>
+              <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
+              <Icon name="plus" size={20}/>
+              {/*<Button transparent>*/}
+                {/*<Icon name="play" size={16}/>*/}
+              {/*</Button>*/}
+            </Right>
+          </ListItem>
+        ));
+        return listContent;
+      }
+      return null;
     }
     return null;
   };
@@ -115,7 +118,7 @@ class Playlist extends Component {
           <ScrollView>
             <H3 style={{margin:13, fontWeight: "bold"}}>Nhạc Offline</H3>
             <List>
-              {this.renderLocalList(this.state.localSongs)}
+              { this._isMounted && this.renderLocalList(this.state.localSongs)}
             </List>
           </ScrollView>
         </Content>
