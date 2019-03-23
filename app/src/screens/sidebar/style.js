@@ -7,7 +7,7 @@ const deviceWidth = Dimensions.get("window").width;
 export default {
   drawerCover: {
     alignSelf: "stretch",
-    height: deviceHeight / 3.5,
+    height: 180,
     width: null,
     position: "relative",
     marginBottom: 10

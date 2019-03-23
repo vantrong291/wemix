@@ -24,7 +24,8 @@ class Personal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      storagePermission: ""
+      storagePermission: "",
+      active: false,
     }
   }
 
@@ -37,11 +38,11 @@ class Personal extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then(response => {
+    // check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then(response => {
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       // console.log(response);
       // this.setState({ photoPermission: response })
-    })
+    // })
   }
 
   _getSongs =() =>{

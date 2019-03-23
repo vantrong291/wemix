@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Root } from "native-base";
+import { Root, Button } from "native-base";
 import { SafeAreaView } from "react-native";
 import {
   createDrawerNavigator,
@@ -94,7 +94,7 @@ const Switcher = createMaterialTopTabNavigator(
         tabBarIcon: ({ tintColor }) => (
           <Icon name="user" color={tintColor} size={24}/>
         )
-      }
+      },
     }
 
   },
@@ -127,7 +127,8 @@ const Switcher = createMaterialTopTabNavigator(
         backgroundColor: "#fff",
         borderTopWidth: 0.5,
         borderTopColor: "grey",
-        height: 55
+        height: 55,
+        // elevation: 3,
       },
       iconStyle: {},
       indicatorStyle: {
@@ -209,7 +210,7 @@ export default () =>
   <Root>
     <AppNavigator>
     </AppNavigator>
-    <MiniPlayer/>
+    <MiniPlayer navigation/>
   </Root>;
 
 // export default AppNavigator;

@@ -6,12 +6,13 @@ const artWorkWidth = 65;
 
 export default {
   miniPlayer: {
+    position: "absolute",
     width: "100%",
-    height: 60,
-    backgroundColor: "#f5f5f5",
+    height: 62,
+    backgroundColor: "#fff",
     left: 0,
-    bottom: 0,
-    // elevation: 5,
+    bottom: 55,
+    // elevation: 3,
     borderTopColor: "#888",
     borderTopWidth: 0.5,
     flexDirection: "row"
@@ -48,6 +49,7 @@ export default {
     fontSize: 11,
   },
   controlIcon: {
+    color: "#333",
     width: "33%",
     fontSize: 26,
     alignItems: "center"

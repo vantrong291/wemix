@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput, ScrollView } from "react-native";
+import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput, ScrollView, Image } from "react-native";
 import {
   Container,
   Header,
@@ -22,7 +22,7 @@ import { connect } from "react-redux";
 import { loginSuccess, syncAuthStatus } from "../../redux/actions";
 
 const launchscreenBg = require("../../assets/bg.jpg");
-const emotion = require("../../assets/splashicon.svg");
+const emotion = require("../../assets/undraw_walk_in_the_city_1ma6.png");
 
 const RN = require("react-native");
 const { Dimensions, Platform } = RN;
@@ -43,7 +43,6 @@ class Login extends React.Component {
       isVisible: true
     };
   }
-
 
   _isMounted = false;
 
@@ -75,17 +74,9 @@ class Login extends React.Component {
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then( async (res) => {
           // console.log(res);
-          await this.props.dispatch(loginSuccess(res.user));
-          await this._isMounted && this.setState({ loading: false });
-          await this.props.navigation.navigate("Home");
-          // Alert.alert(
-          //   "Success",
-          //   res.message,
-          //   [
-          //     { text: "OK", onPress: () => console.log("OK Pressed") }
-          //   ],
-          //   { cancelable: true }
-          // );
+          this.props.dispatch(loginSuccess(res.user));
+          this._isMounted && this.setState({ loading: false });
+          this.props.navigation.navigate("Drawer");
         })
         .catch((err) => {
           Alert.alert(
@@ -115,11 +106,11 @@ class Login extends React.Component {
   componentWillMount() {
     this.keyboardWillShowSub = Keyboard.addListener("keyboardDidShow", this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener("keyboardDidHide", this.keyboardWillHide);
-    // firebase.auth().onAuthStateChanged(user => {
-    //   // console.log(user);
-    //   this.props.dispatch(syncAuthStatus(user));
-    //   this.props.navigation.navigate(user ? "Drawer" : "Login");
-    // });
+    firebase.auth().onAuthStateChanged(user => {
+      // console.log(user);
+      this.props.dispatch(syncAuthStatus(user));
+      this.props.navigation.navigate(user ? "Drawer" : "Login");
+    });
   }
 
   componentWillUnmount() {
@@ -183,6 +174,7 @@ class Login extends React.Component {
     return (
       <Container>
         <StatusBar backgroundColor="#21B540" barStyle="light-content"/>
+
         <ImageBackground source={launchscreenBg} style={styles.imageContainer}>
           <ScrollView contentContainerStyle={{
             flex: 1,
@@ -190,10 +182,11 @@ class Login extends React.Component {
             paddingTop: 20,
             paddingBottom: 20
           }}>
+            {/*<Image source={}></Image>*/}
             <Content contentContainerStyle={styles.content}>
-              {/*<View style={styles.logoContainer}>*/}
-              {/*<ImageBackground source={emotion} style={styles.logo} />*/}
-              {/*</View>*/}
+              <View style={styles.logoContainer}>
+                <Image source={emotion} style={styles.logo} />
+              </View>
               <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
                 <H2 style={{ color: "#333" }}>Đăng nhập</H2>
               </View>
@@ -279,15 +272,13 @@ const styles = StyleSheet.create({
     width: "85%"
   },
   logoContainer: {
-    marginTop: deviceHeight / 8,
-    marginBottom: 30
+    marginBottom: 20,
+    height: 120,
+    width: 200
   },
   logo: {
-    position: "absolute",
-    left: Platform.OS === "android" ? 40 : 50,
-    top: Platform.OS === "android" ? 35 : 60,
-    width: 280,
-    height: 100
+    width: "100%",
+    height: "100%"
   }
 });
 

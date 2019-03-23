@@ -3,11 +3,12 @@ import { View, Alert } from "react-native";
 import { Button, Text, Toast, Thumbnail } from "native-base";
 import {MaterialTopTabBar, BottomTabBar
 } from "react-navigation";
+import TextTicker from 'react-native-text-ticker'
 import Icon from "react-native-vector-icons/Entypo";
 import styles from "./style";
 import TrackPlayer from "../trackPlayer";
 
-const defaultArtwork = "../../assets/default-avatar.png";
+const defaultArtwork = require("../../assets/defaultCover.jpeg");
 
 export default class MiniPlayer extends Component {
   constructor(props) {
@@ -57,9 +58,12 @@ export default class MiniPlayer extends Component {
 
   componentDidMount(){
     this._isMounted = true;
-    TrackPlayer.addEventListener("playback-track-changed", (track, position, nextTrack) => {
-      console.log(nextTrack);
-      this._isMounted && this.setState({currentTrack: nextTrack});
+    TrackPlayer.addEventListener("playback-track-changed", async (data) => {
+      if (data.nextTrack) {
+        const track = await TrackPlayer.getTrack(data.nextTrack);
+        this._isMounted && this.setState({ currentTrack: track });
+      }
+
     })
   }
 
@@ -86,8 +90,9 @@ export default class MiniPlayer extends Component {
     let title = "Chưa xác định";
     let artist = "Chưa xác định";
     if(this.state.currentTrack) {
-      artwork = this.state.currentTrack.artwork;
-      title = (this.state.currentTrack.title) ? this.state.currentTrack.title.substring(0, 16) + " ..." : title;
+      artwork = this.state.currentTrack.artwork ? this.state.currentTrack.artwork : null;
+      // console.log(artwork);
+      title = (this.state.currentTrack.title) ? this.state.currentTrack.title : title;
         // ? this.state.currentTrack.title.substring(0, 25) + " ..." : this.state.currentTrack.title;
       artist = this.state.currentTrack.artist;
     }
@@ -95,10 +100,16 @@ export default class MiniPlayer extends Component {
     return (this.state.playerState === 3) ? (
       <View style={styles.miniPlayer}>
         <View style={styles.artworkView}>
-          <Thumbnail square source={{uri: artwork}} style={styles.artwork} />
+          <Thumbnail square source={ (artwork) ? {uri: artwork} : defaultArtwork} style={styles.artwork} />
         </View>
         <View style={styles.songInfoView}>
-          <Text style={styles.songTitle}>{title}</Text>
+          <TextTicker
+            duration={5000}
+            loop
+            bounce
+            repeatSpacer={10}
+            marqueeDelay={1000}
+            style={styles.songTitle} onPress={() => this.props.navigation.navigate('Login')}>{title}</TextTicker>
           <Text style={styles.songArtist}>{artist}</Text>
         </View>
         <View style={styles.songControlView}>

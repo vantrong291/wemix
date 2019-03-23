@@ -10,10 +10,15 @@ import {
   Body,
   Text, ListItem, Thumbnail, H1, H2, H3, List
 } from "native-base";
-import {View, Alert, AsyncStorage, ScrollView} from "react-native";
+import {View, Alert, AsyncStorage, ScrollView, TouchableOpacity} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
 import variables from "../../theme/variables/commonColor"
+import {
+  RkButton, RkStyleSheet,
+  RkText,
+} from 'react-native-ui-kitten'
+
 import MusicFiles from "react-native-get-music-files"
 import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-permissions"
 // const Permissions = require('react-native-permissions').default;

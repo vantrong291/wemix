@@ -1,5 +1,15 @@
 import React from "react";
-import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput, Keyboard, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Alert,
+  StatusBar,
+  ImageBackground,
+  View,
+  TextInput,
+  Keyboard,
+  ScrollView,
+  Image
+} from "react-native";
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, H2, Spinner } from "native-base";
 import firebase from "react-native-firebase";
 import Icon from "react-native-vector-icons/FontAwesome5";
@@ -10,7 +20,7 @@ import { connect } from "react-redux";
 import { loginSuccess, signupSuccess } from "../../redux/actions";
 
 const launchscreenBg = require("../../assets/bg.jpg");
-const emotion = require("../../assets/splashicon.svg");
+const emotion = require("../../assets/undraw_walk_in_the_city_1ma6.png");
 
 const RN = require("react-native");
 const { Dimensions, Platform } = RN;
@@ -151,9 +161,9 @@ class SignUp extends React.Component {
             paddingBottom: 20
           }}>
             <Content contentContainerStyle={styles.content}>
-              {/*<View style={styles.logoContainer}>*/}
-              {/*<ImageBackground source={emotion} style={styles.logo} />*/}
-              {/*</View>*/}
+              <View style={styles.logoContainer}>
+                <Image source={emotion} style={styles.logo} />
+              </View>
               <View style={{ flexDirection: "row", marginBottom: 10, alignSelf: "center" }}>
                 <H2 style={{ color: "#333" }}>Đăng ký</H2>
               </View>
@@ -248,6 +258,15 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     width: "85%"
+  },
+  logoContainer: {
+    marginBottom: 20,
+    height: 120,
+    width: 200
+  },
+  logo: {
+    width: "100%",
+    height: "100%"
   }
 });
 
