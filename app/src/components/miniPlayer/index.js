@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, Image, Animated, Easing } from "react-native";
 import { Button, Text, Toast, Thumbnail } from "native-base";
 import {MaterialTopTabBar, BottomTabBar
 } from "react-navigation";
@@ -7,6 +7,7 @@ import TextTicker from 'react-native-text-ticker'
 import Icon from "react-native-vector-icons/Entypo";
 import styles from "./style";
 import TrackPlayer from "../trackPlayer";
+// import { Image } from "react-native-paper/typings/components/Avatar";
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 
@@ -15,6 +16,7 @@ export default class MiniPlayer extends Component {
     super(props);
     // this.onPause = this.onPause.bind(this);
     // this.onPlay = this.onPlay.bind(this);
+    this.RotateValueHolder = new Animated.Value(0);
     this.state = {
       playerState : 1,
       currentTrack: {},
@@ -22,6 +24,7 @@ export default class MiniPlayer extends Component {
     }
   };
 
+  // spinValue = new Animated.Value(0);
   _isMounted = false;
 
   componentWillUnmount() {
@@ -63,8 +66,26 @@ export default class MiniPlayer extends Component {
         const track = await TrackPlayer.getTrack(data.nextTrack);
         this._isMounted && this.setState({ currentTrack: track });
       }
+    });
+    this.startImageRotateFunction();
+    // Animated.timing(
+    //   this.spinValue,
+    //   {
+    //     toValue: 1,
+    //     duration: 3000,
+    //     easing: Easing.linear
+    //   }
+    // ).start()
 
-    })
+  };
+
+  startImageRotateFunction() {
+    this.RotateValueHolder.setValue(0);
+    Animated.timing(this.RotateValueHolder, {
+      toValue: 1,
+      duration: 6000,
+      easing: Easing.linear,
+    }).start(() => this.startImageRotateFunction());
   }
 
   renderPlayPause = (playing) => {
@@ -72,6 +93,11 @@ export default class MiniPlayer extends Component {
   };
 
   render() {
+    const RotateData = this.RotateValueHolder.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg'],
+    });
+
     TrackPlayer.addEventListener("playback-state", (state)=> {
       if(this.state.playerState != 3 && this.state.playerState != state.state) {
         this._isMounted && this.setState({playerState: state.state});
@@ -97,10 +123,15 @@ export default class MiniPlayer extends Component {
       artist = this.state.currentTrack.artist;
     }
 
+    // const spin = this.spinValue.interpolate({
+    //   inputRange: [0, 1],
+    //   outputRange: ['0deg', '360deg']
+    // });
+
     return (this.state.playerState === 3) ? (
       <View style={styles.miniPlayer}>
         <View style={styles.artworkView}>
-          <Thumbnail square source={ (artwork) ? {uri: artwork} : defaultArtwork} style={styles.artwork} />
+          <Animated.Image rounded source={ (artwork) ? {uri: artwork} : defaultArtwork} style={[styles.artwork, { transform: [{ rotate: RotateData }]}]} />
         </View>
         <View style={styles.songInfoView}>
           <TextTicker
