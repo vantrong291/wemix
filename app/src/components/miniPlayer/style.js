@@ -15,7 +15,8 @@ export default {
     // elevation: 3,
     borderTopColor: "#888",
     borderTopWidth: 0.5,
-    flexDirection: "row"
+    flexDirection: "row",
+    zIndex: 1,
   },
   artworkView: {
     width: artWorkWidth,

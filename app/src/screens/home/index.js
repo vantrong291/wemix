@@ -79,20 +79,19 @@ class Home extends Component {
         AsyncStorage.getItem("localSongs").then(tracks => {
           localSongs = JSON.parse(tracks);
         }).then(() => {
-          // console.log(localSongs);
           if(!localSongs.isEmpty){
             localSongs.forEach((song, index) => {
               // console.log(song.duration);
-              TrackPlayer.add({
-                id: song.id,
-                url: song.path,
-                title: song.title,
-                artist: song.author,
-                artwork: song.cover,
-                album: song.album ? song.album : "Chưa xác định",
-                genre: song.genre ? song.genre : "Chưa xác định",
-                 duration: song.duration,
-              });
+              // TrackPlayer.add({
+              //   id: song.id,
+              //   url: song.path,
+              //   title: song.title,
+              //   artist: song.author,
+              //   artwork: song.cover,
+              //   album: song.album ? song.album : "Chưa xác định",
+              //   genre: song.genre ? song.genre : "Chưa xác định",
+              //    duration: song.duration,
+              // });
             });
           }
         });

@@ -50,6 +50,15 @@ export default class MiniPlayer extends Component {
     TrackPlayer.skipToNext().then((res) => {
       // console.log(res);
       this._isMounted && this.setState({playing: true});
+    }).catch((err) => {
+      Alert.alert(
+        "Oppp :(",
+        "Danh sách phát đã hết",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: true }
+      );
     });
   };
 
@@ -57,10 +66,19 @@ export default class MiniPlayer extends Component {
     this._isMounted && this.setState({playing: false});
     TrackPlayer.skipToPrevious().then(res => {
       this._isMounted && this.setState({playing: true});
+    }).catch((err) => {
+      Alert.alert(
+        "Oppp :(",
+        "Không có bài liền trước",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: true }
+      );
     });
   };
 
-  componentDidMount(){
+  async componentDidMount(){
     this._isMounted = true;
     let self = this;
     TrackPlayer.addEventListener("playback-track-changed", async (data) => {
@@ -71,24 +89,18 @@ export default class MiniPlayer extends Component {
     });
     this.startImageRotateFunction();
 
-    AsyncStorage.getItem("recentTrack").then(async (track) => {
-      await self._isMounted && self.setState({currentTrack: track});
+    await AsyncStorage.getItem("recentTrack").then(async (track) => {
+      await self._isMounted && self.setState({currentTrack: JSON.parse(track)});
       // console.log(self.state.currentTrack);
+      await TrackPlayer.reset();
+      await TrackPlayer.add(JSON.parse(track));
       setTimeout(await function () {
         self._isMounted && self.setState({loading: false})
       }, 3000);
       // console.log(self.state.loading);
     });
-    // Animated.timing(
-    //   this.spinValue,
-    //   {
-    //     toValue: 1,
-    //     duration: 3000,
-    //     easing: Easing.linear
-    //   }
-    // ).start()
+
     TrackPlayer.addEventListener("playback-state", (state)=> {
-      // console.log(state);
       this._isMounted && this.setState({playerState: state.state});
 
       // if(this.state.playerState != 3 && this.state.playerState != state.state) {

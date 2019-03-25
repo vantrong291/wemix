@@ -82,7 +82,7 @@ class SideBar extends Component {
     // console.log(this.props.auth.user);
     const u = "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png";
     return (
-      <Container>
+      <Container style={{ zIndex: 9999 }}>
           <Content
           bounces={false}
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
