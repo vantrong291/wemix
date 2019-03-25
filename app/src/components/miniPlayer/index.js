@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Alert, Image, Animated, Easing } from "react-native";
+import { View, Alert, Image, Animated, Easing, AsyncStorage } from "react-native";
 import { Button, Text, Toast, Thumbnail } from "native-base";
 import {MaterialTopTabBar, BottomTabBar
 } from "react-navigation";
@@ -20,7 +20,8 @@ export default class MiniPlayer extends Component {
     this.state = {
       playerState : 1,
       currentTrack: {},
-      playing: true
+      playing: true,
+      loading: true
     }
   };
 
@@ -61,6 +62,7 @@ export default class MiniPlayer extends Component {
 
   componentDidMount(){
     this._isMounted = true;
+    let self = this;
     TrackPlayer.addEventListener("playback-track-changed", async (data) => {
       if (data.nextTrack) {
         const track = await TrackPlayer.getTrack(data.nextTrack);
@@ -68,6 +70,15 @@ export default class MiniPlayer extends Component {
       }
     });
     this.startImageRotateFunction();
+
+    AsyncStorage.getItem("recentTrack").then(async (track) => {
+      await self._isMounted && self.setState({currentTrack: track});
+      // console.log(self.state.currentTrack);
+      setTimeout(await function () {
+        self._isMounted && self.setState({loading: false})
+      }, 3000);
+      // console.log(self.state.loading);
+    });
     // Animated.timing(
     //   this.spinValue,
     //   {
@@ -76,7 +87,22 @@ export default class MiniPlayer extends Component {
     //     easing: Easing.linear
     //   }
     // ).start()
+    TrackPlayer.addEventListener("playback-state", (state)=> {
+      // console.log(state);
+      this._isMounted && this.setState({playerState: state.state});
 
+      // if(this.state.playerState != 3 && this.state.playerState != state.state) {
+      //   this._isMounted && this.setState({playerState: state.state});
+      //   if (this.state.playerState === 3) {
+      //     TrackPlayer.getCurrentTrack().then(value => {
+      //       TrackPlayer.getTrack(value).then(track => {
+      //         // console.log(track);
+      //         this._isMounted && this.setState({currentTrack: track});
+      //       });
+      //     });
+      //   }
+      // }
+    });
   };
 
   startImageRotateFunction() {
@@ -88,8 +114,8 @@ export default class MiniPlayer extends Component {
     }).start(() => this.startImageRotateFunction());
   }
 
-  renderPlayPause = (playing) => {
-    return (playing) ? <Icon name="controller-paus" style={styles.controlIcon} onPress={this.onPause}/> : <Icon name="controller-play" style={styles.controlIcon} onPress={this.onPlay}/>;
+  renderPlayPause = (playState) => {
+    return (this.state.playerState === 3) ? <Icon name="controller-paus" style={styles.controlIcon} onPress={this.onPause}/> : <Icon name="controller-play" style={styles.controlIcon} onPress={this.onPlay}/>;
   };
 
   render() {
@@ -98,40 +124,25 @@ export default class MiniPlayer extends Component {
       outputRange: ['0deg', '360deg'],
     });
 
-    TrackPlayer.addEventListener("playback-state", (state)=> {
-      if(this.state.playerState != 3 && this.state.playerState != state.state) {
-        this._isMounted && this.setState({playerState: state.state});
-        if (this.state.playerState === 3) {
-          TrackPlayer.getCurrentTrack().then(value => {
-            TrackPlayer.getTrack(value).then(track => {
-              // console.log(track);
-              this._isMounted && this.setState({currentTrack: track});
-            });
-          });
-        }
-      }
-    });
-
-    let artwork = defaultArtwork;
+    let artwork = " ";
     let title = "Chưa xác định";
     let artist = "Chưa xác định";
     if(this.state.currentTrack) {
-      artwork = this.state.currentTrack.artwork ? this.state.currentTrack.artwork : null;
-      // console.log(artwork);
+      artwork = this.state.currentTrack.artwork ? this.state.currentTrack.artwork : " ";
       title = (this.state.currentTrack.title) ? this.state.currentTrack.title : title;
-        // ? this.state.currentTrack.title.substring(0, 25) + " ..." : this.state.currentTrack.title;
       artist = this.state.currentTrack.artist;
     }
-
     // const spin = this.spinValue.interpolate({
     //   inputRange: [0, 1],
     //   outputRange: ['0deg', '360deg']
     // });
+    // console.log(artwork);
 
-    return (this.state.playerState === 3) ? (
+
+    return (!this.state.loading) ? (
       <View style={styles.miniPlayer}>
         <View style={styles.artworkView}>
-          <Animated.Image rounded source={ (artwork) ? {uri: artwork} : defaultArtwork} style={[styles.artwork, { transform: [{ rotate: RotateData }]}]} />
+          <Animated.Image rounded source={ (this.state.currentTrack.artwork) ? {uri: this.state.currentTrack.artwork} : defaultArtwork} style={[styles.artwork, { transform: [{ rotate: RotateData }]}]} />
         </View>
         <View style={styles.songInfoView}>
           <TextTicker
@@ -139,13 +150,13 @@ export default class MiniPlayer extends Component {
             loop
             bounce
             repeatSpacer={10}
-            marqueeDelay={1000}
-            style={styles.songTitle} onPress={() => this.props.navigation.navigate('Login')}>{title}</TextTicker>
-          <Text style={styles.songArtist}>{artist}</Text>
+            marqueeDelay={0}
+            style={styles.songTitle}>{this.state.currentTrack.title}</TextTicker>
+          <Text style={styles.songArtist}>{this.state.currentTrack.artist}</Text>
         </View>
         <View style={styles.songControlView}>
           <Icon button name="controller-jump-to-start" style={styles.controlIcon} onPress={this.onSkipPrevious}/>
-          {this.renderPlayPause(this.state.playing)}
+          {this.renderPlayPause(this.state.playState)}
           <Icon button name="controller-next" style={styles.controlIcon} onPress={this.onSkipNext}/>
         </View>
         {/*<MaterialTopTabBar/>*/}
