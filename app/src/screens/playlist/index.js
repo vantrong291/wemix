@@ -8,9 +8,9 @@ import {
   Left,
   Right,
   Body,
-  Text, ListItem, Thumbnail, H1, H2, H3, List
+  Text, ListItem, Thumbnail, H1, H2, H3, List, Spinner
 } from "native-base";
-import {View, Alert, AsyncStorage, ScrollView, TouchableOpacity} from "react-native";
+import {View, Alert, FlatList, AsyncStorage, ScrollView, TouchableOpacity} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
 import variables from "../../theme/variables/commonColor"
@@ -25,9 +25,28 @@ import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-p
 import TrackPlayer from "../../components/trackPlayer";
 import MiniPlayer from "../../components/miniPlayer";
 import { queryLocalSong } from "../../redux/actions";
-
+import PlaylistItem from "../../components/playlistItem";
 
 const defaltCover = require('../../assets/defaultCover.jpeg');
+
+const datas = [
+  {
+    title: "FixedLabel",
+    artist: "Fixed Label"
+  },
+  {
+    title: "FixedLabel",
+    artist: "Fixed Label"
+  },
+  {
+    title: "FixedLabel",
+    artist: "Fixed Label"
+  },
+  {
+    title: "FixedLabel",
+    artist: "Fixed Label"
+  },
+];
 
 class Playlist extends Component {
   constructor(props) {
@@ -59,32 +78,28 @@ class Playlist extends Component {
       // console.log(this.state.localSongs);
     });
   };
+  onPlay = (song) => {
+    // TrackPlayer.reset();
+    // TrackPlayer.add({
+    //   id: song.id,
+    //   url: song.path,
+    //   title: song.title,
+    //   artist: song.author,
+    //   artwork: song.cover,
+    //   album: song.album ? song.album : "Chưa xác định",
+    //   genre: song.genre ? song.genre : "Chưa xác định",
+    //   duration: song.duration,
+    // });
+    // TrackPlayer.play();
+    console.log("1");
+  };
 
-  renderLocalList = (lists) => {
+  renderLocalList = (lists, onPress) => {
     if(lists != null) {
-      console.log("LENGTH" + lists.length);
+      // console.log("LENGTH" + lists.length);
       if(lists && lists.length != 0 && lists[0]) {
         const listContent = lists.map((item) => (
-          <ListItem style={{marginLeft: 13 }} thumbnail key={item.id}>
-            <Left>
-              <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover}/>
-            </Left>
-            <Body>
-            <Text numberOfLines={1}>
-              {item.title}
-            </Text>
-            <Text numberOfLines={1} note>
-              {item.author}
-            </Text>
-            </Body>
-            <Right style={{flexDirection: "row", alignItems: "center"}}>
-              <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
-              <Icon name="plus" size={20}/>
-              {/*<Button transparent>*/}
-                {/*<Icon name="play" size={16}/>*/}
-              {/*</Button>*/}
-            </Right>
-          </ListItem>
+          <PlaylistItem item={item} key={item.id} onPress={(item) => {this.onPlay(item)}}/>
         ));
         return listContent;
       }
@@ -122,9 +137,29 @@ class Playlist extends Component {
         <Content padder>
           <ScrollView>
             <H3 style={{margin:13, fontWeight: "bold"}}>Nhạc Offline</H3>
-            <List>
-              { this._isMounted && this.renderLocalList(this.state.localSongs)}
-            </List>
+            {this.state.localSongs && <List dataArray={this.state.localSongs}
+                  renderRow={item =>
+                    <ListItem style={{marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log(item)}>
+                      <Left>
+                        <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover}/>
+                      </Left>
+                      <Body>
+                      <Text numberOfLines={1}>
+                        {item.title}
+                      </Text>
+                      <Text numberOfLines={1} note>
+                        {item.author}
+                      </Text>
+                      </Body>
+                      <Right style={{flexDirection: "row", alignItems: "center"}}>
+                        <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
+                        <Icon name="plus" size={20}/>
+                      </Right>
+                    </ListItem>
+                    }
+            />}
+            {!this.state.localSongs && <Spinner color='#fff'/>}
+              {/*{ this._isMounted && this.renderLocalList(this.state.localSongs, this.onPlay)}*/}
           </ScrollView>
         </Content>
         {/*<MiniPlayer/>*/}
