@@ -78,20 +78,23 @@ class Playlist extends Component {
       // console.log(this.state.localSongs);
     });
   };
-  onPlay = (song) => {
-    // TrackPlayer.reset();
-    // TrackPlayer.add({
-    //   id: song.id,
-    //   url: song.path,
-    //   title: song.title,
-    //   artist: song.author,
-    //   artwork: song.cover,
-    //   album: song.album ? song.album : "Chưa xác định",
-    //   genre: song.genre ? song.genre : "Chưa xác định",
-    //   duration: song.duration,
+  onPlay = async (song) => {
+    await TrackPlayer.reset();
+    await TrackPlayer.add({
+      id: song.id,
+      url: song.path,
+      title: song.title,
+      artist: song.author,
+      artwork: song.cover,
+      album: song.album ? song.album : "Chưa xác định",
+      genre: song.genre ? song.genre : "Chưa xác định",
+      duration: song.duration,
+    });
+    await TrackPlayer.play();
+    // await AsyncStorage.setItem('recentTrack', JSON.stringify(song)).then(async (track) => {
+    //   console.log(track);
     // });
-    // TrackPlayer.play();
-    console.log("1");
+    // console.log(song);
   };
 
   renderLocalList = (lists, onPress) => {
@@ -138,26 +141,26 @@ class Playlist extends Component {
           <ScrollView>
             <H3 style={{margin:13, fontWeight: "bold"}}>Nhạc Offline</H3>
             {this.state.localSongs && <List dataArray={this.state.localSongs}
-                  renderRow={item =>
-                    <ListItem style={{marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log(item)}>
-                      <Left>
-                        <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover}/>
-                      </Left>
-                      <Body>
-                      <Text numberOfLines={1}>
-                        {item.title}
-                      </Text>
-                      <Text numberOfLines={1} note>
-                        {item.author}
-                      </Text>
-                      </Body>
-                      <Right style={{flexDirection: "row", alignItems: "center"}}>
-                        <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
-                        <Icon name="plus" size={20}/>
-                      </Right>
-                    </ListItem>
-                    }
-            />}
+                                            renderRow={item =>
+                                                    <ListItem style={{marginLeft: 13 }} thumbnail key={item.id} onPress={() => this.onPlay(item)}>
+                                                      <Left>
+                                                        <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover}/>
+                                                      </Left>
+                                                      <Body>
+                                                      <Text numberOfLines={1}>
+                                                        {item.title}
+                                                      </Text>
+                                                      <Text numberOfLines={1} note>
+                                                        {item.author}
+                                                      </Text>
+                                                      </Body>
+                                                      <Right style={{flexDirection: "row", alignItems: "center"}}>
+                                                        <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
+                                                        <Icon name="plus" size={20}/>
+                                                      </Right>
+                                                    </ListItem>
+                                                    }
+                                            />}
             {!this.state.localSongs && <Spinner color='#fff'/>}
               {/*{ this._isMounted && this.renderLocalList(this.state.localSongs, this.onPlay)}*/}
           </ScrollView>

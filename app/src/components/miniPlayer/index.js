@@ -85,20 +85,25 @@ export default class MiniPlayer extends Component {
       if (data.nextTrack) {
         const track = await TrackPlayer.getTrack(data.nextTrack);
         this._isMounted && this.setState({ currentTrack: track });
+        setTimeout(await function () {
+          self._isMounted && self.setState({loading: false})
+        }, 1000);
       }
     });
     this.startImageRotateFunction();
 
-    await AsyncStorage.getItem("recentTrack").then(async (track) => {
-      await self._isMounted && self.setState({currentTrack: JSON.parse(track)});
-      // console.log(self.state.currentTrack);
-      await TrackPlayer.reset();
-      await TrackPlayer.add(JSON.parse(track));
-      setTimeout(await function () {
-        self._isMounted && self.setState({loading: false})
-      }, 3000);
-      // console.log(self.state.loading);
-    });
+
+    // await AsyncStorage.getItem("recentTrack").then(async (track) => {
+    //   console.log(track);
+    //   await self._isMounted && self.setState({currentTrack: JSON.parse(track)});
+    //   // console.log(self.state.currentTrack);
+    //   await TrackPlayer.reset();
+    //   await TrackPlayer.add(JSON.parse(track));
+    //   setTimeout(await function () {
+    //     self._isMounted && self.setState({loading: false})
+    //   }, 3000);
+    //   // console.log(self.state.loading);
+    // });
 
     TrackPlayer.addEventListener("playback-state", (state)=> {
       this._isMounted && this.setState({playerState: state.state});
