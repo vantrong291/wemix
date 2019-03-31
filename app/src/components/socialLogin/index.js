@@ -76,7 +76,7 @@ class SocialLogin extends Component {
     }).then((currentUser) => {
       console.log(`Google user:  ${JSON.stringify(currentUser)}`);
       const user = firebase.auth().currentUser;
-      this.props.dispatch(ggLoginSuccess(user))
+      this.props.dispatch(ggLoginSuccess(user));
       Toast.show({
         text: "Xin chào " + currentUser.additionalUserInfo.profile.name,
         textStyle: { color: "yellow" },

@@ -50,7 +50,7 @@ class Login extends React.Component {
     this._isMounted = true;
   }
 
-  handleLogin = () => {
+  handleLogin = async () => {
     // console.log("Press");
     // let userInfo = {
     //     email: this.state.email,
@@ -74,9 +74,9 @@ class Login extends React.Component {
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then( async (res) => {
           // console.log(res);
-          this.props.dispatch(loginSuccess(res.user));
-          this._isMounted && this.setState({ loading: false });
-          this.props.navigation.navigate("Drawer");
+          await this.props.dispatch(loginSuccess(res.user));
+          await this._isMounted && this.setState({ loading: false });
+          await this.props.navigation.navigate("Main");
         })
         .catch((err) => {
           Alert.alert(
@@ -109,7 +109,7 @@ class Login extends React.Component {
     firebase.auth().onAuthStateChanged(user => {
       // console.log(user);
       this.props.dispatch(syncAuthStatus(user));
-      this.props.navigation.navigate(user ? "Drawer" : "Login");
+      this.props.navigation.navigate(user ? "Main" : "Login");
     });
   }
 
@@ -139,7 +139,7 @@ class Login extends React.Component {
   // };
 
   goHomeAfterSignin = (done) => {
-    return done ? this.props.navigation.navigate("Drawer") : console.log(this.state.finishFBSignin);
+    return done ? this.props.navigation.navigate("Main") : console.log(this.state.finishFBSignin);
   };
 
   renderButtonOrLoading() {

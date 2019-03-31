@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import { View, Alert, Image, Animated, Easing, AsyncStorage } from "react-native";
 import { Button, Text, Toast, Thumbnail } from "native-base";
-import {MaterialTopTabBar, BottomTabBar
-} from "react-navigation";
+import {MaterialTopTabBar, BottomTabBar, withNavigation  } from "react-navigation";
+import { connect } from "react-redux";
 import TextTicker from 'react-native-text-ticker'
 import Icon from "react-native-vector-icons/Entypo";
 import styles from "./style";
 import TrackPlayer from "../trackPlayer";
+import NavigationService from "../../NavigationService";
+
 // import { Image } from "react-native-paper/typings/components/Avatar";
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 
-export default class MiniPlayer extends Component {
+class MiniPlayer extends Component {
   constructor(props) {
     super(props);
     // this.onPause = this.onPause.bind(this);
@@ -25,7 +27,6 @@ export default class MiniPlayer extends Component {
     }
   };
 
-  // spinValue = new Animated.Value(0);
   _isMounted = false;
 
   componentWillUnmount() {
@@ -168,7 +169,8 @@ export default class MiniPlayer extends Component {
             bounce
             repeatSpacer={10}
             marqueeDelay={0}
-            style={styles.songTitle}>{this.state.currentTrack.title}</TextTicker>
+            style={styles.songTitle}
+            onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
           <Text style={styles.songArtist}>{this.state.currentTrack.artist}</Text>
         </View>
         <View style={styles.songControlView}>
@@ -181,3 +183,5 @@ export default class MiniPlayer extends Component {
     ) : null;
   }
 }
+
+export default (MiniPlayer);

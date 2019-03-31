@@ -29,25 +29,6 @@ import PlaylistItem from "../../components/playlistItem";
 
 const defaltCover = require('../../assets/defaultCover.jpeg');
 
-const datas = [
-  {
-    title: "FixedLabel",
-    artist: "Fixed Label"
-  },
-  {
-    title: "FixedLabel",
-    artist: "Fixed Label"
-  },
-  {
-    title: "FixedLabel",
-    artist: "Fixed Label"
-  },
-  {
-    title: "FixedLabel",
-    artist: "Fixed Label"
-  },
-];
-
 class Playlist extends Component {
   constructor(props) {
     super(props);
@@ -112,6 +93,7 @@ class Playlist extends Component {
   };
 
   render() {
+    // console.log(this.state.localSongs);
     return (
       <Container style={styles.container}>
         <Header
@@ -140,7 +122,7 @@ class Playlist extends Component {
         <Content padder>
           <ScrollView>
             <H3 style={{margin:13, fontWeight: "bold"}}>Nhạc Offline</H3>
-            {this.state.localSongs && <List dataArray={this.state.localSongs}
+            {this.state.localSongs && this.state.localSongs.length !== 0 && <List dataArray={this.state.localSongs}
                                             renderRow={item =>
                                                     <ListItem style={{marginLeft: 13 }} thumbnail key={item.id} onPress={() => this.onPlay(item)}>
                                                       <Left>

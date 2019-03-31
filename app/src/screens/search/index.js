@@ -128,7 +128,7 @@ class Search extends Component {
   };
 
   render() {
-    AsyncStorage.getItem("vt291").then(console.log);
+    // AsyncStorage.getItem("vt291").then(console.log);
     return (
       <Container style={styles.container}>
         <Header

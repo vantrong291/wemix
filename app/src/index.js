@@ -8,7 +8,7 @@ import {
 } from "react-navigation";
 // import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from "react-native-vector-icons/AntDesign";
-
+import NavigationService from './NavigationService';
 import Login from "./screens/login";
 import Signup from "./screens/signup";
 import Header from "./screens/Header/";
@@ -34,6 +34,8 @@ import Playlist from "./screens/playlist";
 import Personal from "./screens/personal";
 
 import MiniPlayer from "./components/miniPlayer"
+import Player from "./screens/player"
+
 // const tinColor = "#f5f5f5";
 
 
@@ -179,9 +181,16 @@ const Drawer = createDrawerNavigator(
   }
 );
 
+class Main extends React.Component {
+  render() {
+    return <Drawer/>;
+  }
+}
+
 const AppNavigator = createStackNavigator(
   {
     Drawer: { screen: Drawer },
+    Main: { screen: Main },
     Login: { screen: Login },
     Signup: { screen: Signup },
     Home: { screen: Home},
@@ -197,6 +206,9 @@ const AppNavigator = createStackNavigator(
     HeaderNoShadow: { screen: HeaderNoShadow },
     HeaderNoLeft: { screen: HeaderNoLeft },
     HeaderTransparent: { screen: HeaderTransparent },
+    Player: {
+      screen: Player
+    }
   },
   {
     initialRouteName: "Login",
@@ -208,9 +220,10 @@ const AppNavigator = createStackNavigator(
 //
 export default () =>
   <Root>
-    <AppNavigator>
-    </AppNavigator>
-    <MiniPlayer navigation/>
+    <AppNavigator ref={navigatorRef => {
+      NavigationService.setTopLevelNavigator(navigatorRef);
+    }}/>
+    <MiniPlayer/>
   </Root>;
 
 // export default AppNavigator;
