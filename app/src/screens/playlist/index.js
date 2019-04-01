@@ -48,13 +48,9 @@ class Playlist extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    // check(ANDROID_PERMISSIONS.READ_EXTERNAL_STORAGE).then(response => {
-    //   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-    //   // console.log(response);
-    //   this.setState({ storagePermission: response })
-    // });
     AsyncStorage.getItem("localSongs").then(tracks => {
       this._isMounted &&  this.setState({ localSongs: JSON.parse(tracks)});
+      // console.log(tracks);
     }).then(() => {
       // console.log(this.state.localSongs);
     });
@@ -93,7 +89,7 @@ class Playlist extends Component {
   };
 
   render() {
-    // console.log(this.state.localSongs);
+    // console.log("Song:", this.state.localSongs);
     return (
       <Container style={styles.container}>
         <Header

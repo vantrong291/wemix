@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">EnV</string>
-    <string name="facebook_app_id">428260224384336</string>
+    <string name="facebook_app_id">638372929838710</string>
+    <string name="fb_login_protocol_scheme">fb638372929838710</string>
+
 </resources>

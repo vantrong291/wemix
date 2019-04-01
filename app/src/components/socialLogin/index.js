@@ -28,6 +28,7 @@ class SocialLogin extends Component {
   onFacebookLogin = () => {
     let self = this;
     // return (dispatch) => {
+    LoginManager.logOut();
     LoginManager.logInWithReadPermissions(["public_profile", "email"])
       .then(
         (result) => {
@@ -52,7 +53,7 @@ class SocialLogin extends Component {
                   .catch((err) => {
                     Alert.alert(
                       "Error",
-                      err.message,
+                      JSON.stringify(err.message),
                       [
                         { text: "OK", onPress: () => console.log("OK Pressed") }
                       ],
@@ -63,8 +64,15 @@ class SocialLogin extends Component {
           }
         },
         (error) => {
-          Alert.alert("Sign in error", error);
-        }
+          console.log("Login fail with error: " + error);
+          Alert.alert(
+            "Error",
+            error,
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: true }
+          );}
       );
     // };
   };

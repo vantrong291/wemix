@@ -102,7 +102,7 @@ const Switcher = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: "Home",
-    // order: ["Home", "BXH", "Search", "Playlist"],
+    // order: ["Home", "BXH", "Search", "Playlist", "Personal"],
     // activeTintColor: "#e91d62",
     // barStyle: { backgroundColor: '#f5f5f5' },
     // shifting:true
@@ -111,7 +111,6 @@ const Switcher = createMaterialTopTabNavigator(
     tabBarPosition: "bottom",
     swipeEnabled: true,
     animationEnabled: true,
-    // lazy: true,
     optimizationsEnabled: true,
     tabBarOptions: {
       activeTintColor: variables.primaryColor,
@@ -163,6 +162,13 @@ const Switcher = createMaterialTopTabNavigator(
 
 // const MySwitcher = createAppContainer(AppSwitcher);
 
+class Sw extends React.Component {
+  render() {
+    return <Switcher/>;
+  }
+}
+
+
 const Drawer = createDrawerNavigator(
   {
     // Login: { screen: Login },
@@ -189,6 +195,7 @@ class Main extends React.Component {
 
 const AppNavigator = createStackNavigator(
   {
+    // Switcher: { screen: Sw },
     Drawer: { screen: Drawer },
     Main: { screen: Main },
     Login: { screen: Login },
