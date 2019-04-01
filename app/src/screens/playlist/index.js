@@ -10,7 +10,7 @@ import {
   Body,
   Text, ListItem, Thumbnail, H1, H2, H3, List, Spinner
 } from "native-base";
-import {View, Alert, FlatList, AsyncStorage, ScrollView, TouchableOpacity} from "react-native";
+import {View, Alert, FlatList, AsyncStorage, ScrollView} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
 import variables from "../../theme/variables/commonColor"
@@ -89,7 +89,6 @@ class Playlist extends Component {
   };
 
   render() {
-    // console.log("Song:", this.state.localSongs);
     return (
       <Container style={styles.container}>
         <Header
@@ -132,7 +131,7 @@ class Playlist extends Component {
                                                         {item.author}
                                                       </Text>
                                                       </Body>
-                                                      <Right style={{flexDirection: "row", alignItems: "center"}}>
+                                                       <Right style={{flexDirection: "row", alignItems: "center"}}>
                                                         <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
                                                         <Icon name="plus" size={20}/>
                                                       </Right>

@@ -8,8 +8,7 @@ import Icon from "react-native-vector-icons/Entypo";
 import styles from "./style";
 import TrackPlayer from "../trackPlayer";
 import NavigationService from "../../NavigationService";
-
-// import { Image } from "react-native-paper/typings/components/Avatar";
+import {miniPlayerState} from "../../redux/actions"
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 
@@ -121,6 +120,7 @@ class MiniPlayer extends Component {
       //   }
       // }
     });
+    this.props.dispatch(miniPlayerState(true));
   };
 
   startImageRotateFunction() {
@@ -156,6 +156,7 @@ class MiniPlayer extends Component {
     // });
     // console.log(artwork);
 
+    console.log(this.props.miniPlayerState);
 
     return (!this.state.loading) ? (
       <View style={styles.miniPlayer}>
@@ -184,4 +185,12 @@ class MiniPlayer extends Component {
   }
 }
 
-export default (MiniPlayer);
+const mapStateToProps = state => ({
+  miniPlayerState: state.miniPlayerState
+});
+//
+const mapDispatchToProps = dispatch => ({
+  dispatch: dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MiniPlayer);

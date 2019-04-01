@@ -14,10 +14,10 @@ import {connect} from "react-redux";
 import firebase from "react-native-firebase";
 import styles from "./style";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { loginSuccess, logoutSuccess } from "../../redux/actions";
-
+import { loginSuccess, logoutSuccess, miniPlayerState } from "../../redux/actions";
 const drawerCover = require("../../assets/drawer-cover.png");
 const drawerImage = require("../../assets/logo-kitchen-sink.png");
+
 const datas = [
   {
     name: "Trang cá nhân",
@@ -38,11 +38,14 @@ const datas = [
 class SideBar extends Component {
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       shadowOffsetWidth: 1,
-      shadowRadius: 4
+      shadowRadius: 4,
+      drawerState: false
     };
   }
+
 
   renderUserContainer = () => {
     if(this.props.auth.isAuthenticated) {
@@ -78,8 +81,29 @@ class SideBar extends Component {
     }
   };
 
+  // updateMiniPlayerState = (state) => {
+  //   this.props.dispatch(miniPlayerState(state));
+  // };
+  //
+  // componentWillReceiveProps(){
+  //   this._isMounted && this.setState({drawerState: !this.props.navigation.state.isDrawerOpen});
+  //   this._isMounted && console.log(this.state.drawerState);
+  // }
+
+  componentDidMount() {
+    this._isMounted = true;
+    // this.updateMiniPlayerState(this.state.drawerState);
+    // this._isMounted && this.setState({drawerState: !this.props.navigation.state.isDrawerOpen});
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
   render() {
+    // this._isMounted && this.setState({drawerState: !this.props.navigation.state.isDrawerOpen});
     // console.log(this.props.auth.user);
+    // this.updateMiniPlayerState();
     const u = "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png";
     return (
       <Container style={{ zIndex: 9999 }}>
