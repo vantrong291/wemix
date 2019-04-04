@@ -1,4 +1,4 @@
-package com.env;
+package com.wemix;
 
 import android.app.Application;
 
@@ -11,7 +11,7 @@ import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import io.invertase.firebase.RNFirebasePackage;
+
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
@@ -21,8 +21,6 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
 
 

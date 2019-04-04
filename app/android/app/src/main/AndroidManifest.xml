@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.env">
+          package="com.wemix">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -10,16 +10,16 @@
 
 
     <application
-            android:name=".MainApplication"
+            android:name="com.wemix.MainApplication"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
             tools:replace="android:allowBackup">
         <activity
-                android:name=".SplashActivity"
+                android:name="com.wemix.SplashActivity"
                 android:theme="@style/SplashTheme"
-                android:label="EnV">
+                android:label="WeMix">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -28,7 +28,7 @@
 
 
         <activity
-                android:name=".MainActivity"
+                android:name="com.wemix.MainActivity"
                 android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
                 android:label="@string/app_name"
                 android:launchMode="singleTop"

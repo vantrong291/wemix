@@ -1,4 +1,4 @@
-package com.env;
+package com.wemix;
 
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; // import this
@@ -15,7 +15,7 @@ public class MainActivity extends ReactActivity {
 
     @Override
     protected String getMainComponentName() {
-        return "EnV";
+        return "WeMix";
     }
 
     @Override

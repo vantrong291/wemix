@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:138796014905:android:9b7e3c0b162fb66c",
         "android_client_info": {
-          "package_name": "com.env"
+          "package_name": "com.wemix"
         }
       },
       "oauth_client": [
@@ -19,7 +19,7 @@
           "client_id": "138796014905-cf95tjp9s3nnrvgama54t1uc988fak5d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.env",
+            "package_name": "com.wemix",
             "certificate_hash": "9f367983bc4ac717f0ac4c57e32ee4b6e0cfae12"
           }
         },
@@ -27,7 +27,7 @@
           "client_id": "138796014905-31av0m1u9nmbpudit4h8t8id5b0j82ea.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.env",
+            "package_name": "com.wemix",
             "certificate_hash": "78e32c5196ba95d5d65275cfbc0aa1eb2a8f8122"
           }
         },

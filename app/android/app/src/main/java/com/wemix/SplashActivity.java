@@ -1,4 +1,4 @@
-package com.env;
+package com.wemix;
 
 import android.content.Intent;
 import android.os.Bundle;

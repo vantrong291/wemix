@@ -98,7 +98,7 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        applicationId "com.env"
+        applicationId "com.wemix"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
