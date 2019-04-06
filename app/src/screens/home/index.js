@@ -84,7 +84,7 @@ class Home extends Component {
   //         //   url: song.path,
   //         //   title: song.title,
   //         //   artist: song.author,
-  //         //   artwork: song.cover,
+  //         //   artworkMiniPlayer: song.cover,
   //         //   album: song.album ? song.album : "Chưa xác định",
   //         //   genre: song.genre ? song.genre : "Chưa xác định",
   //         //    duration: song.duration,

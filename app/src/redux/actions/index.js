@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGOUT_SUCCESS, FB_LOGIN_SUCCESS, FB_SIGNUP_SUCCESS, GG_LOGIN_SUCCESS, GG_SIGNUP_SUCCESS, SIGNUP_SUCCESS, SYNC_AUTH_STATUS, QUERY_LOCAL_SONG, MINI_PLAYER_STATE} from "./actionTypes.js";
+import {LOGIN_SUCCESS, LOGOUT_SUCCESS, FB_LOGIN_SUCCESS, FB_SIGNUP_SUCCESS, GG_LOGIN_SUCCESS, GG_SIGNUP_SUCCESS, SIGNUP_SUCCESS, SYNC_AUTH_STATUS, QUERY_LOCAL_SONG, MINI_PLAYER_STATE, SYNC_NAVIGATION_PROPS} from "./actionTypes.js";
 
 export const loginSuccess = (user) => {
   return {
@@ -69,3 +69,9 @@ export const miniPlayerState = (state) => {
   }
 };
 
+export const syncNavigationProps = (navigation) => {
+  return {
+    type: SYNC_NAVIGATION_PROPS,
+    syncNavigation: navigation
+  }
+};

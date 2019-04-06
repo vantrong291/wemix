@@ -14,7 +14,7 @@ import {connect} from "react-redux";
 import firebase from "react-native-firebase";
 import styles from "./style";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { loginSuccess, logoutSuccess, miniPlayerState } from "../../redux/actions";
+import { loginSuccess, logoutSuccess, miniPlayerState, syncNavigationProps } from "../../redux/actions";
 const drawerCover = require("../../assets/drawer-cover.png");
 const drawerImage = require("../../assets/logo-kitchen-sink.png");
 
@@ -81,14 +81,16 @@ class SideBar extends Component {
     }
   };
 
-  // updateMiniPlayerState = (state) => {
-  //   this.props.dispatch(miniPlayerState(state));
-  // };
-  //
-  // componentWillReceiveProps(){
-  //   this._isMounted && this.setState({drawerState: !this.props.navigation.state.isDrawerOpen});
-  //   this._isMounted && console.log(this.state.drawerState);
-  // }
+  updateMiniPlayerState = (state) => {
+    this.props.dispatch(miniPlayerState(state));
+  };
+
+  componentWillReceiveProps(nextProps){
+    this._isMounted && this.setState({drawerState: !nextProps.navigation.state.isDrawerOpen});
+    // this._isMounted && console.log(this.state.drawerState);
+    this._isMounted && this.updateMiniPlayerState(!nextProps.navigation.state.isDrawerOpen);
+  }
+
 
   componentDidMount() {
     this._isMounted = true;
@@ -106,10 +108,10 @@ class SideBar extends Component {
     // this.updateMiniPlayerState();
     const u = "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png";
     return (
-      <Container style={{ zIndex: 9999 }}>
+      <Container style={{ zIndex: 2 }}>
           <Content
           bounces={false}
-          style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
+          style={{ flex: 1, backgroundColor: "#fff", top: -1, zIndex: 3 }}
         >
           {/*<Image source={drawerCover} style={styles.drawerCover} />*/}
           {/*<Image square style={styles.drawerImage} source={drawerImage} />*/}

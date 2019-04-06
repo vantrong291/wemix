@@ -51,7 +51,7 @@ class Personal extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
+      <Container>
         <Header
           // style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}
           androidStatusBarColor={variables.secondaryColor}

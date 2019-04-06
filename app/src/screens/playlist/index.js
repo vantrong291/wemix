@@ -18,6 +18,8 @@ import {
   RkButton, RkStyleSheet,
   RkText,
 } from 'react-native-ui-kitten'
+import { connect } from "react-redux";
+import { syncNavigationProps } from "../../redux/actions";
 
 import MusicFiles from "react-native-get-music-files"
 import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-permissions"
@@ -54,6 +56,8 @@ class Playlist extends Component {
     }).then(() => {
       // console.log(this.state.localSongs);
     });
+    // this.props.dispatch(syncNavigationProps(this.props.navigation))
+    // console.log(this.props.dispatch(syncNavigationProps(this.props.navigation)));
   };
   onPlay = async (song) => {
     await TrackPlayer.reset();
@@ -148,4 +152,16 @@ class Playlist extends Component {
   }
 }
 
-export default Playlist;
+
+const mapStateToProps = state => ({
+  syncNavigation: state.syncNavigation
+});
+//
+const mapDispatchToProps = dispatch => ({
+  dispatch: dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
+
+
+// export default Playlist;
