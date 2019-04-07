@@ -13,7 +13,7 @@ import {
 import { View, ScrollView, AsyncStorage } from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
-import variables from "../../theme/variables/commonColor";
+import variables from "../../theme/variables/custom";
 import ChartItem from "../../components/chartItem";
 import axios from "axios";
 

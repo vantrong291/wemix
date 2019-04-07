@@ -1,9 +1,13 @@
+import variables from "../../theme/variables/custom";
+
 const RN = require("react-native");
 const { Dimensions, Platform } = RN;
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const artWorkWidth = 55;
 const artworkPlayerSize = 250;
+
+
 
 export default {
   miniPlayer: {
@@ -85,7 +89,7 @@ export default {
   },
   sliderTrack: {
     height: 2,
-    backgroundColor: '#fff',
+    backgroundColor: "#e5e5e5",
   },
   sliderThumb: {
     width: 10,

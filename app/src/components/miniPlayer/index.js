@@ -24,15 +24,18 @@ import Feather from "react-native-vector-icons/Feather";
 
 import styles from "./style";
 import TrackPlayer from "../trackPlayer";
+import AnimationArtWork from "../animationArtWork";
 import NavigationService from "../../NavigationService";
-import { miniPlayerState } from "../../redux/actions";
-import variables from "../../theme/variables/commonColor";
+import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
+import variables from "../../theme/variables/custom";
 import Slider from "react-native-slider";
 import Carousel from "react-native-banner-carousel";
 import {secondToMinuteString} from "../../api/TimeConvert";
 
 
+
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
+const playerBackground = require("../../assets/bg.jpg");
 
 class MiniPlayer extends Component {
   constructor(props) {
@@ -189,18 +192,19 @@ class MiniPlayer extends Component {
       outputRange: ["0deg", "360deg"]
     });
 
-
     let duration = this.state.duration;
     let presentPosition = this.state.presentPosition;
+
 
     // console.log(this.state.currentTrack);
 
     return (!this.state.loading && this.props.miniPlayerState.display) ? (
       <View style={styles.miniPlayer}>
         <View style={styles.artworkView}>
-          <Animated.Image rounded
-                          source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}
-                          style={[styles.artworkMiniPlayer, { transform: [{ rotate: RotateData }] }]}/>
+          {/*<Animated.Image rounded*/}
+                          {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
+                          {/*style={[styles.artworkMiniPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
+          <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkMiniPlayer}/>
         </View>
         <View style={styles.songInfoView}>
           <TextTicker
@@ -229,8 +233,10 @@ class MiniPlayer extends Component {
             Alert.alert("Modal has been closed.");
           }}>
           <Container style={styles.container}>
-            {!this.state.loading && <ImageBackground blurRadius={8}
-                                                     source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}
+            {!this.state.loading && <ImageBackground
+                                                     blurRadius={15}
+                                                     // source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}
+                                                     source={playerBackground}
                                                      style={styles.imageContainer}>
               <Carousel
                 autoplay={false}
@@ -248,28 +254,41 @@ class MiniPlayer extends Component {
                 </View>
 
                 <View style={{ height: "80%" }}>
-                  <Header noShadow transparent style={{ height: 70, paddingTop: 0 }}>
-                    <Left>
+                  <View noShadow transparent style={{ height: 70, paddingTop: 0, flexDirection: "row"}}>
+                    <View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15}}>
                       <Button transparent onPress={() => {
                         this.setModalVisible(!this.state.modalVisible);
                       }}>
-                        <Icon name="chevron-thin-down" style={{ color: "#333", marginLeft: 5 }} size={24}/>
+                        <Icon name="chevron-thin-down" style={{ color: variables.playerTextColor, marginLeft: 5 }} size={24}/>
                       </Button>
-                    </Left>
-                    <Body>
-                    <Title style={{ color: "#333" }}>{this.state.currentTrack.title}</Title>
-                    </Body>
-                  </Header>
-                  <Content padder>
-                    <ScrollView>
+                    </View>
+                    <View style={{ width: "70%", alignSelf: "center" }}>
+                      <TextTicker
+                        duration={5000}
+                        loop
+                        bounce
+                        repeatSpacer={10}
+                        marqueeDelay={0}
+                        style={{ color: variables.playerTextColor, fontSize: 15 }}
+                        // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
+                        onPress={() => {
+                          this.setModalVisible(!this.state.modalVisible);
+                        }}>{this.state.currentTrack.title}</TextTicker>
+                      {/*<Text style={{ color: variables.playerTextColor, fontSize: 14 }}>{this.state.currentTrack.title}</Text>*/}
+                      <Text style={{ color: variables.playerTextColor, fontSize: 10 }}>{this.state.currentTrack.artist}</Text>
+                    </View>
+                  </View>
+                  <View>
+                    <ScrollView style={{ height: "100%" }}>
                       <View style={styles.artworkPlayerView}>
-                        <Animated.Image rounded
-                                        source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}
-                                        style={[styles.artworkPlayer, { transform: [{ rotate: RotateData }] }]}/>
+                        {/*<Animated.Image rounded*/}
+                                        {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
+                                        {/*style={[styles.artworkPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
+                        <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkPlayer}/>
                       </View>
                       <View style={{flexDirection: "row", marginTop: 20}}>
                         <View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>
-                          <Text style={{fontSize:10}}>{secondToMinuteString(presentPosition)}</Text>
+                          <Text style={{fontSize: 12, color: variables.playerTextColor }}>{secondToMinuteString(presentPosition)}</Text>
                         </View>
                         <View style={{width:"70%"}}>
                           <Slider
@@ -286,12 +305,26 @@ class MiniPlayer extends Component {
                           />
                         </View>
                         <View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>
-                          <Text style={{fontSize:10}}>{secondToMinuteString(duration)}</Text>
+                          <Text style={{fontSize: 12, color:variables.playerTextColor}}>{secondToMinuteString(duration)}</Text>
                         </View>
-
+                      </View>
+                      <View style={{flexDirection: "row", height: 100}}>
+                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
+                          {/*<Text>FLKFM</Text>*/}
+                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor, fontSize: 30}}/>
+                        </View>
+                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
+                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor}}/>
+                        </View>
+                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
+                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor}}/>
+                        </View>
+                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
+                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor}}/>
+                        </View>
                       </View>
                     </ScrollView>
-                  </Content>
+                  </View>
                 </View>
 
                 <View style={{ height: "80%" }}>
@@ -315,7 +348,7 @@ class MiniPlayer extends Component {
 
           {/*</ScrollView>*/}
           {/*</Tab>*/}
-          {/*<Tab tabStyle={{backgroundColor:"#fff"}} activeTabStyle={{backgroundColor: "#fff"}} activeTextStyle={{color: "#333"}} textStyle={{color: "#333"}} heading="Bài hát">*/}
+          {/*<Tab tabStyle={{backgroundColor:variables.playerTextColor}} activeTabStyle={{backgroundColor: variables.playerTextColor}} activeTextStyle={{color: "#333"}} textStyle={{color: "#333"}} heading="Bài hát">*/}
           {/*<ScrollView>*/}
           {/*<Container style={styles.container}>*/}
           {/*{ !this.state.loading && <ImageBackground blurRadius={8} source={(this.state.currentTrack.artwork) ? {uri: this.state.currentTrack.artwork} : defaultArtwork} style={styles.imageContainer}>*/}
@@ -332,7 +365,7 @@ class MiniPlayer extends Component {
           {/*</Body>*/}
           {/*/!*<Right>*!/*/}
           {/*/!*<Button transparent>*!/*/}
-          {/*/!*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24}/>*!/*/}
+          {/*/!*<Icon name="profile" style={{ color: variables.playerTextColor, marginRight: 5 }} size={24}/>*!/*/}
           {/*/!*</Button>*!/*/}
           {/*/!*</Right>*!/*/}
           {/*</Header>*/}

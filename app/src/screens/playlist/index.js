@@ -13,7 +13,7 @@ import {
 import {View, Alert, FlatList, AsyncStorage, ScrollView} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
-import variables from "../../theme/variables/commonColor"
+import variables from "../../theme/variables/custom"
 import {
   RkButton, RkStyleSheet,
   RkText,
@@ -119,7 +119,7 @@ class Playlist extends Component {
         </Header>
 
         <Content padder>
-          <ScrollView>
+          <ScrollView style={{paddingBottom: 50}}>
             <H3 style={{margin:13, fontWeight: "bold"}}>Nhạc Offline</H3>
             {this.state.localSongs && this.state.localSongs.length !== 0 && <List dataArray={this.state.localSongs}
                                             renderRow={item =>

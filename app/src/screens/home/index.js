@@ -15,7 +15,7 @@ import { View, ScrollView, AsyncStorage, PermissionsAndroid } from "react-native
 import TrackPlayer from "../../components/trackPlayer";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign";
-import variables from "../../theme/variables/commonColor";
+import variables from "../../theme/variables/custom";
 import { check, checkMultiple, ANDROID_PERMISSIONS, RESULTS, Permission } from "react-native-permissions";
 import MusicFiles from "react-native-get-music-files";
 

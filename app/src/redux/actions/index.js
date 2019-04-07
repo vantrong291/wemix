@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGOUT_SUCCESS, FB_LOGIN_SUCCESS, FB_SIGNUP_SUCCESS, GG_LOGIN_SUCCESS, GG_SIGNUP_SUCCESS, SIGNUP_SUCCESS, SYNC_AUTH_STATUS, QUERY_LOCAL_SONG, MINI_PLAYER_STATE, SYNC_NAVIGATION_PROPS} from "./actionTypes.js";
+import {LOGIN_SUCCESS, LOGOUT_SUCCESS, FB_LOGIN_SUCCESS, FB_SIGNUP_SUCCESS, GG_LOGIN_SUCCESS, GG_SIGNUP_SUCCESS, SIGNUP_SUCCESS, SYNC_AUTH_STATUS, QUERY_LOCAL_SONG, MINI_PLAYER_STATE, SYNC_NAVIGATION_PROPS, SYNC_CURRENT_TRACK} from "./actionTypes.js";
 
 export const loginSuccess = (user) => {
   return {
@@ -73,5 +73,12 @@ export const syncNavigationProps = (navigation) => {
   return {
     type: SYNC_NAVIGATION_PROPS,
     syncNavigation: navigation
+  }
+};
+
+export const syncCurrentTrack = (track) => {
+  return {
+    type: SYNC_CURRENT_TRACK,
+    currentTrack: track
   }
 };

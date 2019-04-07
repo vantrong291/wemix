@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Modal, Text, TouchableHighlight, View, Alert, ScrollView } from "react-native";
 import styles from "../personal/styles";
 import { Body, Button, Container, Content, Header, Left, Right, Title } from "native-base";
-import variables from "../../theme/variables/commonColor";
+import variables from "../../theme/variables/custom";
 import Icon from "../personal";
 
 class Player extends Component {

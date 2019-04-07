@@ -13,7 +13,7 @@ import {
 import {View, Alert, ScrollView} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
-import variables from "../../theme/variables/commonColor"
+import variables from "../../theme/variables/custom"
 import MusicFiles from "react-native-get-music-files"
 import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-permissions"
 // const Permissions = require('react-native-permissions').default;

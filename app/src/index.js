@@ -39,7 +39,7 @@ import Player from "./screens/player"
 // const tinColor = "#f5f5f5";
 
 
-import variables from "./theme/variables/commonColor"
+import variables from "./theme/variables/custom"
 
 class MyTabBar extends Component {
   render() {

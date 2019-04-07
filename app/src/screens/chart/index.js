@@ -13,7 +13,7 @@ import {
 import {View, ScrollView} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
-import variables from "../../theme/variables/commonColor"
+import variables from "../../theme/variables/custom"
 import MiniPlayer from "../../components/miniPlayer";
 import ChartItem from "../../components/chartItem";
 
