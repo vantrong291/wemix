@@ -62,11 +62,13 @@ class AnimationArtWork extends Component {
     return (
       <Animated.Image rounded
                       source={(this.props.currentTrack.artwork) ? { uri: this.props.currentTrack.artwork } : defaultArtwork}
-                      style={[this.props.styles, { transform: [{ rotate: RotateData }] }]}/>
+                      style={[this.props.styles, { transform: [{ rotate: RotateData }] }]}
+                      // style={[this.props.styles ]}
+      />
     )
   }
 }
-//
+
 // const mapStateToProps = state => ({
 //   scurrentTrack: state.currentTrack
 // });

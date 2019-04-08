@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { View, Alert, Image, Animated, Easing, AsyncStorage, Modal, ScrollView, ImageBackground } from "react-native";
+import {
+  View,
+  Alert,
+  Image,
+  Animated,
+  Easing,
+  AsyncStorage,
+  Modal,
+  ScrollView,
+  ImageBackground,
+  TouchableOpacity
+} from "react-native";
 import {
   Button,
   Text,
@@ -31,6 +42,9 @@ import variables from "../../theme/variables/custom";
 import Slider from "react-native-slider";
 import Carousel from "react-native-banner-carousel";
 import {secondToMinuteString} from "../../api/TimeConvert";
+import RNModal from "react-native-modal";
+import PlayerAction from "../../components/playerAction";
+import PlayerMode from "../../components/playerMode";
 
 
 
@@ -310,17 +324,23 @@ class MiniPlayer extends Component {
                       </View>
                       <View style={{flexDirection: "row", height: 100}}>
                         <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          {/*<Text>FLKFM</Text>*/}
-                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor, fontSize: 30}}/>
+                          <TouchableOpacity style={styles.toolbarButton}>
+                            <MaterialCommunityIcons name="information-outline" style={styles.toolbarIcon}/>
+                          </TouchableOpacity>
                         </View>
                         <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor}}/>
+                          <TouchableOpacity style={styles.toolbarButton}>
+                            <MaterialCommunityIcons name="heart-outline" style={styles.toolbarIcon}/>
+                          </TouchableOpacity>
                         </View>
                         <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor}}/>
+                          <PlayerMode/>
+                          {/*<TouchableOpacity style={styles.toolbarButton}>*/}
+                            {/*<MaterialCommunityIcons name="priority-high" style={styles.toolbarIcon}/>*/}
+                          {/*</TouchableOpacity>*/}
                         </View>
                         <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          <MaterialCommunityIcons name="arrow-collapse-down" style={{color: variables.playerTextColor}}/>
+                          <PlayerAction/>
                         </View>
                       </View>
                     </ScrollView>
@@ -338,9 +358,15 @@ class MiniPlayer extends Component {
                 </View>
               </Carousel>
               <View style={styles.songControlPlayerView}>
-                <Icon button name="controller-jump-to-start" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious}/>
-                {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
-                <Icon button name="controller-next" style={styles.controlPlayerIcon} onPress={this.onSkipNext}/>
+                <TouchableOpacity>
+                  <Icon button name="controller-jump-to-start" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious}/>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Icon button name="controller-next" style={styles.controlPlayerIcon} onPress={this.onSkipNext}/>
+                </TouchableOpacity>
               </View>
             </ImageBackground>}
             {/*<MiniPlayer/>*/}

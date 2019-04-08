@@ -122,4 +122,10 @@ export default {
     paddingRight: 25,
 
   },
+  toolbarIcon : {color: variables.playerTextColor, fontSize: 24},
+  toolbarButton: {
+    width: 50,
+    height: 30,
+    alignItems: "center"
+  }
 }
