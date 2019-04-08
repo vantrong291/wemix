@@ -4,14 +4,27 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var env = require('dotenv').load();
+
+var passport   = require('passport');
+var session    = require('express-session');
+// var bodyParser = require('body-parser');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// //For BodyParser
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -36,6 +49,20 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+
+var models = require("./models");
+
+//Sync Database
+models.sequelize.sync().then(function() {
+
+  console.log('Nice! Database looks fine')
+
+}).catch(function(err) {
+
+  console.log(err, "Something went wrong with the Database Update!")
+
 });
 
 module.exports = app;
