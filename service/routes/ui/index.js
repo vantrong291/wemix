@@ -3,23 +3,23 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('dashboard', { title: 'Express', dashboardClass: "active", iconClass: "", usersClass: "", userClass: "", notificationsClass: "" });
+  res.render('dashboard', { title: 'Tổng quan | Quản lý Wemix Music', dashboardClass: "active", iconClass: "", usersClass: "", userClass: "", notificationsClass: "" });
 });
 
 router.get('/icons', function(req, res, next) {
-  res.render('icons', { title: 'Express', iconClass: "active", dashboardClass: "", usersClass: "", userClass: "", notificationsClass: ""  });
+  res.render('icons', { title: 'Icon | Quản lý Wemix Music', iconClass: "active", dashboardClass: "", usersClass: "", userClass: "", notificationsClass: ""  });
 });
 
 router.get('/users', function(req, res, next) {
-  res.render('tables', { title: 'Express', usersClass: "active", dashboardClass: "", iconClass: "", userClass: "", notificationsClass: ""  });
+  res.render('tables', { title: 'Danh sách User | Quản lý Wemix Music', usersClass: "active", dashboardClass: "", iconClass: "", userClass: "", notificationsClass: ""  });
 });
 
 router.get('/user', function(req, res, next) {
-  res.render('user', { title: 'Express', userClass: "active", dashboardClass: "", iconClass: "", usersClass: "", notificationsClass: ""   });
+  res.render('user', { title: 'User | Quản lý Wemix Music', userClass: "active", dashboardClass: "", iconClass: "", usersClass: "", notificationsClass: ""   });
 });
 
 router.get('/notifications', function(req, res, next) {
-  res.render('notifications', { title: 'Express', notificationsClass: "active", dashboardClass: "", iconClass: "", usersClass: "", userClass: ""});
+  res.render('notifications', { title: 'Thông báo | Quản lý Wemix Music', notificationsClass: "active", dashboardClass: "", iconClass: "", usersClass: "", userClass: ""});
 });
 
 router.get('/register', function(req, res, next) {
