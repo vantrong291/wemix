@@ -15,6 +15,8 @@ import firebase from "react-native-firebase";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import SocialLogin from "../../components/socialLogin";
 import { connect } from "react-redux";
+import axios from "axios";
+import API_URL from "../../api/apiUrl";
 
 
 import { loginSuccess, signupSuccess } from "../../redux/actions";
@@ -58,6 +60,19 @@ class SignUp extends React.Component {
         .createUserWithEmailAndPassword(mstate.email, mstate.password1)
         .then((res) => {
           this.props.dispatch(signupSuccess(res.user));
+
+          axios({
+            method: "post",
+            url: API_URL + '/user',
+            data: {
+              uid : res.user.uid
+            }
+          }).then((res) => {
+            // console.log(res);
+          }).catch((err) => {
+            console.log(err);
+          });
+
           this._isMounted && this.setState({ loading: false });
           this.props.navigation.navigate("Drawer");
         })

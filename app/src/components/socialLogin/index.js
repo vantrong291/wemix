@@ -7,6 +7,9 @@ import firebase from "react-native-firebase";
 import {GoogleSignin} from "react-native-google-signin";
 import {connect} from "react-redux";
 import {fbLoginSuccess, ggLoginSuccess} from '../../redux/actions'
+import axios from "axios";
+import API_URL from "../../api/apiUrl";
+
 
 const FBSDK = require("react-native-fbsdk");
 const {
@@ -42,6 +45,19 @@ class SocialLogin extends Component {
                   .then((res) => {
                     const user = firebase.auth().currentUser;
                     this.props.dispatch(fbLoginSuccess(user))
+
+                    axios({
+                      method: "post",
+                      url: API_URL + '/user',
+                      data: {
+                        uid : user.uid
+                      }
+                    }).then((res) => {
+                      // console.log(res);
+                    }).catch((err) => {
+                      console.log(err);
+                    });
+
                     Toast.show({
                       text: "Xin chào " + user.email,
                       textStyle: { color: "yellow" },
@@ -85,6 +101,19 @@ class SocialLogin extends Component {
       console.log(`Google user:  ${JSON.stringify(currentUser)}`);
       const user = firebase.auth().currentUser;
       this.props.dispatch(ggLoginSuccess(user));
+
+      axios({
+        method: "post",
+        url: API_URL + '/user',
+        data: {
+          uid : user.uid
+        }
+      }).then((res) => {
+        // console.log(res);
+      }).catch((err) => {
+        console.log(err);
+      });
+
       Toast.show({
         text: "Xin chào " + currentUser.additionalUserInfo.profile.name,
         textStyle: { color: "yellow" },
