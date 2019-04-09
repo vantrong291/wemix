@@ -1,20 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var env = require('dotenv').load();
+const env = require('dotenv').load();
 
-var passport   = require('passport');
-var session    = require('express-session');
-// var bodyParser = require('body-parser');
+const passport   = require('passport');
+const session    = require('express-session');
+// const bodyParser = require('body-parser');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const myRouter = require('./routes');
+// const apiRouter = require('./routes/api/user');
 
-var app = express();
-
+const app = express();
 
 
 // view engine setup
@@ -32,8 +31,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', myRouter);
+// app.use('/api/v1', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,7 +51,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-var models = require("./models");
+const models = require("./models");
 
 //Sync Database
 models.sequelize.sync().then(function() {

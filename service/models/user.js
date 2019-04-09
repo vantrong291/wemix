@@ -11,6 +11,8 @@ module.exports = function(sequelize, Sequelize) {
       allowNull: false,
       unique: true,
     }
+  }, {
+    timestamps: false
   });
   User.associate = function(models) {
     User.belongsTo(models.group, {

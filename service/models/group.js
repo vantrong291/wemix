@@ -13,7 +13,13 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.STRING(30),
       allowNull: false,
       unique: true,
+    },
+    description: {
+      type: Sequelize.TEXT,
+      allowNull: false,
     }
+  }, {
+    timestamps: false
   });
   Group.associate = function(models) {
     Group.hasMany(models.user, {

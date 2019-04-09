@@ -29,8 +29,6 @@ DROP TABLE IF EXISTS `favourite_tracks`;
 CREATE TABLE `favourite_tracks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `track` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
   `belong_to_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `belong_to_user` (`belong_to_user`),
@@ -57,8 +55,6 @@ DROP TABLE IF EXISTS `groups`;
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -84,8 +80,6 @@ CREATE TABLE `playlists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tracks` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
   `belong_to_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
@@ -113,8 +107,6 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `token` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
   `group` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `token` (`token`),

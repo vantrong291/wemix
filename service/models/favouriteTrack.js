@@ -10,6 +10,8 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.TEXT,
       allowNull: false,
     }
+  }, {
+    timestamps: false
   });
   FavouriteTrack.associate = function(models) {
     FavouriteTrack.belongsTo(models.user, {

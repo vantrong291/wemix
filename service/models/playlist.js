@@ -15,6 +15,8 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.TEXT,
       allowNull: false,
     }
+  }, {
+    timestamps: false
   });
   Playlist.associate = function(models) {
     Playlist.belongsTo(models.user, {
