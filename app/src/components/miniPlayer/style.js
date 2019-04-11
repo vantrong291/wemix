@@ -109,17 +109,17 @@ export default {
   },
   controlPlayerIcon: {
     color: "#fff",
-    fontSize: 46,
+    fontSize: 40,
     textAlign: "center",
   },
   playPausePlayerIcon: {
     color: "#fff",
     // width: "40%",
-    fontSize: 90,
+    fontSize: 60,
     alignSelf: "center",
     textAlign: "center",
-    paddingLeft: 25,
-    paddingRight: 25,
+    // paddingLeft: 25,
+    // paddingRight: 25,
 
   },
   toolbarIcon : {color: variables.playerTextColor, fontSize: 24},
@@ -127,5 +127,17 @@ export default {
     width: 50,
     height: 30,
     alignItems: "center"
-  }
+  },
+  playButton: {
+    height: 72,
+    width: 72,
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 72 / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 25,
+    marginRight: 25,
+
+  },
 }

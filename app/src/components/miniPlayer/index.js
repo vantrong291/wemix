@@ -31,6 +31,8 @@ import { connect } from "react-redux";
 import TextTicker from "react-native-text-ticker";
 import Icon from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 import Feather from "react-native-vector-icons/Feather";
 
 import styles from "./style";
@@ -174,8 +176,8 @@ class MiniPlayer extends Component {
 
   renderPlayerPlayPause = (playState, style) => {
     return (this.state.playerState === 3) ?
-      <MaterialCommunityIcons name="pause-circle-outline" style={style} onPress={this.onPause}/> :
-      <MaterialCommunityIcons name="play-circle-outline" style={style} onPress={this.onPlay}/>;
+      <Ionicons name="ios-pause" style={style} onPress={this.onPause}/> :
+      <Ionicons name="ios-play" style={[style, {left: 3}]} onPress={this.onPlay}/>;
   };
 
   renderPlayer = () => {
@@ -359,13 +361,15 @@ class MiniPlayer extends Component {
               </Carousel>
               <View style={styles.songControlPlayerView}>
                 <TouchableOpacity>
-                  <Icon button name="controller-jump-to-start" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious}/>
+                  <Ionicons button name="ios-skip-backward" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious}/>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
+                  <View style={styles.playButton}>
+                    {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
+                  </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Icon button name="controller-next" style={styles.controlPlayerIcon} onPress={this.onSkipNext}/>
+                  <Ionicons button name="ios-skip-forward" style={styles.controlPlayerIcon} onPress={this.onSkipNext}/>
                 </TouchableOpacity>
               </View>
             </ImageBackground>}

@@ -53,6 +53,13 @@ class AnimationArtWork extends Component {
     }).start(() => this.startImageRotateFunction());
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.props.currentTrack === nextProps.currentTrack) {
+      return false;
+    }
+    return true
+  }
+
   render() {
     const RotateData = this.RotateValueHolder.interpolate({
       inputRange: [0, 1],

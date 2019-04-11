@@ -14,6 +14,7 @@ import {
   Body, Spinner
 } from "native-base";
 import axios from "axios";
+import {FlatList} from "react-native"
 import View from "../../theme/components/View";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
 
@@ -71,11 +72,35 @@ class ChartItem extends Component {
 
   render() {
     const datas = this.state.chart.data;
-    return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
-      <List>
-        {this.renderChart()}
-      </List>
-      );
+    console.log(datas);
+    // return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
+    //   <List>
+    //     {this.renderChart()}
+    //   </List>
+    //   );
+    return (
+      <FlatList
+        data={datas}
+        renderItem={({item}) => <ListItem style={{marginLeft: 13}} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
+          <Left>
+            <Thumbnail square source={{uri: item.image}}/>
+          </Left>
+          <Body>
+          <Text>
+            {item.name}
+          </Text>
+          <Text numberOfLines={1} note>
+            {item.singer}
+          </Text>
+          </Body>
+          <Right style={{flexDirection: "row", alignItems: "center"}}>
+            <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
+            <Icon name="plus" size={20}/>
+          </Right>
+        </ListItem> }
+        keyExtractor={(item, index) => index.toString()}
+    />
+    )
   }
 }
 
