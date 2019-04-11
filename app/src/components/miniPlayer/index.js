@@ -56,7 +56,7 @@ const playerBackground = require("../../assets/bg.jpg");
 class MiniPlayer extends Component {
   constructor(props) {
     super(props);
-    this.RotateValueHolder = new Animated.Value(0);
+    // this.RotateValueHolder = new Animated.Value(0);
     this.state = {
       playerState: 1,
       currentTrack: {},
@@ -143,7 +143,7 @@ class MiniPlayer extends Component {
         }, 1000);
       }
     });
-    this.startImageRotateFunction();
+    // this.startImageRotateFunction();
 
     TrackPlayer.addEventListener("playback-state", (state) => {
       this._isMounted && this.setState({ playerState: state.state });
@@ -159,14 +159,14 @@ class MiniPlayer extends Component {
     },1000);
   };
 
-  startImageRotateFunction() {
-    this.RotateValueHolder.setValue(0);
-    Animated.timing(this.RotateValueHolder, {
-      toValue: 1,
-      duration: 6000,
-      easing: Easing.linear
-    }).start(() => this.startImageRotateFunction());
-  }
+  // startImageRotateFunction() {
+  //   this.RotateValueHolder.setValue(0);
+  //   Animated.timing(this.RotateValueHolder, {
+  //     toValue: 1,
+  //     duration: 6000,
+  //     easing: Easing.linear
+  //   }).start(() => this.startImageRotateFunction());
+  // }
 
   renderPlayPause = (playState, style) => {
     return (this.state.playerState === 3) ?
@@ -203,16 +203,15 @@ class MiniPlayer extends Component {
     // //   // console.log(parent);
     // }
 
-    const RotateData = this.RotateValueHolder.interpolate({
-      inputRange: [0, 1],
-      outputRange: ["0deg", "360deg"]
-    });
+    // const RotateData = this.RotateValueHolder.interpolate({
+    //   inputRange: [0, 1],
+    //   outputRange: ["0deg", "360deg"]
+    // });
 
     let duration = this.state.duration;
     let presentPosition = this.state.presentPosition;
 
-
-    // console.log(this.state.currentTrack);
+    // console.log(this.s     tate.currentTrack);
 
     return (!this.state.loading && this.props.miniPlayerState.display) ? (
       <View style={styles.miniPlayer}>

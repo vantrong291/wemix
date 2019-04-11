@@ -10,25 +10,24 @@
       "client_info": {
         "mobilesdk_app_id": "1:138796014905:android:9b7e3c0b162fb66c",
         "android_client_info": {
-          "package_name": "com.wemix"
+          "package_name": "com.env"
         }
       },
       "oauth_client": [
-
-        {
-          "client_id": "138796014905-cf95tjp9s3nnrvgama54t1uc988fak5d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wemix",
-            "certificate_hash": "9f367983bc4ac717f0ac4c57e32ee4b6e0cfae12"
-          }
-        },
         {
           "client_id": "138796014905-31av0m1u9nmbpudit4h8t8id5b0j82ea.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.wemix",
+            "package_name": "com.env",
             "certificate_hash": "78e32c5196ba95d5d65275cfbc0aa1eb2a8f8122"
+          }
+        },
+        {
+          "client_id": "138796014905-q4b5u5npmcpgfi4ioirk3dkgcdd4b097.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.env",
+            "certificate_hash": "acd604f6071ed4dc916ef43043dbe1a9a35e48b5"
           }
         },
         {
@@ -42,20 +41,50 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "138796014905-h5l8dp1nbiog26muisgkkk88uu0ghs56.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138796014905:android:500c92bddc95e901",
+        "android_client_info": {
+          "package_name": "com.wemix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138796014905-9qnacbd3dl4kencl5qulr956vk73bf5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wemix",
+            "certificate_hash": "acd604f6071ed4dc916ef43043dbe1a9a35e48b5"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "138796014905-h5l8dp1nbiog26muisgkkk88uu0ghs56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3YYWLMb_ObuUdRgn-mCuGo2sHA_EN4wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138796014905-h5l8dp1nbiog26muisgkkk88uu0ghs56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

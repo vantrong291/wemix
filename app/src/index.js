@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native";
 import {
   createDrawerNavigator,
   createStackNavigator,
-  createMaterialTopTabNavigator, MaterialTopTabBar, BottomTabBar
+  createMaterialTopTabNavigator, MaterialTopTabBar, BottomTabBar, createSwitchNavigator
 } from "react-navigation";
 // import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -193,13 +193,11 @@ class Main extends React.Component {
   }
 }
 
-const AppNavigator = createStackNavigator(
+const AppStackNavigator = createStackNavigator(
   {
     // Switcher: { screen: Sw },
-    Drawer: { screen: Drawer },
+    // Drawer: { screen: Drawer },
     Main: { screen: Main },
-    Login: { screen: Login },
-    Signup: { screen: Signup },
     Home: { screen: Home},
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
@@ -218,16 +216,27 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "Main",
     headerMode: "none"
   }
 );
 
+
+const AppSwitchNavigator =  createSwitchNavigator(
+  {
+    Login: { screen: Login },
+    Signup: { screen: Signup },
+    Stack: {screen: AppStackNavigator}
+  },
+  {
+    initialRouteName: "Login"
+  }
+);
 // const AppContainer = createAppContainer(AppNavigator);
 //
 export default () =>
   <Root>
-    <AppNavigator ref={navigatorRef => {
+    <AppSwitchNavigator ref={navigatorRef => {
       NavigationService.setTopLevelNavigator(navigatorRef);
     }}/>
     <MiniPlayer/>

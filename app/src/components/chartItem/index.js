@@ -72,7 +72,7 @@ class ChartItem extends Component {
 
   render() {
     const datas = this.state.chart.data;
-    console.log(datas);
+    // console.log(datas);
     // return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
     //   <List>
     //     {this.renderChart()}
