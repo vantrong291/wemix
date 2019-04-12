@@ -196,7 +196,7 @@ class MiniPlayer extends Component {
   openPlayer = async () => {
     const currentTrack = this.state.currentTrack;
     await this.setState({loading: true});
-    await NavigationService.navigate('Player', {currentTrack})
+    await NavigationService.navigate('Player', {currentTrack: currentTrack, playerState: this.state.playerState})
   };
 
   render() {

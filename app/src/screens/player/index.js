@@ -59,7 +59,7 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerState: 1,
+      playerState: 0,
       currentTrack: {},
       playing: true,
       loading: true,
@@ -151,17 +151,22 @@ class Player extends Component {
     //   }
     // });
     //
-    // TrackPlayer.addEventListener("playback-state", (state) => {
-    //   this._isMounted && this.setState({ playerState: state.state });
-    // });
-    //
-    setInterval(() => {
-      TrackPlayer.getPosition().then((position) => {
-        // console.log(parseInt(position));
-        // this._isMounted && this.setState({ presentPosition: position });
-        this.presentPosition = position;
-      })
-    },1000);
+    const { navigation } = this.props;
+    const playerState = navigation.getParam('playerState');
+    this._isMounted && this.setState({ playerState: playerState });
+
+    TrackPlayer.addEventListener("playback-state", (state) => {
+      this._isMounted && this.setState({ playerState: state.state });
+      // console.log(state);
+    });
+
+    // setInterval(() => {
+    //   TrackPlayer.getPosition().then((position) => {
+    //     // console.log(parseInt(position));
+    //     // this._isMounted && this.setState({ presentPosition: position });
+    //     this.presentPosition = position;
+    //   })
+    // },1000);
 
     setTimeout(await function() {
       self._isMounted && self.setState({ loading: false });
@@ -178,9 +183,15 @@ class Player extends Component {
       <Ionicons name="ios-play" style={[style, {left: 3}]} onPress={this.onPlay}/>;
   };
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const { navigation } = this.props;
+  //   return navigation.getParam('currentTrack') !== nextProps.navigation.getParam('currentTrack');
+  // }
+
   render() {
     // let duration = this.state.duration;
     let presentPosition = this.presentPosition;
+    // console.log(this.state.playerState);
 
     const de = {
       id : 1,
@@ -194,7 +205,7 @@ class Player extends Component {
     const { navigation } = this.props;
     const currentTrack = navigation.getParam('currentTrack', de);
     const duration = parseInt(currentTrack.duration)/1000;
-    console.log(currentTrack.duration);
+    // console.log(currentTrack.duration);
 
     return (
       <Container style={styles.container}>
