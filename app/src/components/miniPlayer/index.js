@@ -195,7 +195,8 @@ class MiniPlayer extends Component {
 
   openPlayer = async () => {
     const currentTrack = this.state.currentTrack;
-    await this.setState({loading: true});
+    // await this.setState({loading: true});
+    await this.props.dispatch(miniPlayerState(false));
     await NavigationService.navigate('Player', {currentTrack: currentTrack, playerState: this.state.playerState})
   };
 
@@ -229,7 +230,7 @@ class MiniPlayer extends Component {
           {/*<Animated.Image rounded*/}
                           {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
                           {/*style={[styles.artworkMiniPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
-          <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkMiniPlayer}/>
+          <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkMiniPlayer} playing={this.state.playerState === 3}/>
         </View>
         <View style={styles.songInfoView}>
           <TextTicker

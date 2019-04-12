@@ -38,6 +38,13 @@ class AnimationArtWork extends React.PureComponent {
   async componentDidMount() {
     this._isMounted = true;
     this.startImageRotateFunction();
+
+    // setTimeout(() => {
+    //   console.log('stop');
+    //   Animated.timing(
+    //     this.RotateValueHolder
+    //   ).stop();
+    // }, 5000)
   };
 
   startImageRotateFunction() {
@@ -45,8 +52,14 @@ class AnimationArtWork extends React.PureComponent {
     Animated.timing(this.RotateValueHolder, {
       toValue: 1,
       duration: 6000,
-      easing: Easing.linear
-    }).start(() => this.startImageRotateFunction());
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start(() => {
+        // if(this.props.playing) {
+          this.startImageRotateFunction();
+        // }
+      }
+    );
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -54,12 +67,14 @@ class AnimationArtWork extends React.PureComponent {
   // }
 
   render() {
+    console.log(this.props.playing);
     const RotateData = this.RotateValueHolder.interpolate({
       inputRange: [0, 1],
       outputRange: ["0deg", "360deg"]
     });
     // let
     // console.log(1);
+
 
     return (
       <Animated.Image rounded
