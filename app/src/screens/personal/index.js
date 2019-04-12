@@ -15,7 +15,7 @@ import firebase from "react-native-firebase";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { loginSuccess, logoutSuccess, miniPlayerState, syncNavigationProps } from "../../redux/actions";
-const drawerCover = require("../../assets/drawer-cover.png");
+const drawerCover = require("../../assets/cover-personal.jpeg");
 const drawerImage = require("../../assets/logo-kitchen-sink.png");
 
 
@@ -59,7 +59,7 @@ class SideBar extends Component {
         <H3 style={styles.username}>{username}</H3>
         <Text style={styles.small}>{email}</Text>
       </View>
-    };
+    }
     return <View><Text>Empty</Text></View>
   };
 

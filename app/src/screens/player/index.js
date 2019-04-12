@@ -178,9 +178,13 @@ class Player extends Component {
   }
 
   renderPlayerPlayPause = (playState, style) => {
-    return (this.state.playerState === 3) ?
-      <Ionicons name="ios-pause" style={style} onPress={this.onPause}/> :
-      <Ionicons name="ios-play" style={[style, {left: 3}]} onPress={this.onPlay}/>;
+    return (this.state.playerState === 3)
+      ? (<Button transparent style={styles.playButton} onPress={this.onPause}>
+          <Ionicons name="ios-pause" style={style} />
+        </Button>)
+      : (<Button transparent style={styles.playButton} onPress={this.onPlay}>
+          <Ionicons name="ios-play" style={[style, {left: 4}]}/>
+         </Button>);
   };
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -306,9 +310,9 @@ class Player extends Component {
               <Ionicons button name="ios-skip-backward" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious}/>
             </TouchableOpacity>
             <TouchableOpacity>
-              <View style={styles.playButton}>
+              {/*<View style={styles.playButton}>*/}
                 {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
-              </View>
+              {/*</View>*/}
             </TouchableOpacity>
             <TouchableOpacity>
               <Ionicons button name="ios-skip-forward" style={styles.controlPlayerIcon} onPress={this.onSkipNext}/>
