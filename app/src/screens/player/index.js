@@ -47,6 +47,8 @@ import {secondToMinuteString} from "../../api/TimeConvert";
 import RNModal from "react-native-modal";
 import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
+import SeekBar from "../../components/seekBar";
+
 
 
 
@@ -62,12 +64,12 @@ class Player extends Component {
       playing: true,
       loading: true,
       modalVisible: false,
-      presentPosition: 0,
+      presentPosition: 10,
       duration: 0,
       playerStartValue: 0
     };
   }
-
+  presentPosition = 0;
   _isMounted = false;
 
   componentWillUnmount() {
@@ -127,13 +129,73 @@ class Player extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
+    let self = this;
+    // TrackPlayer.getPosition().then((position) => {
+    //   // console.log(parseInt(position));
+    //   this._isMounted && this.setState({ presentPosition: position });
+    // });
+
+    // TrackPlayer.addEventListener("playback-track-changed", async (data) => {
+    //   if (data.nextTrack) {
+    //     const track = await TrackPlayer.getTrack(data.nextTrack);
+    //     this._isMounted && this.setState({ currentTrack: track });
+    //
+    //     TrackPlayer.getDuration().then((duration) => {
+    //       console.log(duration);
+    //       this._isMounted && this.setState({ duration: duration });
+    //     });
+    //
+    //     setTimeout(await function() {
+    //       self._isMounted && self.setState({ loading: false });
+    //     }, 1000);
+    //   }
+    // });
+    //
+    // TrackPlayer.addEventListener("playback-state", (state) => {
+    //   this._isMounted && this.setState({ playerState: state.state });
+    // });
+    //
+    setInterval(() => {
+      TrackPlayer.getPosition().then((position) => {
+        // console.log(parseInt(position));
+        // this._isMounted && this.setState({ presentPosition: position });
+        this.presentPosition = position;
+      })
+    },1000);
+
+    setTimeout(await function() {
+      self._isMounted && self.setState({ loading: false });
+      }, 1000);
   }
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
 
+  renderPlayerPlayPause = (playState, style) => {
+    return (this.state.playerState === 3) ?
+      <Ionicons name="ios-pause" style={style} onPress={this.onPause}/> :
+      <Ionicons name="ios-play" style={[style, {left: 3}]} onPress={this.onPlay}/>;
+  };
+
   render() {
+    // let duration = this.state.duration;
+    let presentPosition = this.presentPosition;
+
+    const de = {
+      id : 1,
+      title : "La danza del fuego",
+      author : "Mago de Oz",
+      album : "Finisterra",
+      genre : "Folk",
+      duration : 121, // miliseconds
+    };
+
+    const { navigation } = this.props;
+    const currentTrack = navigation.getParam('currentTrack', de);
+    const duration = parseInt(currentTrack.duration)/1000;
+    console.log(currentTrack.duration);
+
     return (
       <Container style={styles.container}>
         {!this.state.loading && <ImageBackground
@@ -176,9 +238,9 @@ class Player extends Component {
                     // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
                     onPress={() => {
                       this.setModalVisible(!this.state.modalVisible);
-                    }}>{this.state.currentTrack.title}</TextTicker>
+                    }}>{currentTrack.title}</TextTicker>
                   {/*<Text style={{ color: variables.playerTextColor, fontSize: 14 }}>{this.state.currentTrack.title}</Text>*/}
-                  <Text style={{ color: variables.playerTextColor, fontSize: 10 }}>{this.state.currentTrack.artist}</Text>
+                  <Text style={{ color: variables.playerTextColor, fontSize: 10 }}>{currentTrack.artist}</Text>
                 </View>
               </View>
               <View>
@@ -187,30 +249,31 @@ class Player extends Component {
                     {/*<Animated.Image rounded*/}
                     {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
                     {/*style={[styles.artworkPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
-                    <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkPlayer}/>
+                    <AnimationArtWork currentTrack={currentTrack} styles={styles.artworkPlayer}/>
                   </View>
-                  <View style={{flexDirection: "row", marginTop: 20}}>
-                    <View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>
-                      <Text style={{fontSize: 12, color: variables.playerTextColor }}>{secondToMinuteString(presentPosition)}</Text>
-                    </View>
-                    <View style={{width:"70%"}}>
-                      <Slider
-                        value={this.state.presentPosition}
-                        onValueChange={value => this.setState({ value })}
-                        style={styles.sliderContainer}
-                        trackStyle={styles.sliderTrack}
-                        thumbStyle={styles.sliderThumb}
-                        minimumTrackTintColor='#31a4db'
-                        thumbTouchSize={{ width: 50, height: 40 }}
-                        maximumValue={this.state.duration}
-                        step={1}
-                        onSlidingComplete={(position) => {this.onSliderComplete(position)}}
-                      />
-                    </View>
-                    <View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>
-                      <Text style={{fontSize: 12, color:variables.playerTextColor}}>{secondToMinuteString(duration)}</Text>
-                    </View>
-                  </View>
+                  <SeekBar duration={duration}/>
+                  {/*<View style={{flexDirection: "row", marginTop: 20}}>*/}
+                    {/*<View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>*/}
+                      {/*<Text style={{fontSize: 12, color: variables.playerTextColor }}>{secondToMinuteString(presentPosition)}</Text>*/}
+                    {/*</View>*/}
+                    {/*<View style={{width:"70%"}}>*/}
+                      {/*<Slider*/}
+                        {/*value={this.presentPosition}*/}
+                        {/*// onValueChange={value => this.setState({ value })}*/}
+                        {/*style={styles.sliderContainer}*/}
+                        {/*trackStyle={styles.sliderTrack}*/}
+                        {/*thumbStyle={styles.sliderThumb}*/}
+                        {/*minimumTrackTintColor='#31a4db'*/}
+                        {/*thumbTouchSize={{ width: 50, height: 40 }}*/}
+                        {/*maximumValue={duration}*/}
+                        {/*step={1}*/}
+                        {/*onSlidingComplete={(position) => {this.onSliderComplete(position)}}*/}
+                      {/*/>*/}
+                    {/*</View>*/}
+                    {/*<View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>*/}
+                      {/*<Text style={{fontSize: 12, color:variables.playerTextColor}}>{secondToMinuteString(duration)}</Text>*/}
+                    {/*</View>*/}
+                  {/*</View>*/}
                   <View style={{flexDirection: "row", height: 100}}>
                     <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
                       <TouchableOpacity style={styles.toolbarButton}>

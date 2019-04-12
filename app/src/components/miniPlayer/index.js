@@ -151,13 +151,17 @@ class MiniPlayer extends Component {
 
     this.props.dispatch(miniPlayerState(true));
 
-    setInterval(() => {
-      TrackPlayer.getPosition().then((position) => {
-        // console.log(parseInt(position));
-        this._isMounted && this.setState({ presentPosition: position });
-      })
-    },1000);
+    // setInterval(() => {
+    //   TrackPlayer.getPosition().then((position) => {
+    //     // console.log(parseInt(position));
+    //     this._isMounted && this.setState({ presentPdosition: position });
+    //   })
+    // },1000);
   };
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.state.currentTrack !== nextState.currentTrack;
+  // }
 
   // startImageRotateFunction() {
   //   this.RotateValueHolder.setValue(0);
@@ -189,6 +193,12 @@ class MiniPlayer extends Component {
     TrackPlayer.seekTo(parseInt(position));
   };
 
+  openPlayer = async () => {
+    const currentTrack = this.state.currentTrack;
+    await this.setState({loading: true});
+    await NavigationService.navigate('Player', {currentTrack})
+  };
+
   render() {
 
     // // if(this.props.syncNavigation.navigation) {
@@ -211,7 +221,7 @@ class MiniPlayer extends Component {
     let duration = this.state.duration;
     let presentPosition = this.state.presentPosition;
 
-    // console.log(this.s     tate.currentTrack);
+    console.log(this.state.currentTrack);
 
     return (!this.state.loading && this.props.miniPlayerState.display) ? (
       <View style={styles.miniPlayer}>
@@ -229,10 +239,11 @@ class MiniPlayer extends Component {
             repeatSpacer={10}
             marqueeDelay={0}
             style={styles.songTitle}
-            // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
-            onPress={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}>{this.state.currentTrack.title}</TextTicker>
+            onPress={this.openPlayer}
+            // onPress={() => {
+            //   this.setModalVisible(!this.state.modalVisible);
+            // }}>
+          >{this.state.currentTrack.title}</TextTicker>
           <Text style={styles.songArtist}>{this.state.currentTrack.artist}</Text>
         </View>
         <View style={styles.songControlMiniPlayerView}>
@@ -240,187 +251,6 @@ class MiniPlayer extends Component {
           {this.renderPlayPause(this.state.playState, styles.controlMiniPlayerIcon)}
           <Icon button name="controller-next" style={styles.controlMiniPlayerIcon} onPress={this.onSkipNext}/>
         </View>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}>
-          <Container style={styles.container}>
-            {!this.state.loading && <ImageBackground
-                                                     blurRadius={15}
-                                                     // source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}
-                                                     source={playerBackground}
-                                                     style={styles.imageContainer}>
-              <Carousel
-                autoplay={false}
-                loop={false}
-                index={1}
-              >
-                <View style={{ height: "80%" }}>
-                  <Text>
-                    If you like React, you'll also like React Native.
-                  </Text>
-                  <Text>
-                    Instead of 'div' and 'span', you'll use native components
-                    like 'View' and 'Text'.
-                  </Text>
-                </View>
-
-                <View style={{ height: "80%" }}>
-                  <View noShadow transparent style={{ height: 70, paddingTop: 0, flexDirection: "row"}}>
-                    <View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15}}>
-                      <Button transparent onPress={() => {
-                        this.setModalVisible(!this.state.modalVisible);
-                      }}>
-                        <Icon name="chevron-thin-down" style={{ color: variables.playerTextColor, marginLeft: 5 }} size={24}/>
-                      </Button>
-                    </View>
-                    <View style={{ width: "70%", alignSelf: "center" }}>
-                      <TextTicker
-                        duration={5000}
-                        loop
-                        bounce
-                        repeatSpacer={10}
-                        marqueeDelay={0}
-                        style={{ color: variables.playerTextColor, fontSize: 15 }}
-                        // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
-                        onPress={() => {
-                          this.setModalVisible(!this.state.modalVisible);
-                        }}>{this.state.currentTrack.title}</TextTicker>
-                      {/*<Text style={{ color: variables.playerTextColor, fontSize: 14 }}>{this.state.currentTrack.title}</Text>*/}
-                      <Text style={{ color: variables.playerTextColor, fontSize: 10 }}>{this.state.currentTrack.artist}</Text>
-                    </View>
-                  </View>
-                  <View>
-                    <ScrollView style={{ height: "100%" }}>
-                      <View style={styles.artworkPlayerView}>
-                        {/*<Animated.Image rounded*/}
-                                        {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
-                                        {/*style={[styles.artworkPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
-                        <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkPlayer}/>
-                      </View>
-                      <View style={{flexDirection: "row", marginTop: 20}}>
-                        <View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>
-                          <Text style={{fontSize: 12, color: variables.playerTextColor }}>{secondToMinuteString(presentPosition)}</Text>
-                        </View>
-                        <View style={{width:"70%"}}>
-                          <Slider
-                            value={this.state.presentPosition}
-                            onValueChange={value => this.setState({ value })}
-                            style={styles.sliderContainer}
-                            trackStyle={styles.sliderTrack}
-                            thumbStyle={styles.sliderThumb}
-                            minimumTrackTintColor='#31a4db'
-                            thumbTouchSize={{ width: 50, height: 40 }}
-                            maximumValue={this.state.duration}
-                            step={1}
-                            onSlidingComplete={(position) => {this.onSliderComplete(position)}}
-                          />
-                        </View>
-                        <View style={{width:"15%", alignItems:"center", alignSelf:"center" }}>
-                          <Text style={{fontSize: 12, color:variables.playerTextColor}}>{secondToMinuteString(duration)}</Text>
-                        </View>
-                      </View>
-                      <View style={{flexDirection: "row", height: 100}}>
-                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          <TouchableOpacity style={styles.toolbarButton}>
-                            <MaterialCommunityIcons name="information-outline" style={styles.toolbarIcon}/>
-                          </TouchableOpacity>
-                        </View>
-                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          <TouchableOpacity style={styles.toolbarButton}>
-                            <MaterialCommunityIcons name="heart-outline" style={styles.toolbarIcon}/>
-                          </TouchableOpacity>
-                        </View>
-                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          <PlayerMode/>
-                          {/*<TouchableOpacity style={styles.toolbarButton}>*/}
-                            {/*<MaterialCommunityIcons name="priority-high" style={styles.toolbarIcon}/>*/}
-                          {/*</TouchableOpacity>*/}
-                        </View>
-                        <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                          <PlayerAction/>
-                        </View>
-                      </View>
-                    </ScrollView>
-                  </View>
-                </View>
-
-                <View style={{ height: "80%" }}>
-                  <Text>
-                    If you like React, you'll also like React Native.
-                  </Text>
-                  <Text>
-                    Instead of 'div' and 'span', you'll use native components
-                    like 'View' and 'Text'.
-                  </Text>
-                </View>
-              </Carousel>
-              <View style={styles.songControlPlayerView}>
-                <TouchableOpacity>
-                  <Ionicons button name="ios-skip-backward" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious}/>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <View style={styles.playButton}>
-                    {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                  <Ionicons button name="ios-skip-forward" style={styles.controlPlayerIcon} onPress={this.onSkipNext}/>
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>}
-            {/*<MiniPlayer/>*/}
-          </Container>
-
-          {/*</ScrollView>*/}
-          {/*</Tab>*/}
-          {/*<Tab tabStyle={{backgroundColor:variables.playerTextColor}} activeTabStyle={{backgroundColor: variables.playerTextColor}} activeTextStyle={{color: "#333"}} textStyle={{color: "#333"}} heading="Bài hát">*/}
-          {/*<ScrollView>*/}
-          {/*<Container style={styles.container}>*/}
-          {/*{ !this.state.loading && <ImageBackground blurRadius={8} source={(this.state.currentTrack.artwork) ? {uri: this.state.currentTrack.artwork} : defaultArtwork} style={styles.imageContainer}>*/}
-          {/*<Header noShadow transparent style={{height: 50}}>*/}
-          {/*<Left>*/}
-          {/*<Button transparent onPress={() => {*/}
-          {/*this.setModalVisible(!this.state.modalVisible);*/}
-          {/*}}>*/}
-          {/*<Icon name="chevron-thin-down" style={{ color: "#333", marginLeft: 5 }} size={24}/>*/}
-          {/*</Button>*/}
-          {/*</Left>*/}
-          {/*<Body>*/}
-          {/*<Title style={{color: "#333"}}>{this.state.currentTrack.title}</Title>*/}
-          {/*</Body>*/}
-          {/*/!*<Right>*!/*/}
-          {/*/!*<Button transparent>*!/*/}
-          {/*/!*<Icon name="profile" style={{ color: variables.playerTextColor, marginRight: 5 }} size={24}/>*!/*/}
-          {/*/!*</Button>*!/*/}
-          {/*/!*</Right>*!/*/}
-          {/*</Header>*/}
-          {/*<Content padder>*/}
-          {/*<ScrollView>*/}
-          {/*<View style={styles.artworkPlayerView}>*/}
-          {/*<Animated.Image rounded source={ (this.state.currentTrack.artwork) ? {uri: this.state.currentTrack.artwork} : defaultArtwork} style={[styles.artworkPlayer, { transform: [{ rotate: RotateData }]}]} />*/}
-          {/*</View>*/}
-          {/*<View>*/}
-          {/*<Slider*/}
-          {/*value={this.state.value}*/}
-          {/*onValueChange={value => this.setState({ value })}*/}
-          {/*thumbTouchSize={{width: 2, height: 2}}*/}
-          {/*thumbStyle={{width: 2, height: 2}}*/}
-          {/*/>*/}
-          {/*</View>*/}
-          {/*</ScrollView>*/}
-          {/*</Content>*/}
-          {/*</ImageBackground>}*/}
-          {/*/!*<MiniPlayer/>*!/*/}
-          {/*</Container>*/}
-          {/*</ScrollView>*/}
-          {/*</Tab>*/}
-
-          {/*</Tabs>*/}
-        </Modal>
       </View>) : null;
   }
 }

@@ -22,14 +22,10 @@ import { connect } from "react-redux";
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 
 
-class AnimationArtWork extends Component {
+class AnimationArtWork extends React.PureComponent {
   constructor(props) {
     super(props);
     this.RotateValueHolder = new Animated.Value(0);
-    this.state = {
-      currentTrack: {},
-      loading: true,
-    }
   }
 
 
@@ -48,17 +44,14 @@ class AnimationArtWork extends Component {
     this.RotateValueHolder.setValue(0);
     Animated.timing(this.RotateValueHolder, {
       toValue: 1,
-      duration: 9000,
+      duration: 6000,
       easing: Easing.linear
     }).start(() => this.startImageRotateFunction());
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if(this.props.currentTrack === nextProps.currentTrack) {
-      return false;
-    }
-    return true
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.props.currentTrack !== nextProps.currentTrack;
+  // }
 
   render() {
     const RotateData = this.RotateValueHolder.interpolate({
@@ -66,6 +59,8 @@ class AnimationArtWork extends Component {
       outputRange: ["0deg", "360deg"]
     });
     // let
+    // console.log(1);
+
     return (
       <Animated.Image rounded
                       source={(this.props.currentTrack.artwork) ? { uri: this.props.currentTrack.artwork } : defaultArtwork}

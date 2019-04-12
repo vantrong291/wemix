@@ -32,4 +32,8 @@ module.exports = async function() {
     TrackPlayer.destroy()
   });
 
+  // TrackPlayer.addEventListener('remote-seek', (pos) => {
+  //   TrackPlayer.seekTo(pos)
+  // });
+
 };

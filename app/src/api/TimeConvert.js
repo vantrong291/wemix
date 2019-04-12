@@ -1,5 +1,6 @@
 export const secondToMinuteString = (second) => {
-  return Math.floor(second / 60) + ':' + ('0' + Math.floor(second % 60)).slice(-2);
+  let i = parseInt(second);
+  return Math.floor(i / 60) + ':' + ('0' + Math.floor(i % 60)).slice(-2);
 };
 
 
