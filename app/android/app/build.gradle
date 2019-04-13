@@ -176,6 +176,9 @@ dependencies {
     implementation project(':react-native-fbsdk')
     implementation(project(":react-native-google-signin"))
 
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
+
 
 }
 
