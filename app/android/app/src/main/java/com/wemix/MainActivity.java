@@ -2,11 +2,23 @@ package com.wemix;
 
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; // import this
+
+import android.os.Build;
 import android.os.Bundle; // import this
 import android.content.Intent;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.app.NotificationManager;
+import android.view.View;
+import android.content.Context;
+import android.app.PendingIntent;
+import android.app.Notification;
+
 
 
 public class MainActivity extends ReactActivity {
+
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -29,5 +41,6 @@ public class MainActivity extends ReactActivity {
          super.onActivityResult(requestCode, resultCode, data);
          MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
+
 
 }

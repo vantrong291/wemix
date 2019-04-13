@@ -2,7 +2,7 @@
     <string name="app_name">WeMix</string>
     <string name="facebook_app_id">638372929838710</string>
     <string name="fb_login_protocol_scheme">fb638372929838710</string>
-    <string name="welcome_to_wemix">Welcome to WeMix</string>
+    <string name="welcome_to_wemix">Welcome to WeMix …</string>
 
 
 </resources>

@@ -52,13 +52,13 @@ app.use(function(err, req, res, next) {
 
 
 
-const models = require("./models");
-
-//Sync Database
-models.sequelize.sync().then(function() {
-  console.log('Nice! Database looks fine')
-}).catch(function(err) {
-  console.log(err, "Something went wrong with the Database Update!")
-});
+// const models = require("./models");
+//
+// //Sync Database
+// models.sequelize.sync().then(function() {
+//   console.log('Nice! Database looks fine')
+// }).catch(function(err) {
+//   console.log(err, "Something went wrong with the Database Update!")
+// });
 
 module.exports = app;
