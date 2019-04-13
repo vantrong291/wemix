@@ -32,6 +32,7 @@ import Chart from "./screens/chart";
 import Search from "./screens/search";
 import Playlist from "./screens/playlist";
 import Personal from "./screens/personal";
+import ChartCategory from "./screens/chartCategory";
 
 import MiniPlayer from "./components/miniPlayer"
 import Player from "./screens/player"
@@ -54,7 +55,7 @@ class MyTabBar extends Component {
 const Switcher = createMaterialTopTabNavigator(
   {
     BXH: {
-      screen: Chart,
+      screen: ChartCategory,
       navigationOptions: {
         tabBarLabel: "BXH",
         tabBarIcon: ({ tintColor }) => (
@@ -98,11 +99,10 @@ const Switcher = createMaterialTopTabNavigator(
         )
       },
     }
-
   },
   {
     initialRouteName: "Home",
-    // order: ["Home", "BXH", "Search", "Playlist", "Personal"],
+    order: ["BXH", "Search", "Home", "Playlist", "Personal"],
     // activeTintColor: "#e91d62",
     // barStyle: { backgroundColor: '#f5f5f5' },
     // shifting:true
@@ -199,6 +199,7 @@ const AppStackNavigator = createStackNavigator(
     // Drawer: { screen: Drawer },
     Main: { screen: Main },
     Home: { screen: Home},
+    Chart: { screen: Chart },
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
     Header3: { screen: Header3 },

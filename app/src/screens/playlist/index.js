@@ -14,10 +14,6 @@ import {View, Alert, FlatList, AsyncStorage, ScrollView} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
 import variables from "../../theme/variables/custom"
-import {
-  RkButton, RkStyleSheet,
-  RkText,
-} from 'react-native-ui-kitten'
 import { connect } from "react-redux";
 import { syncNavigationProps } from "../../redux/actions";
 

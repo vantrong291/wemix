@@ -3,6 +3,7 @@ package com.wemix;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.yonahforst.rnpermissions.RNPermissionsPackage;
 import com.cinder92.musicfiles.RNReactNativeGetMusicFilesPackage;
 import com.guichaguri.trackplayer.TrackPlayer;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
           new RNPermissionsPackage(),
           new RNReactNativeGetMusicFilesPackage(),
           new TrackPlayer(),
