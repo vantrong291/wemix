@@ -199,7 +199,7 @@ const AppStackNavigator = createStackNavigator(
     // Drawer: { screen: Drawer },
     Main: { screen: Main },
     Home: { screen: Home},
-    Chart: { screen: Chart },
+    ChartDetail: { screen: Chart },
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
     Header3: { screen: Header3 },

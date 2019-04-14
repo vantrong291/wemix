@@ -9,7 +9,8 @@ import {
   Modal,
   ScrollView,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler
 } from "react-native";
 import {
   Button,
@@ -43,7 +44,7 @@ import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
 import variables from "../../theme/variables/custom";
 import Slider from "react-native-slider";
 import Carousel from "react-native-banner-carousel";
-import {secondToMinuteString} from "../../api/TimeConvert";
+import { secondToMinuteString } from "../../api/TimeConvert";
 import RNModal from "react-native-modal";
 import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
@@ -58,6 +59,7 @@ const playerBackground = require("../../assets/bg.jpg");
 class Player extends Component {
   constructor(props) {
     super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.state = {
       playerState: 0,
       currentTrack: {},
@@ -72,8 +74,23 @@ class Player extends Component {
   presentPosition = 0;
   _isMounted = false;
 
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
   componentWillUnmount() {
     this._isMounted = false;
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  async handleBackButtonClick() {
+    await this.props.navigation.goBack();
+    // await this.props.dispatch(miniPlayerState(true));
+    let self = this;
+    setTimeout(await function () {
+      self.props.dispatch(miniPlayerState(true));
+    }, 100)
+    return true;
   }
 
   onPlay = () => {
@@ -169,22 +186,22 @@ class Player extends Component {
     // },1000);
 
     // setTimeout(await function() {
-      self._isMounted && self.setState({ loading: false });
-      // }, 100);
+    self._isMounted && self.setState({ loading: false });
+    // }, 100);
   }
 
   setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+    this.setState({ modalVisible: visible });
   }
 
   renderPlayerPlayPause = (playState, style) => {
     return (this.state.playerState === 3)
       ? (<Button transparent style={styles.playButton} onPress={this.onPause}>
-          <Ionicons name="ios-pause" style={style} />
-        </Button>)
+        <Ionicons name="ios-pause" style={style} />
+      </Button>)
       : (<Button transparent style={styles.playButton} onPress={this.onPlay}>
-          <Ionicons name="ios-play" style={[style, {left: 4}]}/>
-         </Button>);
+        <Ionicons name="ios-play" style={[style, { left: 4 }]} />
+      </Button>);
   };
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -195,10 +212,10 @@ class Player extends Component {
   goBack = async () => {
     await this.props.navigation.goBack();
     // await this.props.dispatch(miniPlayerState(true));
-    let self =  this;
-    setTimeout(await function() {
+    let self = this;
+    setTimeout(await function () {
       self.props.dispatch(miniPlayerState(true));
-      }, 100)
+    }, 100)
   };
 
   render() {
@@ -207,17 +224,17 @@ class Player extends Component {
     // console.log(this.state.playerState);
 
     const de = {
-      id : 1,
-      title : "La danza del fuego",
-      author : "Mago de Oz",
-      album : "Finisterra",
-      genre : "Folk",
-      duration : 121, // miliseconds
+      id: 1,
+      title: "La danza del fuego",
+      author: "Mago de Oz",
+      album: "Finisterra",
+      genre: "Folk",
+      duration: 121, // miliseconds
     };
 
     const { navigation } = this.props;
     const currentTrack = navigation.getParam('currentTrack', de);
-    const duration = parseInt(currentTrack.duration)/1000;
+    const duration = parseInt(currentTrack.duration) / 1000;
     // console.log(currentTrack.duration);
 
     return (
@@ -243,10 +260,10 @@ class Player extends Component {
             </View>
 
             <View style={{ height: "80%" }}>
-              <View noShadow transparent style={{ height: 70, paddingTop: 0, flexDirection: "row"}}>
-                <View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15}}>
+              <View noShadow transparent style={{ height: 70, paddingTop: 0, flexDirection: "row" }}>
+                <View style={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15 }}>
                   <Button transparent onPress={this.goBack}>
-                    <Icon name="chevron-thin-down" style={{ color: variables.playerTextColor, marginLeft: 5 }} size={24}/>
+                    <Icon name="chevron-thin-down" style={{ color: variables.playerTextColor, marginLeft: 5 }} size={24} />
                   </Button>
                 </View>
                 <View style={{ width: "70%", alignSelf: "center" }}>
@@ -267,28 +284,28 @@ class Player extends Component {
               <View>
                 <ScrollView style={{ height: "100%" }}>
                   <View style={styles.artworkPlayerView}>
-                    <AnimationArtWork currentTrack={currentTrack} styles={styles.artworkPlayer}/>
+                    <AnimationArtWork currentTrack={currentTrack} styles={styles.artworkPlayer} />
                   </View>
-                  <SeekBar duration={duration}/>
-                  <View style={{flexDirection: "row", height: 100}}>
-                    <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
+                  <SeekBar duration={duration} />
+                  <View style={{ flexDirection: "row", height: 100 }}>
+                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
                       <TouchableOpacity style={styles.toolbarButton}>
-                        <MaterialCommunityIcons name="information-outline" style={styles.toolbarIcon}/>
+                        <MaterialCommunityIcons name="information-outline" style={styles.toolbarIcon} />
                       </TouchableOpacity>
                     </View>
-                    <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
+                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
                       <TouchableOpacity style={styles.toolbarButton}>
-                        <MaterialCommunityIcons name="heart-outline" style={styles.toolbarIcon}/>
+                        <MaterialCommunityIcons name="heart-outline" style={styles.toolbarIcon} />
                       </TouchableOpacity>
                     </View>
-                    <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                      <PlayerMode/>
+                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
+                      <PlayerMode />
                       {/*<TouchableOpacity style={styles.toolbarButton}>*/}
                       {/*<MaterialCommunityIcons name="priority-high" style={styles.toolbarIcon}/>*/}
                       {/*</TouchableOpacity>*/}
                     </View>
-                    <View style={{width: "25%", alignItems:"center", alignSelf:"center" }}>
-                      <PlayerAction/>
+                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
+                      <PlayerAction />
                     </View>
                   </View>
                 </ScrollView>
@@ -307,15 +324,15 @@ class Player extends Component {
           </Carousel>
           <View style={styles.songControlPlayerView}>
             <TouchableOpacity>
-              <Ionicons button name="ios-skip-backward" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious}/>
+              <Ionicons button name="ios-skip-backward" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious} />
             </TouchableOpacity>
             <TouchableOpacity>
               {/*<View style={styles.playButton}>*/}
-                {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
+              {this.renderPlayerPlayPause(this.state.playState, styles.playPausePlayerIcon)}
               {/*</View>*/}
             </TouchableOpacity>
             <TouchableOpacity>
-              <Ionicons button name="ios-skip-forward" style={styles.controlPlayerIcon} onPress={this.onSkipNext}/>
+              <Ionicons button name="ios-skip-forward" style={styles.controlPlayerIcon} onPress={this.onSkipNext} />
             </TouchableOpacity>
           </View>
         </ImageBackground>}

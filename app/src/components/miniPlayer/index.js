@@ -257,8 +257,7 @@ class MiniPlayer extends Component {
 }
 
 const mapStateToProps = state => ({
-  miniPlayerState: state.miniPlayerState,
-  syncNavigation: state.syncNavigation
+  miniPlayerState: state.miniPlayerState, 
 });
 //
 const mapDispatchToProps = dispatch => ({

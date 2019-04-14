@@ -14,9 +14,12 @@ import {
   Body, Spinner
 } from "native-base";
 import axios from "axios";
-import {FlatList} from "react-native"
+import { FlatList } from "react-native"
 import View from "../../theme/components/View";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
+// import { ListItem } from 'react-native-elements';
+
+
 
 class ChartItem extends Component {
   constructor(props) {
@@ -36,72 +39,50 @@ class ChartItem extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    axios.get('http://vip.service.keeng.vn:8080/KeengWSRestful/ws/common/getRankDetail?item_type=1&rank_type=50')
+    const url = this.props.rankUrl;
+    axios.get(url)
       .then((res) => {
-        this._isMounted && this.setState({loading: false});
-        this._isMounted && this.setState({chart: res.data});
+        this._isMounted && this.setState({ loading: false });
+        this._isMounted && this.setState({ chart: res.data });
       })
   };
 
-  renderChart = () => {
-    if(this.state.chart.length !== 0) {
-      const chartItems = this.state.chart.data;
-      const chartContent = chartItems.map((item) => (
-        <ListItem style={{marginLeft: 13}} thumbnail key={item.id}>
-          <Left>
-            <Thumbnail square source={{uri: item.image}}/>
-          </Left>
-          <Body>
-          <Text>
-            {item.name}
-          </Text>
-          <Text numberOfLines={1} note>
-            {item.singer}
-          </Text>
-          </Body>
-          <Right style={{flexDirection: "row", alignItems: "center"}}>
-              <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
-              <Icon name="plus" size={20}/>
-          </Right>
-        </ListItem>
-      ));
-      return chartContent;
-    }
-    return null;
-  };
+  renderChart = ({ item }) => (
+    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
+      <Left>
+        <Thumbnail square source={{ uri: item.image }} />
+      </Left>
+      <Body>
+        <Text>
+          {item.name}
+        </Text>
+        <Text numberOfLines={1} note>
+          {item.singer}
+        </Text>
+      </Body>
+      <Right style={{ flexDirection: "row", alignItems: "center" }}>
+        <Icon name="control-play" size={20} style={{ marginRight: 15 }} />
+        <Icon name="plus" size={20} />
+      </Right>
+    </ListItem> 
+  );
 
-  render() {
-    const datas = this.state.chart.data;
-    // console.log(datas);
-    // return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
-    //   <List>
-    //     {this.renderChart()}
-    //   </List>
-    //   );
-    return (
-      <FlatList
-        data={datas}
-        renderItem={({item}) => <ListItem style={{marginLeft: 13}} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
-          <Left>
-            <Thumbnail square source={{uri: item.image}}/>
-          </Left>
-          <Body>
-          <Text>
-            {item.name}
-          </Text>
-          <Text numberOfLines={1} note>
-            {item.singer}
-          </Text>
-          </Body>
-          <Right style={{flexDirection: "row", alignItems: "center"}}>
-            <Icon name="control-play" size={20} style={{marginRight: 15 }}/>
-            <Icon name="plus" size={20}/>
-          </Right>
-        </ListItem> }
-        keyExtractor={(item, index) => index.toString()}
+render() {
+  const datas = this.state.chart.data;
+  // console.log(datas);
+  // return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
+  //   <List>
+  //     {this.renderChart()}
+  //   </List>
+  //   );
+  return (this.state.loading) ? (<Spinner color="#f27010" />) : (
+    <FlatList
+      data={datas}
+      renderItem={this.renderChart}
+      keyExtractor={(item, index) => index.toString()}
     />
-    )
-  }
+  )
+}
 }
 
 export default ChartItem;

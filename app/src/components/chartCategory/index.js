@@ -3,6 +3,10 @@ import { FlatList, ImageBackground } from "react-native";
 import { ListItem } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
 import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
+import NavigationService from "../../NavigationService";
+import { connect } from "react-redux";
+import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
+
 
 const vnChart = require('../../assets/chart-song-vn.png');
 const usChart = require('../../assets/chart-song-us.png');
@@ -12,24 +16,34 @@ const krChart = require('../../assets/chart-song-kpop.png');
 const categories = [
     {
         name: "BXH Việt Nam",
-        background: vnChart
+        background: vnChart,
+        url: "http://vip.service.keeng.vn:8080/KeengWSRestful/ws/common/getRankDetail?item_type=1&rank_type=50"
     },
     {
         name: "BXH US-UK",
-        background: usChart
+        background: usChart,
+        url: "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getRankDetail?item_type=1&rank_type=52"
     },
     {
         name: "BXH KPOP",
-        background: krChart
+        background: krChart,
+        url: "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getRankDetail?item_type=1&rank_type=51"
     },
 ]
 
 class CategoryComponent extends React.PureComponent {
 
-
-    goDetail = () => {
-        console.log("goToDetails");
+    goDetail = (url) => async () => {
+        await this.props.dispatch(miniPlayerState(false));
+        await NavigationService.navigate('ChartDetail', {url: url})
     }
+
+    openPlayer = async () => {
+        const currentTrack = this.state.currentTrack;
+        // await this.setState({loading: true});
+        await this.props.dispatch(miniPlayerState(false));
+        await NavigationService.navigate('Player', {currentTrack: currentTrack, playerState: this.state.playerState})
+      };
 
     keyExtractor = (item, index) => index.toString()
 
@@ -38,7 +52,7 @@ class CategoryComponent extends React.PureComponent {
             activeScale={0.95}
             friction={90}
             tension={100}
-            onPress={this.goDetail}
+            onPress={this.goDetail(item.url)}
             >
             <ImageBackground
                 source={item.background} style={{
@@ -62,4 +76,8 @@ class CategoryComponent extends React.PureComponent {
     }
 }
 
-export default CategoryComponent;
+const mapDispatchToProps = dispatch => ({
+    dispatch: dispatch
+  });
+
+export default connect(mapDispatchToProps)(CategoryComponent);

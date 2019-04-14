@@ -10,7 +10,7 @@ import {
   Body,
   Text
 } from "native-base";
-import {View, ScrollView} from "react-native";
+import { View, ScrollView } from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/AntDesign"
 import variables from "../../theme/variables/custom"
@@ -21,6 +21,7 @@ import CategoryComponent from "../../components/chartCategory";
 
 
 class ChartCategory extends React.PureComponent {
+  
   render() {
     return (
       <Container style={styles.container}>
@@ -31,15 +32,15 @@ class ChartCategory extends React.PureComponent {
         >
           <Left>
             <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24}/>
+              <Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
             </Button>
           </Left>
-          <Body style={{alignItems:"center", justifyContent: "center"}}>
-          <Title style={{color: "#FFF"}}>Bảng xếp hạng</Title>
+          <Body style={{ alignItems: "center", justifyContent: "center" }}>
+            <Title style={{ color: "#FFF" }}>Bảng xếp hạng</Title>
           </Body>
           <Right>
             <Button transparent>
-              <Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24}/>
+              <Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />
             </Button>
           </Right>
         </Header>
