@@ -50,15 +50,22 @@ import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
 import SeekBar from "../../components/seekBar";
 import LyricView from "../../components/lyricView";
+import { ButtonGroup } from 'react-native-elements';
 
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 const playerBackground = require("../../assets/bg.jpg");
+const contentHeight = "70%";
+const component1 = () => <Text>DS phát</Text>
+const component2 = () => <Text>Home</Text>
+const component3 = () => <Text>Lyric</Text>
+
 
 class Player extends Component {
   constructor(props) {
     super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    this.updateIndex = this  .updateIndex.bind(this)
     this.state = {
       playerState: 0,
       currentTrack: {},
@@ -67,11 +74,30 @@ class Player extends Component {
       modalVisible: false,
       presentPosition: 10,
       duration: 0,
-      playerStartValue: 0
+      playerStartValue: 0,
+      displayNowPlaying: false,
+      displayArtwork: true,
+      displayLyric: false,
+      selectedIndex: 1
     };
   }
   presentPosition = 0;
   _isMounted = false;
+
+  updateIndex(selectedIndex) {
+    this.setState({ selectedIndex: selectedIndex });
+    // console.log(selectedIndex);
+    if(selectedIndex == 0) {
+      this.setState({ displayNowPlaying: true, displayArtwork: false, displayLyric: false });
+    }
+    else if(selectedIndex == 1) {
+      this.setState({ displayNowPlaying: false, displayArtwork: true, displayLyric: false });
+    }
+    else if(selectedIndex == 2) {
+      this.setState({ displayNowPlaying: false, displayArtwork: false, displayLyric: true });
+    }
+  }
+
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -163,7 +189,7 @@ class Player extends Component {
       // self._isMounted && self.setState({ loading: false });      
     });
 
-    
+
     TrackPlayer.addEventListener("playback-track-changed", async (data) => {
       if (data.nextTrack) {
         const track = await TrackPlayer.getTrack(data.nextTrack);
@@ -199,7 +225,7 @@ class Player extends Component {
     // },1000);
 
     // setTimeout(await function () {
-      self._isMounted && self.setState({ loading: false });
+    self._isMounted && self.setState({ loading: false });
     // }, 500);
   }
 
@@ -256,6 +282,8 @@ class Player extends Component {
     const currentTrack = this.state.currentTrack;
     const duration = this.state.duration;
     console.log(this.state.currentTrack);
+    const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
+    const selectedIndex = this.state.selectedIndex;
 
 
 
@@ -266,76 +294,86 @@ class Player extends Component {
           // source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}
           source={playerBackground}
           style={styles.imageContainer}>
-          <Carousel
+          {/* <Carousel
             autoplay={false}
             loop={false}
             index={1}
-          >
-            <View style={{ height: "80%" }}>
-              <Text>
-                If you like React, you'll also like React Native.
+          > */}
+          {this.state.displayNowPlaying && <View style={{ height: contentHeight }}>
+            <Text>
+              If you like React, you'll also like React Native.
               </Text>
-              <Text>
-                Instead of 'div' and 'span', you'll use native components
-                like 'View' and 'Text'.
+            <Text>
+              Instead of 'div' and 'span', you'll use native components
+              like 'View' and 'Text'.
               </Text>
-            </View>
+          </View>}
 
-            <View style={{ height: "80%" }}>
-              <View noShadow transparent style={{ height: 70, paddingTop: 0, flexDirection: "row" }}>
-                <View style={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15 }}>
-                  <Button transparent onPress={this.goBack}>
-                    <Icon name="chevron-thin-down" style={{ color: variables.playerTextColor, marginLeft: 5 }} size={24} />
-                  </Button>
-                </View>
-                <View style={{ width: "70%", alignSelf: "center" }}>
-                  <TextTicker
-                    duration={5000}
-                    loop
-                    bounce
-                    repeatSpacer={10}
-                    marqueeDelay={0}
-                    style={{ color: variables.playerTextColor, fontSize: 15 }}
-                  // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
-                  >{currentTrack.title}</TextTicker>
-                  <Text style={{ color: variables.playerTextColor, fontSize: 10 }}>{currentTrack.artist}</Text>
-                </View>
+          {this.state.displayArtwork && <View style={{ height: contentHeight }}>
+            <View noShadow transparent style={{ height: 70, paddingTop: 0, flexDirection: "row" }}>
+              <View style={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15 }}>
+                <Button transparent onPress={this.goBack}>
+                  <Icon name="chevron-thin-down" style={{ color: variables.playerTextColor, marginLeft: 5 }} size={24} />
+                </Button>
               </View>
-              <View>
-                <ScrollView style={{ height: "100%" }}>
-                  <View style={styles.artworkPlayerView}>
-                    <AnimationArtWork currentTrack={currentTrack} styles={styles.artworkPlayer} />
-                  </View>
-                  <SeekBar duration={duration} />
-                  <View style={{ flexDirection: "row", height: 100 }}>
-                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
-                      <TouchableOpacity style={styles.toolbarButton}>
-                        <MaterialCommunityIcons name="information-outline" style={styles.toolbarIcon} />
-                      </TouchableOpacity>
-                    </View>
-                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
-                      <TouchableOpacity style={styles.toolbarButton}>
-                        <MaterialCommunityIcons name="heart-outline" style={styles.toolbarIcon} />
-                      </TouchableOpacity>
-                    </View>
-                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
-                      <PlayerMode />
-                      {/*<TouchableOpacity style={styles.toolbarButton}>*/}
-                      {/*<MaterialCommunityIcons name="priority-high" style={styles.toolbarIcon}/>*/}
-                      {/*</TouchableOpacity>*/}
-                    </View>
-                    <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
-                      <PlayerAction />
-                    </View>
-                  </View>
-                </ScrollView>
+              <View style={{ width: "70%", alignSelf: "center" }}>
+                <TextTicker
+                  duration={5000}
+                  loop
+                  bounce
+                  repeatSpacer={10}
+                  marqueeDelay={0}
+                  style={{ color: variables.playerTextColor, fontSize: 15 }}
+                // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
+                >{currentTrack.title}</TextTicker>
+                <Text style={{ color: variables.playerTextColor, fontSize: 10 }}>{currentTrack.artist}</Text>
               </View>
             </View>
-
-            <View style={{ height: "80%" }}>
-              <LyricView currentTrack={currentTrack} /> 
+            <View>
+              <ScrollView style={{ height: "100%" }}>
+                <View style={styles.artworkPlayerView}>
+                  <AnimationArtWork currentTrack={currentTrack} styles={styles.artworkPlayer} />
+                </View>
+                <SeekBar duration={duration} />
+                <View style={{ flexDirection: "row", height: 80 }}>
+                  <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
+                    <TouchableOpacity style={styles.toolbarButton}>
+                      <MaterialCommunityIcons name="information-outline" style={styles.toolbarIcon} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
+                    <TouchableOpacity style={styles.toolbarButton}>
+                      <MaterialCommunityIcons name="heart-outline" style={styles.toolbarIcon} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
+                    <PlayerMode />
+                    {/*<TouchableOpacity style={styles.toolbarButton}>*/}
+                    {/*<MaterialCommunityIcons name="priority-high" style={styles.toolbarIcon}/>*/}
+                    {/*</TouchableOpacity>*/}
+                  </View>
+                  <View style={{ width: "25%", alignItems: "center", alignSelf: "center" }}>
+                    <PlayerAction />
+                  </View>
+                </View>
+              </ScrollView>
             </View>
-          </Carousel>
+          </View>}
+
+          {this.state.displayLyric && <View style={{ height: contentHeight }}>
+            <LyricView currentTrack={currentTrack} />
+          </View>}
+          {/* </Carousel> */}
+
+
+          <View>
+            <ButtonGroup
+              onPress={this.updateIndex}
+              selectedIndex={selectedIndex}
+              buttons={buttons}
+              containerStyle={{ height: 35, marginTop: 20, marginBottom: 20 }} />
+          </View>
+
           <View style={styles.songControlPlayerView}>
             <TouchableOpacity>
               <Ionicons button name="ios-skip-backward" style={styles.controlPlayerIcon} onPress={this.onSkipPrevious} />
