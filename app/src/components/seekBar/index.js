@@ -16,7 +16,7 @@ class SeekBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      presentPosition: 0,
+      presentPosition: -1,
       duration: 0,
     };
   };

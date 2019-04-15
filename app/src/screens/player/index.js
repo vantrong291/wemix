@@ -152,22 +152,36 @@ class Player extends Component {
     //   this._isMounted && this.setState({ presentPosition: position });
     // });
 
-    // TrackPlayer.addEventListener("playback-track-changed", async (data) => {
-    //   if (data.nextTrack) {
-    //     const track = await TrackPlayer.getTrack(data.nextTrack);
-    //     this._isMounted && this.setState({ currentTrack: track });
+    await TrackPlayer.getCurrentTrack().then(async (trackId) => {
+      // console.log(trackId);
+      const track = await TrackPlayer.getTrack(trackId);
+      this._isMounted && this.setState({ currentTrack: track });
+    })
+
+    await TrackPlayer.getDuration().then((duration) => {
+      // console.log(duration);
+      this._isMounted && this.setState({ duration: duration });
+      // self._isMounted && self.setState({ loading: false });      
+    });
+
     
-        // TrackPlayer.getDuration().then((duration) => {
-        //   console.log(duration);
-        //   this._isMounted && this.setState({ duration: duration });
-        // });
-    
+    TrackPlayer.addEventListener("playback-track-changed", async (data) => {
+      if (data.nextTrack) {
+        const track = await TrackPlayer.getTrack(data.nextTrack);
+        this._isMounted && this.setState({ currentTrack: track });
+        // console.log(track)
+
+        TrackPlayer.getDuration().then((duration) => {
+          // console.log(duration);
+          this._isMounted && this.setState({ duration: duration });
+        });
+
         // setTimeout(await function() {
         //   self._isMounted && self.setState({ loading: false });
         // }, 1000);
-      // }
-    // });
-    
+      }
+    });
+
     const { navigation } = this.props;
     const playerState = navigation.getParam('playerState');
     this._isMounted && this.setState({ playerState: playerState });
@@ -185,9 +199,9 @@ class Player extends Component {
     //   })
     // },1000);
 
-    // setTimeout(await function() {
-    self._isMounted && self.setState({ loading: false });
-    // }, 100);
+    // setTimeout(await function () {
+      self._isMounted && self.setState({ loading: false });
+    // }, 500);
   }
 
   setModalVisible(visible) {
@@ -222,24 +236,30 @@ class Player extends Component {
 
   render() {
     // let duration = this.state.duration;
-    let presentPosition = this.presentPosition;
+    // let presentPosition = this.presentPosition;
     // console.log(this.state.playerState);
 
-    const de = {
-      id: 1,
-      title: "La danza del fuego",
-      author: "Mago de Oz",
-      album: "Finisterra",
-      genre: "Folk",
-      duration: 121, // miliseconds
-    };
+    // const de = {
+    //   id: 1,
+    //   title: "La danza del fuego",
+    //   author: "Mago de Oz",
+    //   album: "Finisterra",
+    //   genre: "Folk",
+    //   duration: 121, // miliseconds
+    // };
 
-    const { navigation } = this.props;
-    const currentTrack = navigation.getParam('currentTrack', de);
-    const duration = navigation.getParam('duration');    
-    // const duration = parseInt(currentTrack.duration) / 1000;
-    console.log("fr "+duration);
-    
+    // const { navigation } = this.props;
+    // const currentTrack = navigation.getParam('currentTrack', de);
+    // const duration = navigation.getParam('duration');    
+    // // const duration = parseInt(currentTrack.duration) / 1000;
+    // console.log("fr "+duration);
+
+    const currentTrack = this.state.currentTrack;
+    const duration = this.state.duration;
+    console.log(this.state.currentTrack);
+
+
+
     return (
       <Container style={styles.container}>
         {!this.state.loading && <ImageBackground
@@ -277,10 +297,8 @@ class Player extends Component {
                     repeatSpacer={10}
                     marqueeDelay={0}
                     style={{ color: variables.playerTextColor, fontSize: 15 }}
-                    // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
-                    onPress={() => {
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}>{currentTrack.title}</TextTicker>
+                  // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
+                  >{currentTrack.title}</TextTicker>
                   <Text style={{ color: variables.playerTextColor, fontSize: 10 }}>{currentTrack.artist}</Text>
                 </View>
               </View>
