@@ -43,7 +43,7 @@ import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
 import variables from "../../theme/variables/custom";
 import Slider from "react-native-slider";
 import Carousel from "react-native-banner-carousel";
-import {secondToMinuteString} from "../../api/TimeConvert";
+import { secondToMinuteString } from "../../api/TimeConvert";
 import RNModal from "react-native-modal";
 import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
@@ -133,12 +133,14 @@ class MiniPlayer extends Component {
         const track = await TrackPlayer.getTrack(data.nextTrack);
         this._isMounted && this.setState({ currentTrack: track });
 
-        TrackPlayer.getDuration().then((duration) => {
-          console.log(duration);
-          this._isMounted && this.setState({ duration: duration });
-        });
+        setTimeout(() => {
+          TrackPlayer.getDuration().then((duration) => {
+            console.log("dr " + duration);
+            this._isMounted && this.setState({ duration: duration });
+          })
+        }, 2000);
 
-        setTimeout(await function() {
+        setTimeout(await function () {
           self._isMounted && self.setState({ loading: false });
         }, 1000);
       }
@@ -174,14 +176,14 @@ class MiniPlayer extends Component {
 
   renderPlayPause = (playState, style) => {
     return (this.state.playerState === 3) ?
-      <Icon name="controller-paus" style={style} onPress={this.onPause}/> :
-      <Icon name="controller-play" style={style} onPress={this.onPlay}/>;
+      <Icon name="controller-paus" style={style} onPress={this.onPause} /> :
+      <Icon name="controller-play" style={style} onPress={this.onPlay} />;
   };
 
   renderPlayerPlayPause = (playState, style) => {
     return (this.state.playerState === 3) ?
-      <Ionicons name="ios-pause" style={style} onPress={this.onPause}/> :
-      <Ionicons name="ios-play" style={[style, {left: 3}]} onPress={this.onPlay}/>;
+      <Ionicons name="ios-pause" style={style} onPress={this.onPause} /> :
+      <Ionicons name="ios-play" style={[style, { left: 3 }]} onPress={this.onPlay} />;
   };
 
   renderPlayer = () => {
@@ -197,7 +199,7 @@ class MiniPlayer extends Component {
     const currentTrack = this.state.currentTrack;
     // await this.setState({loading: true});
     await this.props.dispatch(miniPlayerState(false));
-    await NavigationService.navigate('Player', {currentTrack: currentTrack, playerState: this.state.playerState})
+    await NavigationService.navigate('Player', { currentTrack: currentTrack, playerState: this.state.playerState, duration: this.state.duration })
   };
 
   render() {
@@ -226,13 +228,13 @@ class MiniPlayer extends Component {
 
     return (!this.state.loading && this.props.miniPlayerState.display) ? (
       <View style={styles.miniPlayer}>
-        <View style={styles.artworkView}>
+        <TouchableOpacity style={styles.artworkView} onPress={this.openPlayer}>
           {/*<Animated.Image rounded*/}
-                          {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
-                          {/*style={[styles.artworkMiniPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
-          <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkMiniPlayer} playing={this.state.playerState === 3}/>
-        </View>
-        <View style={styles.songInfoView}>
+          {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
+          {/*style={[styles.artworkMiniPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
+          <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkMiniPlayer} playing={this.state.playerState === 3} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.songInfoView} onPress={this.openPlayer}>
           <TextTicker
             duration={5000}
             loop
@@ -240,24 +242,23 @@ class MiniPlayer extends Component {
             repeatSpacer={10}
             marqueeDelay={0}
             style={styles.songTitle}
-            onPress={this.openPlayer}
-            // onPress={() => {
-            //   this.setModalVisible(!this.state.modalVisible);
-            // }}>
+          // onPress={() => {
+          //   this.setModalVisible(!this.state.modalVisible);
+          // }}>
           >{this.state.currentTrack.title}</TextTicker>
           <Text style={styles.songArtist}>{this.state.currentTrack.artist}</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.songControlMiniPlayerView}>
-          <Icon button name="controller-jump-to-start" style={styles.controlMiniPlayerIcon} onPress={this.onSkipPrevious}/>
+          <Icon button name="controller-jump-to-start" style={styles.controlMiniPlayerIcon} onPress={this.onSkipPrevious} />
           {this.renderPlayPause(this.state.playState, styles.controlMiniPlayerIcon)}
-          <Icon button name="controller-next" style={styles.controlMiniPlayerIcon} onPress={this.onSkipNext}/>
+          <Icon button name="controller-next" style={styles.controlMiniPlayerIcon} onPress={this.onSkipNext} />
         </View>
       </View>) : null;
   }
 }
 
 const mapStateToProps = state => ({
-  miniPlayerState: state.miniPlayerState, 
+  miniPlayerState: state.miniPlayerState,
 });
 //
 const mapDispatchToProps = dispatch => ({

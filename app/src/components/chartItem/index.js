@@ -48,7 +48,7 @@ class ChartItem extends Component {
   };
 
   renderChart = ({ item }) => (
-    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
+    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed " + item.name)}>
       <Left>
         <Thumbnail square source={{ uri: item.image }} />
       </Left>

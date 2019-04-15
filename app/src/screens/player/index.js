@@ -234,8 +234,9 @@ class Player extends Component {
 
     const { navigation } = this.props;
     const currentTrack = navigation.getParam('currentTrack', de);
-    const duration = parseInt(currentTrack.duration) / 1000;
-    // console.log(currentTrack.duration);
+    const duration = navigation.getParam('duration');    
+    // const duration = parseInt(currentTrack.duration) / 1000;
+    console.log("fr "+duration);
 
     return (
       <Container style={styles.container}>
