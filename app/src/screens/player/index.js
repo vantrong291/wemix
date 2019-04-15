@@ -156,18 +156,18 @@ class Player extends Component {
     //   if (data.nextTrack) {
     //     const track = await TrackPlayer.getTrack(data.nextTrack);
     //     this._isMounted && this.setState({ currentTrack: track });
-    //
-    //     TrackPlayer.getDuration().then((duration) => {
-    //       console.log(duration);
-    //       this._isMounted && this.setState({ duration: duration });
-    //     });
-    //
-    //     setTimeout(await function() {
-    //       self._isMounted && self.setState({ loading: false });
-    //     }, 1000);
-    //   }
+    
+        // TrackPlayer.getDuration().then((duration) => {
+        //   console.log(duration);
+        //   this._isMounted && this.setState({ duration: duration });
+        // });
+    
+        // setTimeout(await function() {
+        //   self._isMounted && self.setState({ loading: false });
+        // }, 1000);
+      // }
     // });
-    //
+    
     const { navigation } = this.props;
     const playerState = navigation.getParam('playerState');
     this._isMounted && this.setState({ playerState: playerState });
@@ -218,6 +218,8 @@ class Player extends Component {
     }, 100)
   };
 
+  // shouldComponentUpdate
+
   render() {
     // let duration = this.state.duration;
     let presentPosition = this.presentPosition;
@@ -237,7 +239,7 @@ class Player extends Component {
     const duration = navigation.getParam('duration');    
     // const duration = parseInt(currentTrack.duration) / 1000;
     console.log("fr "+duration);
-
+    
     return (
       <Container style={styles.container}>
         {!this.state.loading && <ImageBackground

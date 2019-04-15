@@ -224,7 +224,7 @@ class MiniPlayer extends Component {
     let duration = this.state.duration;
     let presentPosition = this.state.presentPosition;
 
-    console.log(this.state.currentTrack);
+    // console.log(this.state.currentTrack);
 
     return (!this.state.loading && this.props.miniPlayerState.display) ? (
       <View style={styles.miniPlayer}>
