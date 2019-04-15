@@ -49,8 +49,7 @@ import RNModal from "react-native-modal";
 import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
 import SeekBar from "../../components/seekBar";
-
-
+import LyricView from "../../components/lyricView";
 
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
@@ -334,13 +333,7 @@ class Player extends Component {
             </View>
 
             <View style={{ height: "80%" }}>
-              <Text>
-                If you like React, you'll also like React Native.
-              </Text>
-              <Text>
-                Instead of 'div' and 'span', you'll use native components
-                like 'View' and 'Text'.
-              </Text>
+              <LyricView currentTrack={currentTrack} /> 
             </View>
           </Carousel>
           <View style={styles.songControlPlayerView}>

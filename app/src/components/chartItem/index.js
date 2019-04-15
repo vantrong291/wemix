@@ -16,9 +16,13 @@ import {
 import axios from "axios";
 import { FlatList } from "react-native"
 import View from "../../theme/components/View";
-import Icon from "react-native-vector-icons/SimpleLineIcons"
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 // import { ListItem } from 'react-native-elements';
+import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import TrackPlayer from "../trackPlayer";
 
+const imgUrl = "http://vip.img.cdn.keeng.vn";
+const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
 
 class ChartItem extends Component {
@@ -47,42 +51,78 @@ class ChartItem extends Component {
       })
   };
 
+  onItemPress = (item) => async () => {
+    await TrackPlayer.reset();
+    await TrackPlayer.add({
+      id: item.id,
+      url: item.download_url,
+      title: item.name,
+      artist: item.singer,
+      artwork: item.image310,
+      album: item.album ? item.album : "Chưa xác định",
+      genre: item.genre ? item.genre : "Chưa xác định",
+      description: item.lyric
+      // duration: song.duration,
+    });
+    await TrackPlayer.play();
+  }
+
+  onAddNowPlayingPress = (item) => async () => {
+    await TrackPlayer.add({
+      id: item.id,
+      url: item.download_url,
+      title: item.name,
+      artist: item.singer,
+      artwork: item.image310,
+      album: item.album ? item.album : "Chưa xác định",
+      genre: item.genre ? item.genre : "Chưa xác định",
+      description: item.lyric
+      // duration: song.duration,
+    });
+    // await TrackPlayer.play();
+  }
+
   renderChart = ({ item }) => (
-    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed " + item.name)}>
+    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
-        <Thumbnail square source={{ uri: item.image }} />
+        <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
+          <Thumbnail square source={{ uri: item.image }} />
+        </TouchableScale>
       </Left>
       <Body>
-        <Text>
-          {item.name}
-        </Text>
-        <Text numberOfLines={1} note>
-          {item.singer}
-        </Text>
+        <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
+          <Text>
+            {item.name}
+          </Text>
+          <Text numberOfLines={1} note>
+            {item.singer}
+          </Text>
+        </TouchableScale>
       </Body>
       <Right style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon name="control-play" size={20} style={{ marginRight: 15 }} />
-        <Icon name="plus" size={20} />
+        <TouchableScale onPress={this.onAddNowPlayingPress(item)}>
+          <Icon name="playlist-plus" size={28} />
+        </TouchableScale>
       </Right>
-    </ListItem> 
+    </ListItem>
   );
 
-render() {
-  const datas = this.state.chart.data;
-  // console.log(datas);
-  // return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
-  //   <List>
-  //     {this.renderChart()}
-  //   </List>
-  //   );
-  return (this.state.loading) ? (<Spinner color="#f27010" />) : (
-    <FlatList
-      data={datas}
-      renderItem={this.renderChart}
-      keyExtractor={(item, index) => index.toString()}
-    />
-  )
-}
+  render() {
+    const datas = this.state.chart.data;
+    // console.log(datas);
+    // return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
+    //   <List>
+    //     {this.renderChart()}
+    //   </List>
+    //   );
+    return (this.state.loading) ? (<Spinner color="#f27010" />) : (
+      <FlatList
+        data={datas}
+        renderItem={this.renderChart}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    )
+  }
 }
 
 export default ChartItem;

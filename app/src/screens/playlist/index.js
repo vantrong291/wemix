@@ -10,7 +10,7 @@ import {
   Body,
   Text, ListItem, Thumbnail, H1, H2, H3, List, Spinner
 } from "native-base";
-import {View, Alert, FlatList, AsyncStorage, ScrollView} from "react-native";
+import { View, Alert, FlatList, AsyncStorage, ScrollView } from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import { syncNavigationProps } from "../../redux/actions";
 
 import MusicFiles from "react-native-get-music-files"
-import {check, checkMultiple, ANDROID_PERMISSIONS, RESULTS} from "react-native-permissions"
+import { check, checkMultiple, ANDROID_PERMISSIONS, RESULTS } from "react-native-permissions"
 // const Permissions = require('react-native-permissions').default;
 import TrackPlayer from "../../components/trackPlayer";
 import MiniPlayer from "../../components/miniPlayer";
@@ -48,8 +48,8 @@ class Playlist extends Component {
   componentDidMount() {
     this._isMounted = true;
     AsyncStorage.getItem("localSongs").then(tracks => {
-      this._isMounted &&  this.setState({ localSongs: JSON.parse(tracks)});
-      this._isMounted &&  this.setState({ loading: false});
+      this._isMounted && this.setState({ localSongs: JSON.parse(tracks) });
+      this._isMounted && this.setState({ loading: false });
       // console.log(tracks);
     }).then(() => {
       // console.log(this.state.localSongs);
@@ -101,21 +101,25 @@ class Playlist extends Component {
       genre: song.genre ? song.genre : "Chưa xác định",
       duration: song.duration,
     });
-    await TrackPlayer.play();
+    // await TrackPlayer.play();
   }
 
   renderItem = ({ item }) => (
-    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={this.onPlay(item)}>
+    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
-        <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover} />
+        <TouchableScale activeScale={0.95} onPress={this.onPlay(item)}>
+          <Thumbnail square source={(item.cover) ? { uri: item.cover } : defaltCover} />
+        </TouchableScale>
       </Left>
       <Body>
-        <Text numberOfLines={1}>
-          {item.title}
-        </Text>
-        <Text numberOfLines={1} note>
-          {item.author}
-        </Text>
+        <TouchableScale activeScale={0.95} onPress={this.onPlay(item)}>
+          <Text numberOfLines={1}>
+            {item.title}
+          </Text>
+          <Text numberOfLines={1} note>
+            {item.author}
+          </Text>
+        </TouchableScale>
       </Body>
       <Right style={{ flexDirection: "row", alignItems: "center" }}>
         <TouchableScale onPress={this.onAddNowPlayingPress(item)}>
@@ -147,15 +151,15 @@ class Playlist extends Component {
           // style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}
           androidStatusBarColor={variables.secondaryColor}
           iosBarStyle="light-content"
-          // span
+        // span
         >
           <Left>
             <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Icon name="menu" style={{ color: "#FFF", marginLeft: 5 }} size={24}/>
+              <Icon name="menu" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
             </Button>
           </Left>
           <Body>
-            <Title style={{color: "#FFF"}}>Nhạc của tôi</Title>
+            <Title style={{ color: "#FFF" }}>Nhạc của tôi</Title>
           </Body>
           <Right>
             <Button transparent>
@@ -165,10 +169,10 @@ class Playlist extends Component {
         </Header>
 
         <Content padder>
-          <ScrollView style={{paddingBottom: 50}}>
-            <H3 style={{margin:13, fontWeight: "bold"}}>Nhạc Offline</H3>
+          <ScrollView style={{ paddingBottom: 50 }}>
+            <H3 style={{ margin: 13, fontWeight: "bold" }}>Nhạc Offline</H3>
             {localSongs && this.rendeLocalSong(localSongs)}
-            
+
             {/* {this.state.localSongs && this.state.localSongs.length !== 0 && <List dataArray={this.state.localSongs}
                                             renderRow={item =>
                                                     <ListItem style={{marginLeft: 13 }} thumbnail key={item.id} onPress={() => this.onPlay(item)}>
@@ -191,7 +195,7 @@ class Playlist extends Component {
                                                     }
                                             />} */}
             {/* {!this.state.localSongs && <Spinner color='#fff'/>} */}
-              {/*{ this._isMounted && this.renderLocalList(this.state.localSongs, this.onPlay)}*/}
+            {/*{ this._isMounted && this.renderLocalList(this.state.localSongs, this.onPlay)}*/}
           </ScrollView>
         </Content>
         {/*<MiniPlayer/>*/}

@@ -19,6 +19,8 @@ import ChartItem from "../../components/chartItem";
 import { connect } from "react-redux"
 import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
 
+const imgUrl = "http://vip.img.cdn.keeng.vn";
+const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
 
 class Chart extends React.PureComponent {
@@ -45,25 +47,25 @@ class Chart extends React.PureComponent {
     return true;
   }
 
-  renderChart = ({ item }) => (
-    <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
-      <Left>
-        <Thumbnail square source={{ uri: item.image }} />
-      </Left>
-      <Body>
-        <Text>
-          {item.name}
-        </Text>
-        <Text numberOfLines={1} note>
-          {item.singer}
-        </Text>
-      </Body>
-      <Right style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon name="control-play" size={20} style={{ marginRight: 15 }} />
-        <Icon name="plus" size={20} />
-      </Right>
-    </ListItem>
-  );
+  // renderChart = ({ item }) => (
+  //   <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
+  //     <Left>
+  //       <Thumbnail square source={{ uri: item.image }} />
+  //     </Left>
+  //     <Body>
+  //       <Text>
+  //         {item.name}
+  //       </Text>
+  //       <Text numberOfLines={1} note>
+  //         {item.singer}
+  //       </Text>
+  //     </Body>
+  //     <Right style={{ flexDirection: "row", alignItems: "center" }}>
+  //       <Icon name="control-play" size={20} style={{ marginRight: 15 }} />
+  //       <Icon name="plus" size={20} />
+  //     </Right>
+  //   </ListItem>
+  // );
 
   render() {
     const { navigation } = this.props;
