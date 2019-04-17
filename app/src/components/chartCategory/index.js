@@ -34,16 +34,16 @@ const categories = [
 class CategoryComponent extends React.PureComponent {
 
     goDetail = (url) => async () => {
-        await this.props.dispatch(miniPlayerState(false));
+        // await this.props.dispatch(miniPlayerState(false));
         await NavigationService.navigate('ChartDetail', {url: url})
     };
 
-    openPlayer = async () => {
-        const currentTrack = this.state.currentTrack;
-        // await this.setState({loading: true});
-        await this.props.dispatch(miniPlayerState(false));
-        await NavigationService.navigate('Player', {currentTrack: currentTrack, playerState: this.state.playerState})
-      };
+    // openPlayer = async () => {
+    //     const currentTrack = this.state.currentTrack;
+    //     // await this.setState({loading: true});
+    //     await this.props.dispatch(miniPlayerState(false));
+    //     await NavigationService.navigate('Player', {currentTrack: currentTrack, playerState: this.state.playerState})
+    //   };
 
     keyExtractor = (item, index) => index.toString();
 

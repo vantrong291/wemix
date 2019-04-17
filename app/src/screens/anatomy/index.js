@@ -6,17 +6,38 @@ import {
   Content,
   Text,
   Button,
-  Icon,
   Footer,
   FooterTab,
   Left,
   Right,
   Body
 } from "native-base";
-
 import styles from "./styles";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import { BackHandler } from "react-native";
 
 class Anatomy extends Component {
+  constructor(props) {
+    super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  async handleBackButtonClick() {
+    await this.props.navigation.goBack();
+    // let self = this;
+    // setTimeout(await function () {
+    //   self.props.dispatch(miniPlayerState(true));
+    // }, 100);
+    return true;
+  }
   render() {
     return (
       <Container style={styles.container}>
@@ -24,9 +45,9 @@ class Anatomy extends Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.openDrawer()}
+              onPress={() => this.props.navigation.goBack()}
             >
-              <Icon name="ios-menu" />
+              <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 5 }} size={24}/>
             </Button>
           </Left>
           <Body>

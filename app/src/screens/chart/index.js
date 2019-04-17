@@ -13,7 +13,7 @@ import {
 } from "native-base";
 import { View, ScrollView, BackHandler } from "react-native";
 import styles from "./styles";
-import Icon from "react-native-vector-icons/AntDesign"
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
 import MiniPlayer from "../../components/miniPlayer";
 import ChartItem from "../../components/chartItem";
@@ -26,7 +26,7 @@ const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
 class Chart extends React.PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
@@ -42,9 +42,9 @@ class Chart extends React.PureComponent {
     await this.props.navigation.goBack();
     // await this.props.dispatch(miniPlayerState(true));
     let self = this;
-    setTimeout(await function () {
-      self.props.dispatch(miniPlayerState(true));
-    }, 100);
+    // setTimeout(await function () {
+    //   self.props.dispatch(miniPlayerState(true));
+    // }, 100);
     return true;
   }
 
@@ -82,33 +82,31 @@ class Chart extends React.PureComponent {
         >
           <Left>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
+              <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
             </Button>
           </Left>
           <Body style={{ alignItems: "center", justifyContent: "center" }}>
             <Title style={{ color: "#FFF" }}>Bảng xếp hạng</Title>
           </Body>
           <Right>
-            <Button transparent>
-              <Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />
-            </Button>
+            {/*<Button transparent>*/}
+              {/*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />*/}
+            {/*</Button>*/}
           </Right>
-
         </Header>
 
         <Content padder>
-          <ScrollView>
+          <ScrollView  style={{paddingBottom: 50}}>
             <ChartItem rankUrl={url} />
           </ScrollView>
         </Content>
         <Footer>
           <FooterTab>
             <Button active full>
-              <Text>Footer</Text>
+              <Text>Nghe tất cả</Text>
             </Button>
           </FooterTab>
         </Footer>
-
         {/*<MiniPlayer/>*/}
       </Container>
     );

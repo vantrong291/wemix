@@ -46,7 +46,7 @@ class ChartCategory extends React.PureComponent {
         </Header>
 
         <Content padder>
-          <ScrollView>
+          <ScrollView style={{paddingBottom: 50}}>
             <CategoryComponent/>
           </ScrollView>
         </Content>

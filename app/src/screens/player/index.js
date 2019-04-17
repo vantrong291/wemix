@@ -57,9 +57,9 @@ import { ButtonGroup } from 'react-native-elements';
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 const playerBackground = require("../../assets/bg.jpg");
 const contentHeight = "70%";
-const component1 = () => <Text>DS phát</Text>
-const component2 = () => <Text>Home</Text>
-const component3 = () => <Text>Lyric</Text>
+const component1 = () => <Text>DS phát</Text>;
+const component2 = () => <Text>Home</Text>;
+const component3 = () => <Text>Lyric</Text>;
 
 
 class Player extends Component {
@@ -182,7 +182,7 @@ class Player extends Component {
       // console.log(trackId);
       const track = await TrackPlayer.getTrack(trackId);
       this._isMounted && this.setState({ currentTrack: track });
-    })
+    });
 
     await TrackPlayer.getDuration().then((duration) => {
       // console.log(duration);
