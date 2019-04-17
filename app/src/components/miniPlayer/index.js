@@ -204,34 +204,14 @@ class MiniPlayer extends Component {
 
   render() {
 
-    // // if(this.props.syncNavigation.navigation) {
-    // //   console.log(this.props.syncNavigation.navigation.state.isDrawerOpen);
-    // //
-    // //   // console.log(this.props.syncNavigation.navigation.state.isDrawerOpen);
-    // //   // console.log(this.props.syncNavigation);
-    // //   // const parent = this.props.syncNavigation.navigation.dangerouslyGetParent();
-    // //   // const isDrawerOpen = parent && parent.state && parent.state.isDrawerOpen;
-    // //   //
-    // //   // // console.log(this.props.syncNavigation);
-    // //   // console.log(parent);
-    // }
-
-    // const RotateData = this.RotateValueHolder.interpolate({
-    //   inputRange: [0, 1],
-    //   outputRange: ["0deg", "360deg"]
-    // });
-
     let duration = this.state.duration;
     let presentPosition = this.state.presentPosition;
 
-    // console.log(this.state.currentTrack);
+    // console.log("m" + this.props.miniPlayerState.display);
 
     return (!this.state.loading && this.props.miniPlayerState.display) ? (
       <View style={styles.miniPlayer}>
         <TouchableOpacity style={styles.artworkView} onPress={this.openPlayer}>
-          {/*<Animated.Image rounded*/}
-          {/*source={(this.state.currentTrack.artwork) ? { uri: this.state.currentTrack.artwork } : defaultArtwork}*/}
-          {/*style={[styles.artworkMiniPlayer, { transform: [{ rotate: RotateData }] }]}/>*/}
           <AnimationArtWork currentTrack={this.state.currentTrack} styles={styles.artworkMiniPlayer} playing={this.state.playerState === 3} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.songInfoView} onPress={this.openPlayer}>
@@ -242,9 +222,6 @@ class MiniPlayer extends Component {
             repeatSpacer={10}
             marqueeDelay={0}
             style={styles.songTitle}
-          // onPress={() => {
-          //   this.setModalVisible(!this.state.modalVisible);
-          // }}>
           >{this.state.currentTrack.title}</TextTicker>
           <Text style={styles.songArtist}>{this.state.currentTrack.artist}</Text>
         </TouchableOpacity>

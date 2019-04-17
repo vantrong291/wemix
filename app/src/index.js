@@ -162,34 +162,34 @@ const Switcher = createMaterialTopTabNavigator(
 
 // const MySwitcher = createAppContainer(AppSwitcher);
 
-class Sw extends React.Component {
-  render() {
-    return <Switcher/>;
-  }
-}
+// class Sw extends React.Component {
+//   render() {
+//     return <Switcher/>;
+//   }
+// }
 
 
-const Drawer = createDrawerNavigator(
-  {
-    // Login: { screen: Login },
-    // Signup: { screen: Signup },
-    Switcher: { screen: Switcher },
-    Home: { screen: Home },
-    Anatomy: { screen: Anatomy },
-    Header: { screen: Header },
-  },
-  {
-    initialRouteName: "Switcher",
-    contentOptions: {
-      activeTintColor: "#e91e63"
-    },
-    contentComponent: props => <SideBar {...props} />
-  }
-);
+// const Drawer = createDrawerNavigator(
+//   {
+//     // Login: { screen: Login },
+//     // Signup: { screen: Signup },
+//     Switcher: { screen: Switcher },
+//     Home: { screen: Home },
+//     Anatomy: { screen: Anatomy },
+//     Header: { screen: Header },
+//   },
+//   {
+//     initialRouteName: "Switcher",
+//     contentOptions: {
+//       activeTintColor: "#e91e63"
+//     },
+//     contentComponent: props => <SideBar {...props} />
+//   }
+// );
 
 class Main extends React.Component {
   render() {
-    return <Drawer/>;
+    return <Switcher/>;
   }
 }
 
@@ -200,6 +200,8 @@ const AppStackNavigator = createStackNavigator(
     Main: { screen: Main },
     Home: { screen: Home},
     ChartDetail: { screen: Chart },
+    Anatomy: { screen: Anatomy },
+    Header: { screen: Header },
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
     Header3: { screen: Header3 },

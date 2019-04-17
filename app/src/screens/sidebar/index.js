@@ -82,8 +82,10 @@ class SideBar extends Component {
   };
 
   updateMiniPlayerState = (state) => {
-    this.props.dispatch(miniPlayerState(state));
+    console.log("s" + state);
+    // this.props.dispatch(miniPlayerState(state));
   };
+
 
   componentWillReceiveProps(nextProps){
     // this._isMounted && this.setState({drawerState: !nextProps.navigation.state.isDrawerOpen});

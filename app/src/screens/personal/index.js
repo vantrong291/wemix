@@ -14,6 +14,7 @@ import {connect} from "react-redux";
 import firebase from "react-native-firebase";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import NavigationService from "../../NavigationService";
 import { loginSuccess, logoutSuccess, miniPlayerState, syncNavigationProps } from "../../redux/actions";
 const drawerCover = require("../../assets/cover-personal.jpeg");
 const drawerImage = require("../../assets/logo-kitchen-sink.png");
@@ -36,17 +37,11 @@ const datas = [
 
 ];
 
-class SideBar extends Component {
+class Personal extends React.PureComponent {
   constructor(props) {
     super(props);
     this._isMounted = false;
-    this.state = {
-      shadowOffsetWidth: 1,
-      shadowRadius: 4,
-      drawerState: false
-    };
   }
-
 
   renderUserContainer = () => {
     if(this.props.auth.isAuthenticated) {
@@ -82,15 +77,15 @@ class SideBar extends Component {
     }
   };
 
-  updateMiniPlayerState = (state) => {
-    this.props.dispatch(miniPlayerState(state));
-  };
-
-  componentWillReceiveProps(nextProps){
-    // this._isMounted && this.setState({drawerState: !nextProps.navigation.state.isDrawerOpen});
-    // this._isMounted && console.log(this.state.drawerState);
-    this._isMounted && this.updateMiniPlayerState(!nextProps.navigation.state.isDrawerOpen);
-  }
+  // updateMiniPlayerState = (state) => {
+  //   this.props.dispatch(miniPlayerState(state));
+  // };
+  //
+  // componentWillReceiveProps(nextProps){
+  //   // this._isMounted && this.setState({drawerState: !nextProps.navigation.state.isDrawerOpen});
+  //   // this._isMounted && console.log(this.state.drawerState);
+  //   this._isMounted && this.updateMiniPlayerState(!nextProps.navigation.state.isDrawerOpen);
+  // }
 
 
   componentDidMount() {
@@ -125,7 +120,7 @@ class SideBar extends Component {
               <ListItem
                 button
                 noBorder
-                onPress={() => this.props.navigation.navigate(data.route)}
+                onPress={() => NavigationService.navigate(data.route)}
               >
                 <Left>
                   <Icon
@@ -187,4 +182,4 @@ const mapDispatchToProps = dispatch => ({
   dispatch: dispatch
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default connect(mapStateToProps, mapDispatchToProps)(Personal);

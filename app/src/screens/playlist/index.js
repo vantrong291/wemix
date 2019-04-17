@@ -15,7 +15,7 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
 import { connect } from "react-redux";
-import { syncNavigationProps } from "../../redux/actions";
+import { miniPlayerState } from "../../redux/actions";
 
 import MusicFiles from "react-native-get-music-files"
 import { check, checkMultiple, ANDROID_PERMISSIONS, RESULTS } from "react-native-permissions"
@@ -47,6 +47,7 @@ class Playlist extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    this.props.dispatch(miniPlayerState(true));
     AsyncStorage.getItem("localSongs").then(tracks => {
       this._isMounted && this.setState({ localSongs: JSON.parse(tracks) });
       this._isMounted && this.setState({ loading: false });
@@ -102,7 +103,7 @@ class Playlist extends Component {
       duration: song.duration,
     });
     // await TrackPlayer.play();
-  }
+  };
 
   renderItem = ({ item }) => (
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
