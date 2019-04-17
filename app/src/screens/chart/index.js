@@ -8,6 +8,7 @@ import {
   Left,
   Right,
   Body,
+  Footer, FooterTab,
   Text
 } from "native-base";
 import { View, ScrollView, BackHandler } from "react-native";
@@ -43,7 +44,7 @@ class Chart extends React.PureComponent {
     let self = this;
     setTimeout(await function () {
       self.props.dispatch(miniPlayerState(true));
-    }, 100)
+    }, 100);
     return true;
   }
 
@@ -100,6 +101,13 @@ class Chart extends React.PureComponent {
             <ChartItem rankUrl={url} />
           </ScrollView>
         </Content>
+        <Footer>
+          <FooterTab>
+            <Button active full>
+              <Text>Footer</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
 
         {/*<MiniPlayer/>*/}
       </Container>

@@ -69,13 +69,6 @@ export const miniPlayerState = (state) => {
   }
 };
 
-export const syncNavigationProps = (navigation) => {
-  return {
-    type: SYNC_NAVIGATION_PROPS,
-    syncNavigation: navigation
-  }
-};
-
 export const syncCurrentTrack = (track) => {
   return {
     type: SYNC_CURRENT_TRACK,

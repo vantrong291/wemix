@@ -26,7 +26,7 @@ import { queryLocalSong } from "../../redux/actions";
 import PlaylistItem from "../../components/playlistItem";
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
 
-const defaltCover = require('../../assets/defaultCover.jpeg');
+  const defaltCover = require('../../assets/defaultCover.jpeg');
 
 class Playlist extends Component {
   constructor(props) {
@@ -154,11 +154,11 @@ class Playlist extends Component {
           iosBarStyle="light-content"
         // span
         >
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Icon name="menu" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
-            </Button>
-          </Left>
+          {/*<Left>*/}
+            {/*<Button transparent onPress={() => this.props.navigation.openDrawer()}>*/}
+              {/*<Icon name="menu" style={{ color: "#FFF", marginLeft: 5 }} size={24} />*/}
+            {/*</Button>*/}
+          {/*</Left>*/}
           <Body>
             <Title style={{ color: "#FFF" }}>Nhạc của tôi</Title>
           </Body>

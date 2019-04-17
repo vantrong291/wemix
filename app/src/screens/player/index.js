@@ -50,6 +50,7 @@ import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
 import SeekBar from "../../components/seekBar";
 import LyricView from "../../components/lyricView";
+import NowPlaying from "../../components/nowPlaying";
 import { ButtonGroup } from 'react-native-elements';
 
 
@@ -281,7 +282,7 @@ class Player extends Component {
 
     const currentTrack = this.state.currentTrack;
     const duration = this.state.duration;
-    console.log(this.state.currentTrack);
+    // console.log(this.state.currentTrack);
     const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
     const selectedIndex = this.state.selectedIndex;
 
@@ -300,13 +301,7 @@ class Player extends Component {
             index={1}
           > */}
           {this.state.displayNowPlaying && <View style={{ height: contentHeight }}>
-            <Text>
-              If you like React, you'll also like React Native.
-              </Text>
-            <Text>
-              Instead of 'div' and 'span', you'll use native components
-              like 'View' and 'Text'.
-              </Text>
+            <NowPlaying/>
           </View>}
 
           {this.state.displayArtwork && <View style={{ height: contentHeight }}>

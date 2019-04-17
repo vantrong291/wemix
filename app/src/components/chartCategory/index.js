@@ -29,14 +29,14 @@ const categories = [
         background: krChart,
         url: "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getRankDetail?item_type=1&rank_type=51"
     },
-]
+];
 
 class CategoryComponent extends React.PureComponent {
 
     goDetail = (url) => async () => {
         await this.props.dispatch(miniPlayerState(false));
         await NavigationService.navigate('ChartDetail', {url: url})
-    }
+    };
 
     openPlayer = async () => {
         const currentTrack = this.state.currentTrack;
@@ -45,7 +45,7 @@ class CategoryComponent extends React.PureComponent {
         await NavigationService.navigate('Player', {currentTrack: currentTrack, playerState: this.state.playerState})
       };
 
-    keyExtractor = (item, index) => index.toString()
+    keyExtractor = (item, index) => index.toString();
 
     renderItem = ({ item }) => (
         <TouchableScale
@@ -63,7 +63,7 @@ class CategoryComponent extends React.PureComponent {
                     marginBottom: 10
                 }} />
         </TouchableScale>
-    )
+    );
 
     render() {
         return (

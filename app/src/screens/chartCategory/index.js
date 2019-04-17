@@ -30,19 +30,19 @@ class ChartCategory extends React.PureComponent {
           androidStatusBarColor={variables.secondaryColor}
           iosBarStyle="light-content"
         >
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
-            </Button>
-          </Left>
+          {/*<Left>*/}
+            {/*<Button transparent onPress={() => this.props.navigation.openDrawer()}>*/}
+              {/*<Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24} />*/}
+            {/*</Button>*/}
+          {/*</Left>*/}
           <Body style={{ alignItems: "center", justifyContent: "center" }}>
             <Title style={{ color: "#FFF" }}>Bảng xếp hạng</Title>
           </Body>
-          <Right>
-            <Button transparent>
-              <Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />
-            </Button>
-          </Right>
+          {/*<Right>*/}
+            {/*<Button transparent>*/}
+              {/*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />*/}
+            {/*</Button>*/}
+          {/*</Right>*/}
         </Header>
 
         <Content padder>

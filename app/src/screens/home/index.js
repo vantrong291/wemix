@@ -134,20 +134,20 @@ class Home extends Component {
           iosBarStyle="light-content"
           noShadow
         >
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Icon name="menu-fold" style={{ color: variables.primaryColor, marginLeft: 0 }} size={24}/>
-            </Button>
-          </Left>
+          {/*<Left>*/}
+            {/*<Button transparent onPress={() => this.props.navigation.openDrawer()}>*/}
+              {/*<Icon name="menu-fold" style={{ color: variables.primaryColor, marginLeft: 0 }} size={24}/>*/}
+            {/*</Button>*/}
+          {/*</Left>*/}
           <Body>
           {/*<H3 style={{fontWeight: "bold", color: variables.primaryColor, marginLeft: 0}}>Trang chủ</H3>*/}
           <Title style={{ color: variables.primaryColor, marginLeft: 0 }}>EnV-Music</Title>
           </Body>
-          <Right>
-            <Button transparent>
-              <Icon name="profile" style={{ marginRight: 0 }} size={24}/>
-            </Button>
-          </Right>
+          {/*<Right>*/}
+            {/*<Button transparent>*/}
+              {/*<Icon name="profile" style={{ marginRight: 0 }} size={24}/>*/}
+            {/*</Button>*/}
+          {/*</Right>*/}
         </Header>
 
         <Content padder style={{ paddingLeft: 10, paddingRight: 10 }}>

@@ -65,7 +65,7 @@ class ChartItem extends Component {
       // duration: song.duration,
     });
     await TrackPlayer.play();
-  }
+  };
 
   onAddNowPlayingPress = (item) => async () => {
     await TrackPlayer.add({
@@ -80,7 +80,7 @@ class ChartItem extends Component {
       // duration: song.duration,
     });
     // await TrackPlayer.play();
-  }
+  };
 
   renderChart = ({ item }) => (
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
