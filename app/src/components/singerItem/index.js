@@ -14,12 +14,13 @@ import {
   Body, Spinner
 } from "native-base";
 import axios from "axios";
-import { FlatList } from "react-native"
+import { FlatList, ImageBackground, ScrollView, Image } from "react-native";
 import View from "../../theme/components/View";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // import { ListItem } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
 import TrackPlayer from "../trackPlayer";
+import styles from "./styles";
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
@@ -33,7 +34,7 @@ class SingerItem extends Component {
       lists: [],
       loading: true,
       singerInfo: []
-    }
+    };
   }
 
 
@@ -52,7 +53,7 @@ class SingerItem extends Component {
         this._isMounted && this.setState({ lists: res.data.data.media_item.list_song });
         this._isMounted && this.setState({ singerInfo: res.data.data });
         this._isMounted && this.setState({ loading: false });
-      })
+      });
   };
 
   onItemPress = (item) => async () => {
@@ -90,22 +91,22 @@ class SingerItem extends Component {
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
         <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-          <Thumbnail square source={{ uri: item.image }} />
+          <Thumbnail square source={{ uri: item.image }}/>
         </TouchableScale>
       </Left>
       <Body>
-        <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-          <Text>
-            {item.name}
-          </Text>
-          <Text numberOfLines={1} note>
-            {item.singer}
-          </Text>
-        </TouchableScale>
+      <TouchableScale  activeScale={0.98} onPress={this.onItemPress(item)}>
+        <Text numberOfLines={1}>
+          {item.name}
+        </Text>
+        <Text numberOfLines={1} note>
+          {item.singer}
+        </Text>
+      </TouchableScale>
       </Body>
       <Right style={{ flexDirection: "row", alignItems: "center" }}>
         <TouchableScale onPress={this.onAddNowPlayingPress(item)}>
-          <Icon name="playlist-plus" size={28} />
+          <Icon name="playlist-plus" size={28}/>
         </TouchableScale>
       </Right>
     </ListItem>
@@ -119,13 +120,24 @@ class SingerItem extends Component {
     //     {this.renderChart()}
     //   </List>
     //   );
-    return (this.state.loading) ? (<Spinner color="#f27010" />) : (
-      <FlatList
-        data={datas}
-        renderItem={this.renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    )
+    const singerCover = this.state.singerInfo.cover ? this.state.singerInfo.cover : this.state.singerInfo.image310;
+    const singerName = this.state.singerInfo.name;
+    // console.log(singerCover);
+
+    return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
+        <ScrollView style={{ paddingBottom: 50 }}>
+          <Image source={{ uri: singerCover }} style={styles.singerCover}/>
+          <Title style={{alignSelf: "center", color: "#333"}}>Các ca khúc của {singerName}</Title>
+          <Text style={{alignSelf: "center"}}>________________________</Text>
+          {/*<Text style={{alignSelf: "center"}}>Các ca khúc của {singerName}</Text>*/}
+          <FlatList
+            data={datas}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </ScrollView>
+
+    );
   }
 }
 

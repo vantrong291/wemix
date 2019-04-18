@@ -222,7 +222,7 @@ class MiniPlayer extends Component {
             marqueeDelay={0}
             style={styles.songTitle}
           >{this.state.currentTrack.title}</TextTicker>
-          <Text style={styles.songArtist}>{this.state.currentTrack.artist}</Text>
+          <Text style={styles.songArtist} numberOfLines={1}>{this.state.currentTrack.artist}</Text>
         </TouchableOpacity>
         <View style={styles.songControlMiniPlayerView}>
           <Icon button name="controller-jump-to-start" style={styles.controlMiniPlayerIcon} onPress={this.onSkipPrevious} />

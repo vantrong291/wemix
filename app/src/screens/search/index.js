@@ -9,7 +9,7 @@ import {
   Body,
   Text, Item, Input, Form, Tab, Tabs, ListItem, Thumbnail, Spinner
 } from "native-base";
-import { View, ScrollView, AsyncStorage, Alert, FlatList } from "react-native";
+import { View, ScrollView, AsyncStorage, Alert, FlatList, Keyboard } from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -50,6 +50,7 @@ class Search extends Component {
 
   onSearch = () => {
     const keyword = this.state.keyword;
+    Keyboard.dismiss();
     if (keyword.length !== 0) {
       this._isMounted && this.setState({ loading: true, displayRecent: false });
       console.log(keyword);

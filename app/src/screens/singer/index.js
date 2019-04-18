@@ -86,7 +86,7 @@ class Singer extends React.PureComponent {
             </Button>
           </Left>
           <Body style={{ alignItems: "center", justifyContent: "center" }}>
-            <Title style={{ color: "#FFF" }}>Bảng xếp hạng</Title>
+            <Title style={{ color: "#FFF" }}>Ca sĩ</Title>
           </Body>
           <Right>
             {/*<Button transparent>*/}
@@ -96,9 +96,9 @@ class Singer extends React.PureComponent {
         </Header>
 
         <Content padder>
-          <ScrollView  style={{paddingBottom: 50}}>
+          {/*<ScrollView  style={{paddingBottom: 50}}>*/}
             <SingerItem slug={slug} />
-          </ScrollView>
+          {/*</ScrollView>*/}
         </Content>
         <Footer>
           <FooterTab>

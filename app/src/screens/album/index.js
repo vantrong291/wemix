@@ -85,7 +85,7 @@ class Album extends React.PureComponent {
             </Button>
           </Left>
           <Body style={{ alignItems: "center", justifyContent: "center" }}>
-            <Title style={{ color: "#FFF" }}>Bảng xếp hạng</Title>
+            <Title style={{ color: "#FFF" }}>Album</Title>
           </Body>
           <Right>
             {/*<Button transparent>*/}
