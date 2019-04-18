@@ -70,8 +70,7 @@ class Album extends React.PureComponent {
 
   render() {
     const { navigation } = this.props;
-    const url = navigation.getParam('url');
-    // console.log(url);
+    const identify = navigation.getParam('identify');
 
     return (
       <Container style={styles.container}>
@@ -97,7 +96,7 @@ class Album extends React.PureComponent {
 
         <Content padder>
           <ScrollView  style={{paddingBottom: 50}}>
-            <AlbumItem rankUrl={url} />
+            <AlbumItem identify={identify} />
           </ScrollView>
         </Content>
         <Footer>

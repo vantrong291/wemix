@@ -24,13 +24,15 @@ import TrackPlayer from "../trackPlayer";
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
+const singerUrl = "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getSingerDetailAll?slug=";
 
 class SingerItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chart: [],
-      loading: true
+      lists: [],
+      loading: true,
+      singerInfo: []
     }
   }
 
@@ -43,11 +45,13 @@ class SingerItem extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    const url = this.props.rankUrl;
+    const slug = this.props.slug;
+    const url = singerUrl + slug;
     axios.get(url)
       .then((res) => {
+        this._isMounted && this.setState({ lists: res.data.data.media_item.list_song });
+        this._isMounted && this.setState({ singerInfo: res.data.data });
         this._isMounted && this.setState({ loading: false });
-        this._isMounted && this.setState({ chart: res.data });
       })
   };
 
@@ -82,7 +86,7 @@ class SingerItem extends Component {
     // await TrackPlayer.play();
   };
 
-  renderChart = ({ item }) => (
+  renderItem = ({ item }) => (
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
         <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
@@ -108,7 +112,7 @@ class SingerItem extends Component {
   );
 
   render() {
-    const datas = this.state.chart.data;
+    const datas = this.state.lists;
     // console.log(datas);
     // return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
     //   <List>
@@ -118,7 +122,7 @@ class SingerItem extends Component {
     return (this.state.loading) ? (<Spinner color="#f27010" />) : (
       <FlatList
         data={datas}
-        renderItem={this.renderChart}
+        renderItem={this.renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
     )

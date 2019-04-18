@@ -70,7 +70,7 @@ class Singer extends React.PureComponent {
 
   render() {
     const { navigation } = this.props;
-    const url = navigation.getParam('url');
+    const slug = navigation.getParam('slug');
     // console.log(url);
 
     return (
@@ -97,7 +97,7 @@ class Singer extends React.PureComponent {
 
         <Content padder>
           <ScrollView  style={{paddingBottom: 50}}>
-            <SingerItem rankUrl={url} />
+            <SingerItem slug={slug} />
           </ScrollView>
         </Content>
         <Footer>
