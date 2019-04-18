@@ -141,7 +141,7 @@ class Playlist extends Component {
       )
     }
     return (<Text style={{ alignSelf: "center", marginTop: 20 }}>Không có kết quả</Text>);
-  }
+  };
 
 
   render() {
@@ -159,14 +159,14 @@ class Playlist extends Component {
               {/*<Icon name="menu" style={{ color: "#FFF", marginLeft: 5 }} size={24} />*/}
             {/*</Button>*/}
           {/*</Left>*/}
-          <Body>
-            <Title style={{ color: "#FFF" }}>Nhạc của tôi</Title>
+          <Body style={{ alignItems: "center", justifyContent: "center" }}>
+            <Title style={{ color: "#FFF" }}>Danh sánh nhạc</Title>
           </Body>
-          <Right>
-            <Button transparent>
-              {/*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24}/>*/}
-            </Button>
-          </Right>
+          {/*<Right>*/}
+            {/*<Button transparent>*/}
+              {/*/!*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24}/>*!/*/}
+            {/*</Button>*/}
+          {/*</Right>*/}
         </Header>
 
         <Content padder>

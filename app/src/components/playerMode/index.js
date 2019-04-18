@@ -19,7 +19,6 @@ import styles from "./styles";
 import TrackPlayer from "../trackPlayer";
 import { connect } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import RNModal from "react-native-modal";
 
 var BUTTONS = [
   { text: "Ngẫu nhiên", icon: "md-download", iconColor: "#2c8ef4" },

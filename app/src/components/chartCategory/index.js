@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, ImageBackground } from "react-native";
 import { ListItem } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
-import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
+// import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
 import NavigationService from "../../NavigationService";
 import { connect } from "react-redux";
 import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";

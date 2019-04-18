@@ -44,7 +44,6 @@ import variables from "../../theme/variables/custom";
 import Slider from "react-native-slider";
 import Carousel from "react-native-banner-carousel";
 import { secondToMinuteString } from "../../api/TimeConvert";
-import RNModal from "react-native-modal";
 import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
 

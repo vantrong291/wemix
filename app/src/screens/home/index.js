@@ -8,9 +8,9 @@ import {
   Left,
   Right,
   Body,
-  Text, H2, H1, H3
+  Text, H2, H1, H3, Card, CardItem, Thumbnail
 } from "native-base";
-import { View, ScrollView, AsyncStorage, PermissionsAndroid } from "react-native";
+import { View, ScrollView, AsyncStorage, Image, PermissionsAndroid, RefreshControl } from "react-native";
 // import TrackPlayer from 'react-native-track-player';
 import TrackPlayer from "../../components/trackPlayer";
 import styles from "./styles";
@@ -23,15 +23,18 @@ import { connect } from "react-redux";
 import { queryLocalSong } from "../../redux/actions";
 import MiniPlayer from "../../components/miniPlayer";
 
+const logo = require("../../assets/logo.png");
+const cardImage = require("../../assets/drawer-cover.png");
+
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      storagePermission: ""
+      storagePermission: "",
+      refreshing: false
     };
   };
-
 
   _isMounted = false;
 
@@ -43,26 +46,26 @@ class Home extends Component {
     // Alert.alert('seen')
     let songs = "";
     await MusicFiles.getAll({
-        id: true,
-        blured: true,
-        artist: true,
-        duration: true,
-        genre: true,
-        title: true,
-        cover: true
-      }).then(async (tracks) => {
-        songs = JSON.stringify(tracks);
+      id: true,
+      blured: true,
+      artist: true,
+      duration: true,
+      genre: true,
+      title: true,
+      cover: true
+    }).then(async (tracks) => {
+      songs = JSON.stringify(tracks);
 
-        // try {
-        //   await AsyncStorage.setItem("localSongs", JSON.stringify(tracks));
-        // } catch (error) {
-        //   // Error saving data
-        // }
+      // try {
+      //   await AsyncStorage.setItem("localSongs", JSON.stringify(tracks));
+      // } catch (error) {
+      //   // Error saving data
+      // }
 
-        // this.props.dispatch(queryLocalSong(tracks));
-      }).catch(error => {
-        console.log(error);
-      });
+      // this.props.dispatch(queryLocalSong(tracks));
+    }).catch(error => {
+      console.log(error);
+    });
 
     try {
       await AsyncStorage.setItem("localSongs", songs);
@@ -93,6 +96,12 @@ class Home extends Component {
   //     }
   //   });
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    setTimeout(() => {
+      this.setState({refreshing: false});
+    }, 2000);
+  };
 
   async componentDidMount() {
     await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
@@ -114,45 +123,60 @@ class Home extends Component {
     // this.onPlay();
   }
 
-  onPlay = () => {
-    // TrackPlayer.play();
-
-    // TrackPlayer.getCurrentTrack().then(value => {
-    //   console.log(value)
-    // });
-    // TrackPlayer.getState().then(value => {
-    //   console.log(value)
-    // })0000
-  };
-
   render() {
     return (
       <Container style={styles.container}>
         <Header
-          style={{ backgroundColor: "#fff" }}
+          // style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}
           androidStatusBarColor={variables.secondaryColor}
           iosBarStyle="light-content"
-          noShadow
         >
           {/*<Left>*/}
-            {/*<Button transparent onPress={() => this.props.navigation.openDrawer()}>*/}
-              {/*<Icon name="menu-fold" style={{ color: variables.primaryColor, marginLeft: 0 }} size={24}/>*/}
-            {/*</Button>*/}
+          {/*<Button transparent onPress={() => this.props.navigation.openDrawer()}>*/}
+          {/*<Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24} />*/}
+          {/*</Button>*/}
           {/*</Left>*/}
-          <Body>
-          {/*<H3 style={{fontWeight: "bold", color: variables.primaryColor, marginLeft: 0}}>Trang chủ</H3>*/}
-          <Title style={{ color: variables.primaryColor, marginLeft: 0 }}>EnV-Music</Title>
+          <Body style={{ alignItems: "center", justifyContent: "center" }}>
+            <Title style={{ color: "#FFF" }}>Trang chủ</Title>
           </Body>
           {/*<Right>*/}
-            {/*<Button transparent>*/}
-              {/*<Icon name="profile" style={{ marginRight: 0 }} size={24}/>*/}
-            {/*</Button>*/}
+          {/*<Button transparent>*/}
+          {/*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />*/}
+          {/*</Button>*/}
           {/*</Right>*/}
         </Header>
 
-        <Content padder style={{ paddingLeft: 10, paddingRight: 10 }}>
-          <ScrollView>
-            <Button onPress={this.onPlay}><Text>Play Music</Text></Button>
+        <Content padder>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }>
+            <Card style={styles.mb}>
+              <CardItem>
+                <Left>
+                  <Thumbnail source={logo} />
+                  <Body>
+                  <Text>NativeBase</Text>
+                  <Text note>GeekyAnts</Text>
+                  </Body>
+                </Left>
+              </CardItem>
+
+              <CardItem cardBody>
+                <Image
+                  style={{
+                    resizeMode: "cover",
+                    width: null,
+                    height: 200,
+                    flex: 1
+                  }}
+                  source={cardImage}
+                />
+              </CardItem>
+            </Card>
           </ScrollView>
         </Content>
       </Container>

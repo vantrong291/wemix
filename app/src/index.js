@@ -33,9 +33,12 @@ import Search from "./screens/search";
 import Playlist from "./screens/playlist";
 import Personal from "./screens/personal";
 import ChartCategory from "./screens/chartCategory";
+import Album from "./screens/album";
+import Singer from "./screens/singer";
 
-import MiniPlayer from "./components/miniPlayer"
-import Player from "./screens/player"
+import MiniPlayer from "./components/miniPlayer";
+import Player from "./screens/player";
+
 
 // const tinColor = "#f5f5f5";
 
@@ -216,7 +219,9 @@ const AppStackNavigator = createStackNavigator(
     HeaderTransparent: { screen: HeaderTransparent },
     Player: {
       screen: Player
-    }
+    },
+    Album: {screen: Album},
+    Singer: {screen: Singer}
   },
   {
     initialRouteName: "Main",

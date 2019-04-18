@@ -172,12 +172,12 @@ class Search extends Component {
                 <SearchItem data={this.state.album_result} type="album"/>
               </ScrollView>
             </Tab>
-            <Tab tabStyle={{ backgroundColor: "#fff" }} activeTabStyle={{ backgroundColor: "#fff" }} activeTextStyle={{ color: "#333" }} textStyle={{ color: "#333" }} heading="Playlist">
-              <ScrollView style={{paddingBottom: 50}}>
-                <SearchItem data={this.state.playlist_result} type="playlist"/>
-                {/* {this.renderResult(this.state.playlist_result)} */}
-              </ScrollView>
-            </Tab>
+            {/*<Tab tabStyle={{ backgroundColor: "#fff" }} activeTabStyle={{ backgroundColor: "#fff" }} activeTextStyle={{ color: "#333" }} textStyle={{ color: "#333" }} heading="Playlist">*/}
+              {/*<ScrollView style={{paddingBottom: 50}}>*/}
+                {/*<SearchItem data={this.state.playlist_result} type="playlist"/>*/}
+                {/*/!* {this.renderResult(this.state.playlist_result)} *!/*/}
+              {/*</ScrollView>*/}
+            {/*</Tab>*/}
           </Tabs>
         )
       }
@@ -199,11 +199,11 @@ class Search extends Component {
                 <Spinner color="#f27010" />
               </ScrollView>
             </Tab>
-            <Tab tabStyle={{ backgroundColor: "#fff" }} activeTabStyle={{ backgroundColor: "#fff" }} activeTextStyle={{ color: "#333" }} textStyle={{ color: "#333" }} heading="Playlist">
-              <ScrollView>
-                <Spinner color="#f27010" />
-              </ScrollView>
-            </Tab>
+            {/*<Tab tabStyle={{ backgroundColor: "#fff" }} activeTabStyle={{ backgroundColor: "#fff" }} activeTextStyle={{ color: "#333" }} textStyle={{ color: "#333" }} heading="Playlist">*/}
+              {/*<ScrollView>*/}
+                {/*<Spinner color="#f27010" />*/}
+              {/*</ScrollView>*/}
+            {/*</Tab>*/}
           </Tabs>
         )
       }

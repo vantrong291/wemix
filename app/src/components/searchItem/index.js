@@ -20,6 +20,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 // import { ListItem } from 'react-native-elements';
 import TrackPlayer from "../trackPlayer";
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import NavigationService from '../../NavigationService';
 
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
@@ -72,14 +73,16 @@ class SearchItem extends Component {
     }
     else if (type === "singer") {
       console.log(item.full_name);
+      NavigationService.navigate('Singer', {"slug": item.slug});
     }
     else if (type === "album") {
-      console.log(item.full_name);
+      console.log(item.identify);
+      NavigationService.navigate('Album', {"identify": item.identify});
     }
-    else if (type === "playlist") {
-      console.log(item.full_name);
-    }
-  }
+    // else if (type === "playlist") {
+    //   console.log(item.full_name);
+    // }
+  };
 
   onAddNowPlayingPress = (item) => async () => {
     await TrackPlayer.add({
@@ -93,7 +96,7 @@ class SearchItem extends Component {
       // duration: song.duration,
     });
     // await TrackPlayer.play();
-  }
+  };
 
   renderItem = ({ item }) => (
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>

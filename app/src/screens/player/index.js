@@ -45,13 +45,14 @@ import variables from "../../theme/variables/custom";
 import Slider from "react-native-slider";
 import Carousel from "react-native-banner-carousel";
 import { secondToMinuteString } from "../../api/TimeConvert";
-import RNModal from "react-native-modal";
 import PlayerAction from "../../components/playerAction";
 import PlayerMode from "../../components/playerMode";
 import SeekBar from "../../components/seekBar";
 import LyricView from "../../components/lyricView";
 import NowPlaying from "../../components/nowPlaying";
 import { ButtonGroup } from 'react-native-elements';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
@@ -285,8 +286,6 @@ class Player extends Component {
     // console.log(this.state.currentTrack);
     const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
     const selectedIndex = this.state.selectedIndex;
-
-
 
     return (
       <Container style={styles.container}>
