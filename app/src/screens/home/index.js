@@ -22,6 +22,9 @@ import MusicFiles from "react-native-get-music-files";
 import { connect } from "react-redux";
 import { queryLocalSong } from "../../redux/actions";
 import MiniPlayer from "../../components/miniPlayer";
+import AlbumHot from "../../components/albumHot";
+import SingerHot from "../../components/singerHot";
+import Singer from "../singer";
 
 const logo = require("../../assets/logo.png");
 const cardImage = require("../../assets/drawer-cover.png");
@@ -154,6 +157,9 @@ class Home extends Component {
                 onRefresh={this._onRefresh}
               />
             }>
+            <AlbumHot/>
+            <SingerHot/>
+
             <Card style={styles.mb}>
               <CardItem>
                 <Left>

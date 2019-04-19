@@ -125,6 +125,7 @@ class AlbumItem extends Component {
         <Title numberOfLines={2} style={{ alignSelf: "center", color: "#333" }}>{albumTitle}</Title>
         <Text style={{ alignSelf: "center" }}>{singer}</Text>
         <Text style={{ alignSelf: "center" }}>________________________</Text>
+
         <FlatList
           data={datas}
           renderItem={this.renderItem}
