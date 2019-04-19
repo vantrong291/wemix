@@ -129,7 +129,6 @@ class SingerItem extends Component {
           <Image source={{ uri: singerCover }} style={styles.singerCover}/>
           <Title style={{alignSelf: "center", color: "#333"}}>Các ca khúc của {singerName}</Title>
           <Text style={{alignSelf: "center"}}>________________________</Text>
-          {/*<Text style={{alignSelf: "center"}}>Các ca khúc của {singerName}</Text>*/}
           <FlatList
             data={datas}
             renderItem={this.renderItem}
