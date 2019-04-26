@@ -33,7 +33,7 @@ class SeekBar extends Component {
 
     TrackPlayer.getPosition().then((position) => {
       this._isMounted && this.setState({ presentPosition: position });
-    })
+    });
 
     setInterval(() => {
       TrackPlayer.getPosition().then((position) => {

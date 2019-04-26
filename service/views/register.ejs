@@ -133,7 +133,10 @@
                 method: "post",
                 url: API_URL + '/user',
                 data: {
-                  uid : user.uid
+                  uid : user.uid,
+                  displayName: user.displayName,
+                  avatarPath: user.photoURL,
+                  email: user.email
                 }
               }).then((res) => {
                 // console.log(res);

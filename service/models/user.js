@@ -10,6 +10,18 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.STRING(50),
       allowNull: false,
       unique: true,
+    },
+    displayName: {
+      type: Sequelize.STRING(150),
+      allowNull: true,
+    },
+    avatarPath: {
+      type: Sequelize.STRING(300),
+      allowNull: true,
+    },
+    email: {
+      type: Sequelize.STRING(150),
+      allowNull: true,
     }
   }, {
     timestamps: false

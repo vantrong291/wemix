@@ -106,106 +106,112 @@
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
 <% include ./include/firebase.ejs %>
 <script>
-  new Vue({
-    el: '#login',
-    data: {
-      email: '',
-      password: '',
-    },
-    mounted() {
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          location.href = '/';
-          // User is signed in.
-        } else {
-          // No user is signed in.
+    new Vue({
+        el: '#login',
+        data: {
+            email: '',
+            password: '',
+        },
+        mounted() {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    location.href = '/';
+                    // User is signed in.
+                } else {
+                    // No user is signed in.
+                }
+            });
+        },
+        methods: {
+            onSignin() {
+                // console.log(this.email);
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(res => {
+                    const user = firebase.auth().currentUser;
+                    console.log(firebase.database().ref('logs'));
+                    window.localStorage.setItem("wemix", JSON.stringify(user));
+                    let now = Date.now();
+                    let date = new Date(now);
+                    let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ' ' + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+                    firebase.database().ref('logs/' + now).set({
+                        user: user.email,
+                        time: time
+                    });
+                    console.log(now);
+                    alert("Đăng nhập thành công");
+                    setTimeout(function () {
+                        location.href = '/';
+                    }, 1000);
+                }).catch(
+                    error => {
+                        console.log(error);
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        if (errorCode === 'auth/user-not-found') {
+                            alert('Error: User not found')
+                        } else if (errorCode === 'auth/wrong-password') {
+                            alert('The password is incorrect')
+                        } else alert(errorMessage)
+                    }
+                )
+            },
+            login_via_google: function () {
+                // alert("Hiện tại chức năng đăng ký và đăng nhập bằng Facebook, Google tạm thời không khả dụng")
+                var provider = new firebase.auth.GoogleAuthProvider()
+                firebase.auth().signInWithPopup(provider).then((res) => {
+                    const user = firebase.auth().currentUser;
+                    alert("Đăng nhập thành công bằng Google dưới tài khoản " + "\"" + user.displayName + "\"");
+                    localStorage.setItem("wemix", JSON.stringify(user));
+
+                    axios({
+                        method: "post",
+                        url: API_URL + '/user',
+                        data: {
+                            uid: user.uid,
+                            displayName: user.displayName,
+                            avatarPath: user.photoURL,
+                            email: user.email
+                        }
+                    }).then((res) => {
+                        // console.log(res);
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+
+                }).catch(err => {
+                    alert(err.message);
+                    console.log(err);
+                })
+            },
+            login_via_facebook: function () {
+                // alert("Hiện tại chức năng đăng ký và đăng nhập bằng Facebook, Google tạm thời không khả dụng")
+                var provider = new firebase.auth.FacebookAuthProvider()
+                firebase.auth().signInWithPopup(provider).then((res) => {
+                    const user = firebase.auth().currentUser;
+                    alert("Đăng nhập thành công bằng Facebook dưới tài khoản " + "\"" + user.displayName + "\"");
+                    localStorage.setItem("wemix", JSON.stringify(user));
+
+                    axios({
+                        method: "post",
+                        url: API_URL + '/user',
+                        data: {
+                            uid: user.uid,
+                            displayName: user.displayName,
+                            avatarPath: user.photoURL,
+                            email: user.email
+                        }
+                    }).then((res) => {
+                        // console.log(res);
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+
+                }).catch(err => {
+                    alert(err.message);
+                    console.log(err);
+                })
+            },
         }
-      });
-    },
-    methods: {
-      onSignin() {
-        // console.log(this.email);
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(res => {
-          const user = firebase.auth().currentUser;
-          console.log(firebase.database().ref('logs'));
-          window.localStorage.setItem("wemix", JSON.stringify(user));
-          let now = Date.now();
-          let date = new Date(now);
-          let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ' ' + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-          firebase.database().ref('logs/' + now).set({
-            user: user.email,
-            time: time
-          });
-          console.log(now);
-          alert("Đăng nhập thành công");
-          setTimeout(function() {
-            location.href = '/';
-          }, 1000);
-        }).catch(
-          error => {
-            console.log(error);
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode === 'auth/user-not-found') {
-              alert('Error: User not found')
-            } else if (errorCode === 'auth/wrong-password') {
-              alert('The password is incorrect')
-            } else alert(errorMessage)
-          }
-        )
-      },
-      login_via_google: function() {
-        // alert("Hiện tại chức năng đăng ký và đăng nhập bằng Facebook, Google tạm thời không khả dụng")
-        var provider = new firebase.auth.GoogleAuthProvider()
-        firebase.auth().signInWithPopup(provider).then((res) => {
-          const user = firebase.auth().currentUser;
-        	alert("Đăng nhập thành công bằng Google dưới tài khoản " + "\"" + user.displayName + "\"");
-        	localStorage.setItem("wemix", JSON.stringify(user));
-
-          axios({
-            method: "post",
-            url: API_URL + '/user',
-            data: {
-              uid : user.uid
-            }
-          }).then((res) => {
-            // console.log(res);
-          }).catch((err) => {
-            console.log(err);
-          });
-
-        }).catch(err => {
-        	alert(err.message);
-        	console.log(err);
-        })
-      },
-      login_via_facebook: function() {
-        // alert("Hiện tại chức năng đăng ký và đăng nhập bằng Facebook, Google tạm thời không khả dụng")
-        var provider = new firebase.auth.FacebookAuthProvider()
-        firebase.auth().signInWithPopup(provider).then((res) => {
-        	const user = firebase.auth().currentUser;
-        	alert("Đăng nhập thành công bằng Facebook dưới tài khoản " + "\"" + user.displayName + "\"");
-        	localStorage.setItem("wemix", JSON.stringify(user));
-
-          axios({
-            method: "post",
-            url: API_URL + '/user',
-            data: {
-              uid : user.uid
-            }
-          }).then((res) => {
-            // console.log(res);
-          }).catch((err) => {
-            console.log(err);
-          });
-
-        }).catch(err => {
-        	alert(err.message);
-        	console.log(err);
-        })
-      },
-    }
-  })
+    })
 </script>
 
 

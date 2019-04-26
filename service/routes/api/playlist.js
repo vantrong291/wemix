@@ -60,16 +60,26 @@ router.post('/addToPlaylist', (req, res, next) => {
       res.send(res);
     }).catch((err) => res.json(err));
   });
-
-  // models.playlist.update({
-  //   tracks: old_tracks + track
-  // },{
-  //   where: {id: id}
-  // }).then(() => {
-  //
-  // }).catch((err) => res.json(err));
-
-
 });
+
+router.post('/removeFromPlaylist', (req, res, next) => {
+  let id = req.body.playlist_id;
+  let track = req.body.track;
+
+  models.playlist.findOne({
+    where: {id: id}
+  }).then(playlists => {
+    old_tracks = playlists.tracks;
+    // res.send(playlists.tracks);
+    models.playlist.update({
+      tracks: old_tracks.replace(track,'')
+    },{
+      where: {id: id}
+    }).then((res) => {
+      res.send(res);
+    }).catch((err) => res.json(err));
+  });
+});
+
 
 module.exports = router;

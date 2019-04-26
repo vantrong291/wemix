@@ -50,7 +50,10 @@ class SocialLogin extends Component {
                       method: "post",
                       url: API_URL + '/user',
                       data: {
-                        uid : user.uid
+                        uid : user.uid,
+                          displayName: user.displayName,
+                          avatarPath: user.photoURL,
+                          email: user.email
                       }
                     }).then((res) => {
                       // console.log(res);
@@ -98,7 +101,7 @@ class SocialLogin extends Component {
       const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
       return firebase.auth().signInWithCredential(credential);
     }).then((currentUser) => {
-      console.log(`Google user:  ${JSON.stringify(currentUser)}`);
+      // console.log(`Google user:  ${JSON.stringify(currentUser)}`);
       const user = firebase.auth().currentUser;
       this.props.dispatch(ggLoginSuccess(user));
 
@@ -106,7 +109,10 @@ class SocialLogin extends Component {
         method: "post",
         url: API_URL + '/user',
         data: {
-          uid : user.uid
+          uid : user.uid,
+            displayName: user.displayName,
+            avatarPath: user.photoURL,
+            email: user.email
         }
       }).then((res) => {
         // console.log(res);

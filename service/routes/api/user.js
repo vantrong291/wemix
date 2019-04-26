@@ -23,7 +23,10 @@ router.post('/user', (req, res, next) => {
     else {
       models.user.create({
         token: req.body.uid,
-        group: req.body.group ? req.body.group : 2
+        group: req.body.group ? req.body.group : 2,
+        displayName: req.body.displayName ? req.body.displayName : null,
+        avatarPath: req.body.avatarPath ? req.body.avatarPath : null,
+        email: req.body.email ? req.body.email : null
       }).then( (result) => res.json(result))
         .catch((err) => res.json(err));
     }
