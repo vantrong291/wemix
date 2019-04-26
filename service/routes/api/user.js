@@ -10,13 +10,13 @@ router.get('/users', (req, res, next) => {
 });
 
 router.post('/user', (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   models.user.findAll({
     where: {
       token: req.body.uid,
     }
   }).then( (result) => {
-    console.log(result.length);
+    // console.log(result.length);
     if(result.length > 0) {
       return res.json({"message": "User is registered"})
     }
