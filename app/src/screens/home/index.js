@@ -1,30 +1,16 @@
-import React, { Component } from "react";
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Left,
-  Right,
-  Body,
-  Text, H2, H1, H3, Card, CardItem, Thumbnail
-} from "native-base";
-import { View, ScrollView, AsyncStorage, Image, PermissionsAndroid, RefreshControl } from "react-native";
+import React, {Component} from "react";
+import {Body, Card, CardItem, Container, Content, Header, Left, Text, Thumbnail, Title, H2, H1, H3} from "native-base";
+import {AsyncStorage, Image, PermissionsAndroid, RefreshControl, ScrollView} from "react-native";
 // import TrackPlayer from 'react-native-track-player';
-import TrackPlayer from "../../components/trackPlayer";
 import styles from "./styles";
-import Icon from "react-native-vector-icons/AntDesign";
 import variables from "../../theme/variables/custom";
-import { check, checkMultiple, ANDROID_PERMISSIONS, RESULTS, Permission } from "react-native-permissions";
+import {ANDROID_PERMISSIONS, check, Permission} from "react-native-permissions";
 import MusicFiles from "react-native-get-music-files";
 
-import { connect } from "react-redux";
-import { queryLocalSong } from "../../redux/actions";
-import MiniPlayer from "../../components/miniPlayer";
+import {connect} from "react-redux";
 import AlbumHot from "../../components/albumHot";
 import SingerHot from "../../components/singerHot";
-import Singer from "../singer";
+
 
 const logo = require("../../assets/logo.png");
 const cardImage = require("../../assets/drawer-cover.png");
@@ -157,32 +143,34 @@ class Home extends Component {
                 onRefresh={this._onRefresh}
               />
             }>
+            <H2 style={{paddingLeft: 10, paddingVertical: 10}}>Album Hot</H2>
             <AlbumHot/>
+            <H2 style={{paddingLeft: 10, paddingVertical: 10}}>Ca sỹ Hot</H2>
             <SingerHot/>
 
-            <Card style={styles.mb}>
-              <CardItem>
-                <Left>
-                  <Thumbnail source={logo} />
-                  <Body>
-                  <Text>NativeBase</Text>
-                  <Text note>GeekyAnts</Text>
-                  </Body>
-                </Left>
-              </CardItem>
+            {/*<Card style={styles.mb}>*/}
+              {/*<CardItem>*/}
+                {/*<Left>*/}
+                  {/*<Thumbnail source={logo} />*/}
+                  {/*<Body>*/}
+                  {/*<Text>NativeBase</Text>*/}
+                  {/*<Text note>GeekyAnts</Text>*/}
+                  {/*</Body>*/}
+                {/*</Left>*/}
+              {/*</CardItem>*/}
 
-              <CardItem cardBody>
-                <Image
-                  style={{
-                    resizeMode: "cover",
-                    width: null,
-                    height: 200,
-                    flex: 1
-                  }}
-                  source={cardImage}
-                />
-              </CardItem>
-            </Card>
+              {/*<CardItem cardBody>*/}
+                {/*<Image*/}
+                  {/*style={{*/}
+                    {/*resizeMode: "cover",*/}
+                    {/*width: null,*/}
+                    {/*height: 200,*/}
+                    {/*flex: 1*/}
+                  {/*}}*/}
+                  {/*source={cardImage}*/}
+                {/*/>*/}
+              {/*</CardItem>*/}
+            {/*</Card>*/}
           </ScrollView>
         </Content>
       </Container>

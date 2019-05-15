@@ -1,5 +1,5 @@
 {
-  "name": "EnV",
+  "name": "wemix",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -17,6 +17,7 @@
     "react-native": "0.58.6",
     "react-native-banner-carousel": "^1.0.3",
     "react-native-button": "^2.3.0",
+    "react-native-easy-grid": "^0.2.1",
     "react-native-elements": "^1.1.0",
     "react-native-fbsdk": "^0.8.0",
     "react-native-firebase": "^5.0.0",
@@ -28,6 +29,7 @@
     "react-native-slider": "^0.11.0",
     "react-native-snap-carousel": "^3.7.5",
     "react-native-splash-screen": "^3.0.6",
+    "react-native-super-grid": "^3.0.4",
     "react-native-swipe-gestures": "^1.0.3",
     "react-native-text-ticker": "^0.14.0",
     "react-native-touchable-scale": "^2.0.0",

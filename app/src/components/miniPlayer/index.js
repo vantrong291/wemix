@@ -33,8 +33,6 @@ import Icon from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import Feather from "react-native-vector-icons/Feather";
-
 import styles from "./style";
 import TrackPlayer from "../trackPlayer";
 import AnimationArtWork from "../animationArtWork";
@@ -183,10 +181,6 @@ class MiniPlayer extends Component {
     return (this.state.playerState === 3) ?
       <Ionicons name="ios-pause" style={style} onPress={this.onPause} /> :
       <Ionicons name="ios-play" style={[style, { left: 3 }]} onPress={this.onPlay} />;
-  };
-
-  renderPlayer = () => {
-
   };
 
   onSliderComplete = (position) => {

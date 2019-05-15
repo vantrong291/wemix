@@ -1,12 +1,13 @@
-import React, { Component } from "react";
-import { Body, Left, ListItem, Right, Spinner, Text, Thumbnail, Title } from "native-base";
+import React, {Component} from "react";
+import {Spinner, Text} from "native-base";
 import axios from "axios";
-import { FlatList, Image, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import {FlatList, Image} from "react-native";
 // import { ListItem } from 'react-native-elements';
 import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
 import styles from "./styles";
 import NavigationService from "../../NavigationService";
+import { Col, Row, Grid } from "react-native-easy-grid";
+
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
@@ -57,7 +58,7 @@ class SingerHot extends Component {
 
     return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
       <FlatList
-        horizontal
+          horizontal
         data={datas}
         renderItem={this.renderItem}
         keyExtractor={(item, index) => index.toString()}

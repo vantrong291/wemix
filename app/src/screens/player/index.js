@@ -58,7 +58,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 const playerBackground = require("../../assets/bg.jpg");
 const contentHeight = "70%";
-const component1 = () => <Text>DS phát</Text>;
+const component1 = () => <MaterialCommunityIcons name="information-outline" style={styles.barIcon} />;
 const component2 = () => <Text>Home</Text>;
 const component3 = () => <Text>Lyric</Text>;
 
@@ -67,7 +67,7 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-    this.updateIndex = this  .updateIndex.bind(this)
+    this.updateIndex = this  .updateIndex.bind(this);
     this.state = {
       playerState: 0,
       currentTrack: {},

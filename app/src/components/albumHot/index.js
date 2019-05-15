@@ -5,6 +5,7 @@ import { FlatList, Image, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // import { ListItem } from 'react-native-elements';
 import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
+import { FlatGrid } from 'react-native-super-grid';
 import NavigationService from '../../NavigationService';
 import styles from "./styles";
 
@@ -56,12 +57,21 @@ class AlbumHot extends Component {
     const datas = this.state.lists;
 
     return (this.state.loading) ? (<Spinner color="#f27010"/>) : (
-      <FlatList
-        horizontal
-        data={datas}
-        renderItem={this.renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+        <FlatGrid
+            itemDimension={150}
+            items={datas}
+            style={styles.gridView}
+            // staticDimension={300}
+            // fixed
+            // spacing={20}
+            renderItem={({ item, index }) => (
+                <TouchableScale activeScale={0.98} style={styles.albumContainer} onPress={this.onPressItem(item)}>
+                  <Image source={{ uri: item.image }} style={styles.albumCover}/>
+                  <Text style={{ alignSelf: "center", color: "#333", fontSize: 13,  paddingHorizontal: 5, paddingTop: 5 }} numberOfLines={1}>{item.name}</Text>
+                  <Text style={{ alignSelf: "center", fontSize: 10, paddingHorizontal: 5 }} numberOfLines={1}>{item.singer}</Text>
+                </TouchableScale>
+            )}
+        />
     );
   }
 }

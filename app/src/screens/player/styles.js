@@ -139,4 +139,7 @@ export default {
     marginLeft: 25,
     marginRight: 25,
   },
+  barIcon: {
+    fontSize: 24
+  }
 }

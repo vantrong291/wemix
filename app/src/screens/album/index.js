@@ -95,9 +95,9 @@ class Album extends React.PureComponent {
         </Header>
 
         <Content padder>
-          <ScrollView  style={{paddingBottom: 50}}>
+          {/*<ScrollView  style={{paddingBottom: 50}}>*/}
             <AlbumItem identify={identify} />
-          </ScrollView>
+          {/*</ScrollView>*/}
         </Content>
         <Footer>
           <FooterTab>
