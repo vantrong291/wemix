@@ -13,7 +13,7 @@ const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
 const PAGE = 1;
-const NUM = 10;
+const NUM = 20;
 const albumHotUrl = `http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getSingerList?page=${PAGE}&num=${NUM}`;
 
 class SingerHot extends Component {

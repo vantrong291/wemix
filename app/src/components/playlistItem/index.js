@@ -13,7 +13,7 @@ const PlaylistItem = ({item}) => {
   return (
     <ListItem style={{marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
-        <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover}/>
+        <Thumbnail square source={(item.cover) ? {uri: item.cover} : defaltCover} style={{borderRadius: 6}}/>
       </Left>
       <Body>
       <Text numberOfLines={1}>

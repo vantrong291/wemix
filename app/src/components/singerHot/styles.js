@@ -6,6 +6,7 @@ export default {
     // alignSelf: "stretch",
     height: albumSize,
     width: albumSize,
+    borderRadius: 6
     // position: "relative",
   },
   albumContainer: {

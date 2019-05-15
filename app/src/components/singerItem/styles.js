@@ -7,7 +7,8 @@ export default {
     position: "relative",
     marginBottom: 10,
     marginLeft: 0,
-    marginRight: 0
+    marginRight: 0,
+    borderRadius: 6
   },
 
 }

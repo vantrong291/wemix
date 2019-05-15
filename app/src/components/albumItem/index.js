@@ -14,18 +14,27 @@ import {
   Body, Spinner
 } from "native-base";
 import axios from "axios";
-import { FlatList, Image, ScrollView } from "react-native";
+import {Dimensions, FlatList, Image, ScrollView} from "react-native";
 import View from "../../theme/components/View";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // import { ListItem } from 'react-native-elements';
 import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
 import TrackPlayer from "../trackPlayer";
 import styles from "./styles";
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
 const albumUrl = "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getAlbumInfo?identify=";
+
+const window = Dimensions.get('window');
+
+const AVATAR_SIZE = 120;
+const ROW_HEIGHT = 60;
+const PARALLAX_HEADER_HEIGHT = 350;
+const STICKY_HEADER_HEIGHT = 70;
+
 
 class AlbumItem extends Component {
   constructor(props) {
@@ -91,7 +100,7 @@ class AlbumItem extends Component {
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
         <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-          <Thumbnail square source={{ uri: item.image }}/>
+          <Thumbnail square source={{ uri: item.image }} style={{borderRadius: 6}}/>
         </TouchableScale>
       </Left>
       <Body>

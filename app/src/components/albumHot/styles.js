@@ -5,6 +5,7 @@ export default {
     // alignSelf: "stretch",
     height: albumSize,
     width: albumSize,
+    borderRadius: 6,
     // position: "relative",
   },
   albumContainer: {
@@ -14,7 +15,7 @@ export default {
     // width: albumSize,
     // alignSelf: "center"
     // justifyContent: 'flex-end',
-    borderRadius: 5,
+    // borderRadius: 5,
     // padding: 10,
     height: 200,
   },

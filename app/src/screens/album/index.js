@@ -1,34 +1,118 @@
 import React, { Component } from "react";
 import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Left,
-  Right,
-  Body,
-  Footer, FooterTab,
-  Text
+    Container,
+    Header,
+    Title,
+    Content,
+    Button,
+    Left,
+    Right,
+    Body,
+    Footer, FooterTab,
+    Text, ListItem, Thumbnail
 } from "native-base";
-import { View, ScrollView, BackHandler } from "react-native";
+import {View, ScrollView, BackHandler, Image, FlatList, Dimensions} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
 import MiniPlayer from "../../components/miniPlayer";
 import AlbumItem from "../../components/albumItem";
 import { connect } from "react-redux"
+import TextTicker from "react-native-text-ticker";
 import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
+import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
+const albumUrl = "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getAlbumInfo?identify=";
+
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import axios from "axios";
+import TrackPlayer from "../../components/trackPlayer";
+import {window, AVATAR_SIZE, ROW_HEIGHT, PARALLAX_HEADER_HEIGHT, STICKY_HEADER_HEIGHT, parallaxStyles} from "../../components/parallaxStyles";
 
 
-class Album extends React.PureComponent {
+class Album extends React.Component {
   constructor(props) {
     super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-  }
+      this.state = {
+          lists: [],
+          loading: true,
+          albumInfo: []
+      };
+  };
+
+    _isMounted = false;
+
+    componentDidMount() {
+        this._isMounted = true;
+        const { navigation } = this.props;
+        const identify = navigation.getParam('identify');
+        const url = albumUrl + identify;
+        axios.get(url)
+            .then((res) => {
+                this._isMounted && this.setState({ lists: res.data.data.list_item });
+                this._isMounted && this.setState({ albumInfo: res.data.data });
+                this._isMounted && this.setState({ loading: false });
+            });
+    };
+
+    onItemPress = (item) => async () => {
+        await TrackPlayer.reset();
+        await TrackPlayer.add({
+            id: item.id,
+            url: item.download_url,
+            title: item.name,
+            artist: item.singer,
+            artwork: item.image310,
+            album: item.album ? item.album : "Chưa xác định",
+            genre: item.genre ? item.genre : "Chưa xác định",
+            description: item.lyric
+            // duration: song.duration,
+        });
+        await TrackPlayer.play();
+    };
+
+    onAddNowPlayingPress = (item) => async () => {
+        await TrackPlayer.add({
+            id: item.id,
+            url: item.download_url,
+            title: item.name,
+            artist: item.singer,
+            artwork: item.image310,
+            album: item.album ? item.album : "Chưa xác định",
+            genre: item.genre ? item.genre : "Chưa xác định",
+            description: item.lyric
+            // duration: song.duration,
+        });
+        // await TrackPlayer.play();
+    };
+
+    renderItem = ({ item }) => (
+        <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
+            <Left>
+                <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
+                    <Thumbnail square source={{ uri: item.image }} style={{borderRadius: 6}}/>
+                </TouchableScale>
+            </Left>
+            <Body>
+            <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
+                <Text numberOfLines={1}>
+                    {item.name}
+                </Text>
+                <Text numberOfLines={1} note>
+                    {item.singer}
+                </Text>
+            </TouchableScale>
+            </Body>
+            <Right style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableScale onPress={this.onAddNowPlayingPress(item)}>
+                    <Icon name="playlist-plus" size={28}/>
+                </TouchableScale>
+            </Right>
+        </ListItem>
+    );
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -36,6 +120,8 @@ class Album extends React.PureComponent {
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+      this._isMounted = false;
+
   }
 
   async handleBackButtonClick() {
@@ -72,33 +158,80 @@ class Album extends React.PureComponent {
     const { navigation } = this.props;
     const identify = navigation.getParam('identify');
 
+      const datas = this.state.lists;
+      const albumCover = this.state.albumInfo.cover ? this.state.albumInfo.cover : this.state.albumInfo.image310;
+      const albumTitle = this.state.albumInfo.name;
+      const singer = this.state.albumInfo.singer;
+
     return (
       <Container style={styles.container}>
-        <Header
-          // style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}
-          androidStatusBarColor={variables.secondaryColor}
-          iosBarStyle="light-content"
-        >
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
-            </Button>
-          </Left>
-          <Body style={{ alignItems: "center", justifyContent: "center" }}>
-            <Title style={{ color: "#FFF" }}>Album</Title>
-          </Body>
-          <Right>
-            {/*<Button transparent>*/}
-              {/*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />*/}
-            {/*</Button>*/}
-          </Right>
-        </Header>
+        <ParallaxScrollView
+            ref="ScrollView"
+            backgroundColor="#30d453"
+            headerBackgroundColor="#333"
+            stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
+            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
+            backgroundSpeed={10}
+            // style={{paddingBottom: 50}}
+            renderBackground={() => (
+                <View key="background">
+                  <Image source={{uri: albumCover,
+                    width: window.width,
+                    height: PARALLAX_HEADER_HEIGHT}}/>
+                  <View style={{position: 'absolute',
+                    top: 0,
+                    width: window.width,
+                    backgroundColor: 'rgba(0,0,0,.4)',
+                    height: PARALLAX_HEADER_HEIGHT}}/>
+                </View>
+            )}
 
-        <Content padder>
-          {/*<ScrollView  style={{paddingBottom: 50}}>*/}
-            <AlbumItem identify={identify} />
-          {/*</ScrollView>*/}
-        </Content>
+            renderForeground={() => (
+                <View key="parallax-header" style={ parallaxStyles.parallaxHeader }>
+                    <Image style={ parallaxStyles.avatar } source={{
+                    uri: albumCover,
+                    width: AVATAR_SIZE,
+                    height: AVATAR_SIZE
+                  }}/>
+                  <Text style={ parallaxStyles.sectionSpeakerText }>
+                      {albumTitle}
+                  </Text>
+                  <Text style={ parallaxStyles.sectionTitleText }>
+                      {singer}
+                  </Text>
+                </View>
+            )}
+
+            renderStickyHeader={() => (
+                <View key="sticky-header" style={parallaxStyles.stickySection}>
+                  {/*<Text style={styles.stickySectionText}>Rich Hickey Talks</Text>*/}
+                    <Button transparent onPress={() => this.props.navigation.goBack()}>
+                        <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 15, paddingBottom: 8 }} size={24} />
+                    </Button>
+                </View>
+            )}
+
+            renderFixedHeader={() => (
+                <View key="fixed-header" style={parallaxStyles.fixedSection}>
+                  <Icon name="format-align-top" style={parallaxStyles.fixedSectionText}
+                        onPress={() => this.refs.ScrollView.scrollTo({ x: 0, y: 0 })}>
+                  </Icon>
+
+                </View>
+            )}>
+          <FlatList
+              style={{paddingBottom: 50}}
+              data={datas}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => index.toString()}
+          />
+        {/*</ParallaxScrollView>*/}
+
+        {/*/!*<ScrollView  style={{paddingBottom: 50}}>*!/*/}
+            {/*<AlbumItem identify={identify} />*/}
+          {/*/!*</ScrollView>*!/*/}
+        {/*</Content>*/}
+        </ParallaxScrollView>
         <Footer>
           <FooterTab>
             <Button active full>

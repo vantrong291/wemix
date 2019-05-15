@@ -25,6 +25,7 @@
     "react-native-google-signin": "^1.2.1",
     "react-native-htmlview": "^0.13.0",
     "react-native-paper": "^2.12.0",
+    "react-native-parallax-scroll-view": "^0.21.3",
     "react-native-permissions": "^2.0.0-alpha.1",
     "react-native-slider": "^0.11.0",
     "react-native-snap-carousel": "^3.7.5",

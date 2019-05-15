@@ -102,7 +102,7 @@ class SearchItem extends Component {
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
         <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-          <Thumbnail square source={{ uri: imgUrl + item.image }} />
+          <Thumbnail square source={{ uri: imgUrl + item.image }} style={{borderRadius: 6}}/>
         </TouchableScale>
       </Left>
       <Body>
