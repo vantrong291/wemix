@@ -1,4 +1,4 @@
-const albumSize = 180;
+const albumSize = 150;
 
 export default {
   albumCover: {
@@ -10,11 +10,15 @@ export default {
     // position: "relative",
   },
   albumContainer: {
-    marginBottom: 10,
-    marginLeft: 0,
-    marginRight: 10,
-    width: albumSize,
-    // alignSelf: "center"
+    // marginBottom: 10,
+    // marginLeft: 0,
+    // marginRight: 10,
+    // width: albumSize,
+    // alignSelf: "center",
+    height: 200
+  },
+  gridView: {
+    // marginTop: 5,
+    flex: 1,
   }
-
 }
