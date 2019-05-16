@@ -62,12 +62,12 @@ class NowPlaying extends React.Component {
     <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
       <Left>
         <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-          <Thumbnail square source={(item.artwork) ? { uri: item.artwork } : defaltCover}/>
+          <Thumbnail square source={(item.artwork) ? { uri: item.artwork } : defaltCover} style={{borderRadius: 6}}/>
         </TouchableScale>
       </Left>
       <Body>
       <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-        <Text>
+        <Text numberOfLines={1}>
           {item.title}
         </Text>
         <Text numberOfLines={1} note>

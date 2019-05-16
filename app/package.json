@@ -16,6 +16,7 @@
     "react": "16.8.6",
     "react-native": "0.58.6",
     "react-native-banner-carousel": "^1.0.3",
+    "react-native-bottom-sheet-behavior": "^1.0.0",
     "react-native-button": "^2.3.0",
     "react-native-easy-grid": "^0.2.1",
     "react-native-elements": "^1.1.0",
