@@ -420,7 +420,7 @@ import {
 
 const { width, height } = Dimensions.get('window')
 
-const anchorPoint = 235
+const anchorPoint = 235;
 const RippleColor = (...args) => (
     Platform.Version >= 21
         ? TouchableNativeFeedback.Ripple(...args)
@@ -701,41 +701,6 @@ class Player extends Component {
     )
   }
 
-  renderComment(index) {
-    return (
-        <View style={styles.comment}>
-          <View style={{ alignItems: 'center' }}>
-            <Image source={require('../../assets/default-avatar.png')} style={styles.picture} />
-            <View style={styles.commentLine} />
-          </View>
-          <View style={styles.commentContent}>
-            <Text style={styles.commentName}>Lorem Ipsum</Text>
-            <Text style={styles.commentNumberReviews}>2 reviews</Text>
-            <View style={styles.commentStars}>
-              <Icon color={STAR_COLOR} name="md-star" size={14} />
-              <Icon color={STAR_COLOR} name="md-star" size={14} />
-              <Icon color={STAR_COLOR} name="md-star" size={14} />
-              <Icon color={STAR_COLOR} name="md-star" size={14} />
-              <Icon color={STAR_COLOR} name="md-star" size={14} />
-              <Text style={{fontSize: 12, marginLeft: 6}}>a month ago</Text>
-            </View>
-            <Text style={styles.commentDescription}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget blandit sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla dui eros, gravida vitae mollis in, auctor eget sapien. In suscipit quam non tempus eleifend. Ut lacus massa, pellentesque vitae condimentum eu, dictum et metus
-            </Text>
-            <View style={styles.commentButtons}>
-              <View style={styles.commentButton}>
-                <Icon color='#ccc' name='md-thumbs-up' size={22} />
-                <Text style={styles.commentButtonLabel}>Helpful?</Text>
-              </View>
-              <View style={styles.commentButton}>
-                <Icon color='#ccc' name='md-share' size={22} />
-                <Text style={styles.commentButtonLabel}>Share</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-    )
-  }
 
   renderDetailItem(icon, text) {
     return (
@@ -754,7 +719,7 @@ class Player extends Component {
     return (
         <View style={styles.bottomSheetContent}>
           <View style={[styles.section, styles.takeoutSection]}>
-            <Text style={[styles.sectionTitle, {marginLeft: 20}]}>Takeout</Text>
+            <Text style={[styles.sectionTitle, {marginLeft: 20}]}>Track</Text>
             <View style={styles.cards}>
               <NowPlaying/>
             </View>
@@ -770,8 +735,8 @@ class Player extends Component {
             elevation={18}
             rippleEffect={true}
             rippleColor="#55ffffff"
-            icon="directions"
-            iconProvider={IconMDI}
+            icon="chevron-double-down"
+            iconProvider={MaterialCommunityIcons}
             iconColor={WHITE}
             iconColorExpanded={PRIMARY_COLOR}
             onPress={this.handleFabPress}
@@ -781,23 +746,24 @@ class Player extends Component {
     )
   }
 
-  renderBackdropPager(source) {
+  renderBackdropPager = (source) => {
     return (
         <View>
-          <Image resizeMode="cover" style={{width, height: anchorPoint}} source={source} />
+          <Image resizeMode="cover" style={{width, height: anchorPoint}} source={{uri: source}} />
         </View>
     )
-  }
+  };
 
   renderBackdrop() {
-    const { viewPagerSelected } = this.state
+    const { viewPagerSelected } = this.state;
+    const currentTrack = this.state.currentTrack;
     return (
         <BackdropBottomSheet height={anchorPoint}>
           <View style={{flex: 1, backgroundColor: 'white'}}>
             <ViewPagerAndroid onPageSelected={this.handleViewPager} style={{flex: 1}}>
-              {this.renderBackdropPager(images[1])}
-              {this.renderBackdropPager(images[0])}
-              {this.renderBackdropPager(images[2])}
+              {this.renderBackdropPager(currentTrack.artwork)}
+              {this.renderBackdropPager(currentTrack.artwork)}
+              {this.renderBackdropPager(currentTrack.artwork)}
             </ViewPagerAndroid>
             <View style={styles.dots}>
               <View style={[styles.dot, viewPagerSelected === 0 && styles.dotActive]} />
@@ -814,19 +780,19 @@ class Player extends Component {
         <MergedAppBarLayout
             mergedColor={PRIMARY_COLOR}
             toolbarColor={PRIMARY_COLOR}
-            statusBarColor={STATUS_BAR_COLOR}
+            // statusBarColor={STATUS_BAR_COLOR}
             style={styles.appBarMerged}>
           <Icon.ToolbarAndroid
               navIconName="md-arrow-back"
               overflowIconName='md-more'
-              title='React Native Bar!'
+              title='Danh sách đang phát'
               titleColor={WHITE}
               style={{elevation: 6}}
               onIconClicked={() => this.handleState(STATE_COLLAPSED)}
-              actions={[
-                {title: 'Search', show: 'always', iconName: 'md-search' },
-                {title: 'More'}
-              ]}
+              // actions={[
+              //   {title: 'Search', show: 'always', iconName: 'md-search' },
+              //   {title: 'More'}
+              // ]}
           />
         </MergedAppBarLayout>
     )
@@ -835,10 +801,11 @@ class Player extends Component {
   renderBottomSheet() {
     return (
         <BottomSheetBehavior
+            hideable
             anchorEnabled
             anchorPoint={anchorPoint}
             peekHeight={55}
-            elevation={8}
+            // elevation={8}
             ref={(bottomSheet) => { this.bottomSheet = bottomSheet }}
             onSlide={this.handleSlide}
             onStateChange={this.handleBottomSheetChange}>
@@ -851,7 +818,7 @@ class Player extends Component {
               <View pointerEvents='none' style={styles.bottomSheetHeader}>
                 <View style={styles.bottomSheetLeft}>
                   <Text selectionColor={'#000'} style={styles.bottomSheetTitle}>
-                    Now Playing
+                    Danh sách đang phát
                   </Text>
                   {/*<View style={styles.starsContainer}>*/}
                     {/*<Text style={{marginRight: 8}} selectionColor={STAR_COLOR}>5.0</Text>*/}
