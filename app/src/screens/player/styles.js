@@ -68,7 +68,8 @@ export default {
     top: 0,
     left: 0,
     right: 0,
-    bottom: 170
+    bottom: 170,
+    backgroundColor: variables.lightTheme
   },
   artworkPlayer : {
     width: artworkPlayerSize,
@@ -108,12 +109,12 @@ export default {
     paddingTop: 10,
   },
   controlPlayerIcon: {
-    color: "#fff",
+    color: variables.primaryColor,
     fontSize: 40,
     textAlign: "center",
   },
   playPausePlayerIcon: {
-    color: "#fff",
+    color: variables.primaryColor,
     // width: "40%",
     fontSize: 60,
     alignSelf: "center",
@@ -132,7 +133,7 @@ export default {
     height: 72,
     width: 72,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: variables.primaryColor,
     borderRadius: 72 / 2,
     alignItems: 'center',
     justifyContent: 'center',

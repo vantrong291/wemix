@@ -67,7 +67,7 @@ class SingerHot extends Component {
             // spacing={20}
             renderItem={({ item, index }) => (
                 <TouchableScale activeScale={0.98} style={styles.albumContainer} onPress={this.onPressItem(item)}>
-                  <Image source={{ uri: item.image }} style={styles.albumCover}/>
+                  <Image source={{ uri: item.image310 }} style={styles.albumCover}/>
                   <Text style={{ alignSelf: "center", color: "#333", fontSize: 13,  paddingHorizontal: 5, paddingTop: 5 }} numberOfLines={1}>{item.name}</Text>
                   <Text style={{ alignSelf: "center", fontSize: 10, paddingHorizontal: 5 }} numberOfLines={1}>{item.singer}</Text>
                 </TouchableScale>

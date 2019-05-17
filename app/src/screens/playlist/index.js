@@ -599,7 +599,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
 //         )
 //     }
 //
-//     renderMaps() {
+//     renderPlayer() {
 //         return (
 //             <View style={styles.containerMap}>
 //                 <Text>sdkjghspifd</Text>
@@ -642,7 +642,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
 //                 <StatusBar translucent barStyle='dark-content' backgroundColor={STATUS_BAR_COLOR} />
 //                 {this.renderToolbar()}
 //                 <View style={styles.content}>
-//                     {this.renderMaps()}
+//                     {this.renderPlayer()}
 //                 </View>
 //                 {this.renderBackdrop()}
 //                 {this.renderBottomSheet()}
