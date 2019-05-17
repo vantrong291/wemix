@@ -9,9 +9,9 @@ import {
   Right,
   Body,
   Footer, FooterTab,
-  Text
+  Text, ListItem, Thumbnail
 } from "native-base";
-import { View, ScrollView, BackHandler } from "react-native";
+import {View, ScrollView, BackHandler, Image, FlatList} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
@@ -19,22 +19,108 @@ import MiniPlayer from "../../components/miniPlayer";
 import SingerItem from "../../components/singerItem";
 import { connect } from "react-redux"
 import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
+import axios from "axios";
+import TrackPlayer from "../../components/trackPlayer";
+import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
+import {window, AVATAR_SIZE, ROW_HEIGHT, PARALLAX_HEADER_HEIGHT, STICKY_HEADER_HEIGHT, parallaxStyles} from "../../components/parallaxStyles";
+import ParallaxScrollView from "react-native-parallax-scroll-view";
+
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
+const singerUrl = "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getSingerDetailAll?slug=";
 
-class Singer extends React.PureComponent {
+
+
+class Singer extends React.Component {
   constructor(props) {
     super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    this.state = {
+      lists: [],
+      loading: true,
+      singerInfo: []
+    };
   }
+
+  _isMounted = false;
+
+  componentDidMount() {
+    this._isMounted = true;
+    const { navigation } = this.props;
+    const slug = navigation.getParam('slug');
+    const url = singerUrl + slug;
+    axios.get(url)
+        .then((res) => {
+          this._isMounted && this.setState({ lists: res.data.data.media_item.list_song });
+          this._isMounted && this.setState({ singerInfo: res.data.data });
+          this._isMounted && this.setState({ loading: false });
+        });
+  };
+
+  onItemPress = (item) => async () => {
+    await TrackPlayer.reset();
+    await TrackPlayer.add({
+      id: item.id,
+      url: item.download_url,
+      title: item.name,
+      artist: item.singer,
+      artwork: item.image310,
+      album: item.album ? item.album : "Chưa xác định",
+      genre: item.genre ? item.genre : "Chưa xác định",
+      description: item.lyric
+      // duration: song.duration,
+    });
+    await TrackPlayer.play();
+  };
+
+  onAddNowPlayingPress = (item) => async () => {
+    await TrackPlayer.add({
+      id: item.id,
+      url: item.download_url,
+      title: item.name,
+      artist: item.singer,
+      artwork: item.image310,
+      album: item.album ? item.album : "Chưa xác định",
+      genre: item.genre ? item.genre : "Chưa xác định",
+      description: item.lyric
+      // duration: song.duration,
+    });
+    // await TrackPlayer.play();
+  };
+
+  renderItem = ({ item }) => (
+      <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
+        <Left>
+          <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
+            <Thumbnail square source={{ uri: item.image }} style={{borderRadius: 6}}/>
+          </TouchableScale>
+        </Left>
+        <Body>
+        <TouchableScale  activeScale={0.98} onPress={this.onItemPress(item)}>
+          <Text numberOfLines={1}>
+            {item.name}
+          </Text>
+          <Text numberOfLines={1} note>
+            {item.singer}
+          </Text>
+        </TouchableScale>
+        </Body>
+        <Right style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableScale onPress={this.onAddNowPlayingPress(item)}>
+            <Icon name="playlist-plus" size={28}/>
+          </TouchableScale>
+        </Right>
+      </ListItem>
+  );
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
   componentWillUnmount() {
+    this._isMounted = false;
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
@@ -69,37 +155,74 @@ class Singer extends React.PureComponent {
   // );
 
   render() {
-    const { navigation } = this.props;
-    const slug = navigation.getParam('slug');
-    // console.log(url);
+    const datas = this.state.lists;
+    const singerCover = this.state.singerInfo.cover ? this.state.singerInfo.cover : this.state.singerInfo.image310;
+    const singerName = this.state.singerInfo.name;
+    const singerAvatar = this.state.singerInfo.image310;
 
     return (
       <Container style={styles.container}>
-        <Header
-          // style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}
-          androidStatusBarColor={variables.secondaryColor}
-          iosBarStyle="light-content"
-        >
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 5 }} size={24} />
-            </Button>
-          </Left>
-          <Body style={{ alignItems: "center", justifyContent: "center" }}>
-            <Title style={{ color: "#FFF" }}>Ca sĩ</Title>
-          </Body>
-          <Right>
-            {/*<Button transparent>*/}
-              {/*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />*/}
-            {/*</Button>*/}
-          </Right>
-        </Header>
+        <ParallaxScrollView
+            ref="ScrollView"
+            backgroundColor="#30d453"
+            headerBackgroundColor="#333"
+            stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
+            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
+            backgroundSpeed={10}
+            // style={{paddingBottom: 50}}
+            renderBackground={() => (
+                <View key="background">
+                  <Image source={{uri: singerCover,
+                    width: window.width,
+                    height: PARALLAX_HEADER_HEIGHT}}/>
+                  <View style={{position: 'absolute',
+                    top: 0,
+                    width: window.width,
+                    backgroundColor: 'rgba(0,0,0,.4)',
+                    height: PARALLAX_HEADER_HEIGHT}}/>
+                </View>
+            )}
 
-        <Content padder>
-          {/*<ScrollView  style={{paddingBottom: 50}}>*/}
-            <SingerItem slug={slug} />
-          {/*</ScrollView>*/}
-        </Content>
+            renderForeground={() => (
+                <View key="parallax-header" style={ parallaxStyles.parallaxHeader }>
+                  <Image style={ parallaxStyles.avatar } source={{
+                    uri: singerAvatar,
+                    width: AVATAR_SIZE,
+                    height: AVATAR_SIZE
+                  }}/>
+                  <Text style={ parallaxStyles.sectionSpeakerText }>
+                    {singerName}
+                  </Text>
+                  <Text style={ parallaxStyles.sectionTitleText }>
+                    {singerName}
+                  </Text>
+                </View>
+            )}
+
+            renderStickyHeader={() => (
+                <View key="sticky-header" style={parallaxStyles.stickySection}>
+                  {/*<Text style={styles.stickySectionText}>Rich Hickey Talks</Text>*/}
+                  <Button transparent onPress={() => this.props.navigation.goBack()}>
+                    <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 15, paddingBottom: 8 }} size={24} />
+                  </Button>
+                </View>
+            )}
+
+            renderFixedHeader={() => (
+                <View key="fixed-header" style={parallaxStyles.fixedSection}>
+                  <Icon name="format-align-top" style={parallaxStyles.fixedSectionText}
+                        onPress={() => this.refs.ScrollView.scrollTo({ x: 0, y: 0 })}>
+                  </Icon>
+
+                </View>
+            )}>
+          <FlatList
+              style={{paddingBottom: 50}}
+              data={datas}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => index.toString()}
+          />
+        </ParallaxScrollView>
         <Footer>
           <FooterTab>
             <Button active full>
@@ -107,7 +230,6 @@ class Singer extends React.PureComponent {
             </Button>
           </FooterTab>
         </Footer>
-        {/*<MiniPlayer/>*/}
       </Container>
     );
   }
