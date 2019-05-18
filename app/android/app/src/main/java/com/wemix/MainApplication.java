@@ -3,6 +3,8 @@ package com.wemix;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.horcrux.svg.SvgPackage;
+import com.react.rnspinkit.RNSpinkitPackage;
 import com.bottomsheetbehavior.BottomSheetBehaviorPackage;
 import com.yonahforst.rnpermissions.RNPermissionsPackage;
 import com.cinder92.musicfiles.RNReactNativeGetMusicFilesPackage;
@@ -41,6 +43,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SvgPackage(),
+            new RNSpinkitPackage(),
             new BottomSheetBehaviorPackage(),
           new RNPermissionsPackage(),
           new RNReactNativeGetMusicFilesPackage(),

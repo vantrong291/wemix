@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ImageBackground } from "react-native";
+import { FlatList, ImageBackground, Image } from "react-native";
 import { ListItem } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
 // import LinearGradient from 'react-native-linear-gradient'; // Only if no expo
@@ -17,25 +17,28 @@ const categories = [
     {
         name: "BXH Việt Nam",
         background: vnChart,
-        url: "http://vip.service.keeng.vn:8080/KeengWSRestful/ws/common/getRankDetail?item_type=1&rank_type=50"
+        url: "http://vip.service.keeng.vn:8080/KeengWSRestful/ws/common/getRankDetail?item_type=1&rank_type=50",
+        type: "vn"
     },
     {
         name: "BXH US-UK",
         background: usChart,
-        url: "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getRankDetail?item_type=1&rank_type=52"
+        url: "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getRankDetail?item_type=1&rank_type=52",
+        type: "us"
     },
     {
         name: "BXH KPOP",
         background: krChart,
-        url: "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getRankDetail?item_type=1&rank_type=51"
+        url: "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getRankDetail?item_type=1&rank_type=51",
+        type: "kpop"
     },
 ];
 
 class CategoryComponent extends React.PureComponent {
 
-    goDetail = (url) => async () => {
+    goDetail = (url, type) => async () => {
         // await this.props.dispatch(miniPlayerState(false));
-        await NavigationService.navigate('ChartDetail', {url: url})
+        await NavigationService.navigate('ChartDetail', {url: url, type: type})
     };
 
     // openPlayer = async () => {
@@ -52,15 +55,16 @@ class CategoryComponent extends React.PureComponent {
             activeScale={0.95}
             friction={90}
             tension={100}
-            onPress={this.goDetail(item.url)}
+            onPress={this.goDetail(item.url, item.type)}
             >
-            <ImageBackground
+            <Image
                 source={item.background} style={{
                     alignSelf: "stretch",
                     height: 180,
                     width: null,
                     position: "relative",
-                    marginBottom: 10
+                    marginBottom: 10,
+                    borderRadius: 10
                 }} />
         </TouchableScale>
     );

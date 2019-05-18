@@ -21,6 +21,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
 import TrackPlayer from "../trackPlayer";
 
+
+
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
 
@@ -91,7 +93,7 @@ class ChartItem extends Component {
       </Left>
       <Body>
         <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-          <Text>
+          <Text numberOfLines={1}>
             {item.name}
           </Text>
           <Text numberOfLines={1} note>

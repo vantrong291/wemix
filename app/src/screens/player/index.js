@@ -309,7 +309,7 @@ class Player extends Component {
         return (
             <View style={styles.bottomSheetContent}>
                 <View style={[styles.section, styles.takeoutSection]}>
-                    <Text style={[styles.sectionTitle, {marginLeft: 20}]}>Track</Text>
+                    {/*<Text style={[styles.sectionTitle, {marginLeft: 20}]}>Track</Text>*/}
                     <View style={styles.cards}>
                         <NowPlaying/>
                     </View>
@@ -687,7 +687,7 @@ const styles = StyleSheet.create({
         lineHeight: 22,
     },
     section: {
-        padding: 22,
+        padding: 0,
         borderColor: '#eee',
         borderTopWidth: 1,
     },

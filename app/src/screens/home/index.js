@@ -143,34 +143,11 @@ class Home extends Component {
                 onRefresh={this._onRefresh}
               />
             }>
-            <H2 style={{paddingLeft: 10, paddingVertical: 10}}>Album Hot</H2>
+            <Text style={{paddingLeft: 10, paddingVertical: 10, fontSize: 20, fontWeight: "bold"}}>Album Hot</Text>
             <AlbumHot/>
-            <H2 style={{paddingLeft: 10, paddingVertical: 10}}>Ca sỹ Hot</H2>
+            <Text style={{paddingLeft: 10, paddingVertical: 10, fontSize: 20, fontWeight: "bold"}}>Ca sỹ Hot</Text>
             <SingerHot/>
 
-            {/*<Card style={styles.mb}>*/}
-              {/*<CardItem>*/}
-                {/*<Left>*/}
-                  {/*<Thumbnail source={logo} />*/}
-                  {/*<Body>*/}
-                  {/*<Text>NativeBase</Text>*/}
-                  {/*<Text note>GeekyAnts</Text>*/}
-                  {/*</Body>*/}
-                {/*</Left>*/}
-              {/*</CardItem>*/}
-
-              {/*<CardItem cardBody>*/}
-                {/*<Image*/}
-                  {/*style={{*/}
-                    {/*resizeMode: "cover",*/}
-                    {/*width: null,*/}
-                    {/*height: 200,*/}
-                    {/*flex: 1*/}
-                  {/*}}*/}
-                  {/*source={cardImage}*/}
-                {/*/>*/}
-              {/*</CardItem>*/}
-            {/*</Card>*/}
           </ScrollView>
         </Content>
       </Container>

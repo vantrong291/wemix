@@ -7,7 +7,7 @@ import {
   Left,
   Right,
   Body,
-  Text, Item, Input, Form, Tab, Tabs, ListItem, Thumbnail, Spinner
+  Text, Item, Input, Form, Tab, Tabs, ListItem, Thumbnail, Spinner, H2, H3
 } from "native-base";
 import { View, ScrollView, AsyncStorage, Alert, FlatList, Keyboard } from "react-native";
 import styles from "./styles";
@@ -19,6 +19,7 @@ import axios from "axios";
 
 import { Button } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale'; // https://github.com/kohver/react-native-touchable-scale
+import RecommendSong from "../../components/recommendSongs";
 
 const imgurl = "http://vip.img.cdn.keeng.vn";
 
@@ -147,8 +148,8 @@ class Search extends Component {
   renderContent = () => {
     if (this.state.keyword.length === 0 || this.state.displayRecent) {
       return (<ScrollView>
-        <Text>https://www.youtube.com/watch?v=0LHmevWVvpch</Text>
-        {/* <ChartItem/> */}
+        <Text style={{paddingLeft: 12, paddingVertical: 10, fontSize: 20, fontWeight: "bold"}}>Bài hát gợi ý</Text>
+        <RecommendSong/>
       </ScrollView>)
     }
     else {

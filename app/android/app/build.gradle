@@ -145,6 +145,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-svg')
+    implementation project(':react-native-spinkit')
     implementation project(':react-native-bottom-sheet-behavior')
     //implementation project(':react-native-linear-gradient')
     implementation project(':react-native-permissions')

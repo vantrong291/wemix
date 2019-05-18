@@ -30,6 +30,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import axios from "axios";
 import TrackPlayer from "../../components/trackPlayer";
 import {window, AVATAR_SIZE, ROW_HEIGHT, PARALLAX_HEADER_HEIGHT, STICKY_HEADER_HEIGHT, parallaxStyles} from "../../components/parallaxStyles";
+import Spinner from "react-native-spinkit";
 
 
 class Album extends React.Component {
@@ -219,13 +220,16 @@ class Album extends React.Component {
 
                 </View>
             )}>
-          <FlatList
+            {!this.state.loading && <FlatList
               style={{paddingBottom: 50}}
               data={datas}
+              initialNumToRender={10}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => index.toString()}
-          />
-        {/*</ParallaxScrollView>*/}
+          />}
+            {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>}
+
+            {/*</ParallaxScrollView>*/}
 
         {/*/!*<ScrollView  style={{paddingBottom: 50}}>*!/*/}
             {/*<AlbumItem identify={identify} />*/}
