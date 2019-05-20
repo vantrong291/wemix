@@ -117,8 +117,8 @@
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Capacity</p>
-                      <p class="card-title">150GB
+                      <p class="card-category">Người dùng</p>
+                      <p class="card-title"><%= numberOfUsers %>
                         <p>
                     </div>
                   </div>
@@ -143,8 +143,8 @@
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Revenue</p>
-                      <p class="card-title">$ 1,345
+                      <p class="card-category">Admin</p>
+                      <p class="card-title"><%= numberOfAdmin %>
                         <p>
                     </div>
                   </div>
@@ -169,8 +169,8 @@
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Errors</p>
-                      <p class="card-title">23
+                      <p class="card-category">Playlist</p>
+                      <p class="card-title"><%= numberOfPlaylist %>
                         <p>
                     </div>
                   </div>
@@ -195,8 +195,8 @@
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Followers</p>
-                      <p class="card-title">+45K
+                      <p class="card-category">Bài hát yêu thích</p>
+                      <p class="card-title"><%= numberOfFavTracks %>
                         <p>
                     </div>
                   </div>
@@ -211,50 +211,54 @@
             </div>
           </div>
         </div>
+        <!--<div class="row">-->
+          <!--<div class="col-md-12">-->
+            <!--<div class="card ">-->
+              <!--<div class="card-header ">-->
+                <!--<h5 class="card-title">Users Behavior</h5>-->
+                <!--<p class="card-category">24 Hours performance</p>-->
+              <!--</div>-->
+              <!--<div class="card-body ">-->
+                <!--<canvas id=chartHours width="400" height="100"></canvas>-->
+              <!--</div>-->
+              <!--<div class="card-footer ">-->
+                <!--<hr>-->
+                <!--<div class="stats">-->
+                  <!--<i class="fa fa-history"></i> Updated 3 minutes ago-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="row">
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header ">
-                <h5 class="card-title">Users Behavior</h5>
-                <p class="card-category">24 Hours performance</p>
+                <h5 class="card-title">Người dùng</h5>
+                <p class="card-category">Quản trị viên và Nguời dùng hệ thống </p>
               </div>
               <div class="card-body ">
-                <canvas id=chartHours width="400" height="100"></canvas>
+                <div class="row">
+                  <div class="col-5">
+                    <canvas id="chartEmail"></canvas>
+                  </div>
+                  <div class="col-7">
+                    <div class="legend">
+                      <i class="fa fa-circle text-primary"></i> Nguời dùng hệ thống <br>
+                      <i class="fa fa-circle text-danger"></i> Quản trị viên
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-history"></i> Updated 3 minutes ago
+                  <i class="fa fa-calendar"></i> Phân loại người dùng
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card ">
-              <div class="card-header ">
-                <h5 class="card-title">Email Statistics</h5>
-                <p class="card-category">Last Campaign Performance</p>
-              </div>
-              <div class="card-body ">
-                <canvas id="chartEmail"></canvas>
-              </div>
-              <div class="card-footer ">
-                <div class="legend">
-                  <i class="fa fa-circle text-primary"></i> Opened
-                  <i class="fa fa-circle text-warning"></i> Read
-                  <i class="fa fa-circle text-danger"></i> Deleted
-                  <i class="fa fa-circle text-gray"></i> Unopened
-                </div>
-                <hr>
-                <div class="stats">
-                  <i class="fa fa-calendar"></i> Number of emails sent
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-8">
+          <div class="col-md-8 d-none">
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-title">NASDAQ: AAPL</h5>
@@ -298,7 +302,122 @@
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-      demo.initChartsPages();
+      // demo.initChartsPages();
+      function initChartsPages () {
+        let numberOfAdmin = <%= numberOfAdmin %>;
+        let numberOfNormalUser = <%= numberOfNormalUser %>;
+
+
+        chartColor = "#FFFFFF";
+
+        ctx = document.getElementById('chartEmail').getContext("2d");
+
+        myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: [1, 2],
+            datasets: [{
+              label: "Users",
+              pointRadius: 0,
+              pointHoverRadius: 0,
+              backgroundColor: [
+                '#ef8157',
+                '#4acccd',
+              ],
+              borderWidth: 0,
+              data: [numberOfAdmin, numberOfNormalUser]
+            }]
+          },
+
+          options: {
+
+            legend: {
+              display: false
+            },
+
+            pieceLabel: {
+              render: 'percentage',
+              fontColor: ['white'],
+              precision: 2
+            },
+
+            tooltips: {
+              enabled: true
+            },
+
+            scales: {
+              yAxes: [{
+
+                ticks: {
+                  display: false
+                },
+                gridLines: {
+                  drawBorder: false,
+                  zeroLineColor: "transparent",
+                  color: 'rgba(255,255,255,0.05)'
+                }
+
+              }],
+
+              xAxes: [{
+                barPercentage: 1.6,
+                gridLines: {
+                  drawBorder: false,
+                  color: 'rgba(255,255,255,0.1)',
+                  zeroLineColor: "transparent"
+                },
+                ticks: {
+                  display: false,
+                }
+              }]
+            },
+          }
+        });
+
+        var speedCanvas = document.getElementById("speedChart");
+
+        var dataFirst = {
+          data: [0, 19, 15, 20, 30, 40, 40, 50, 25, 30, 50, 70],
+          fill: false,
+          borderColor: '#fbc658',
+          backgroundColor: 'transparent',
+          pointBorderColor: '#fbc658',
+          pointRadius: 4,
+          pointHoverRadius: 4,
+          pointBorderWidth: 8,
+        };
+
+        var dataSecond = {
+          data: [0, 5, 10, 12, 20, 27, 30, 34, 42, 45, 55, 63],
+          fill: false,
+          borderColor: '#51CACF',
+          backgroundColor: 'transparent',
+          pointBorderColor: '#51CACF',
+          pointRadius: 4,
+          pointHoverRadius: 4,
+          pointBorderWidth: 8
+        };
+
+        var speedData = {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets: [dataFirst, dataSecond]
+        };
+
+        var chartOptions = {
+          legend: {
+            display: false,
+            position: 'top'
+          }
+        };
+
+        var lineChart = new Chart(speedCanvas, {
+          type: 'line',
+          hover: false,
+          data: speedData,
+          options: chartOptions
+        });
+      }
+      initChartsPages();
     });
   </script>
 </body>

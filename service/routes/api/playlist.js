@@ -43,6 +43,16 @@ router.delete('/playlist', (req, res, next) => {
   }).catch((err) => res.json(err));
 });
 
+router.get('/playlistDetail/:pid', (req, res, next) => {
+    let id = req.params.pid;
+    // console.log("AAA");
+    models.playlist.findOne({
+        where: {id: id}
+    }).then(tracks => {
+        res.send(tracks);
+    }).catch((err) => res.json(err));
+});
+
 router.post('/addToPlaylist', (req, res, next) => {
   let id = req.body.playlist_id;
   let track = req.body.track;
@@ -53,7 +63,7 @@ router.post('/addToPlaylist', (req, res, next) => {
     old_tracks = playlists.tracks;
     // res.send(playlists.tracks);
     models.playlist.update({
-      tracks: old_tracks + track
+      tracks: old_tracks + "//EDGE//" + track
     },{
       where: {id: id}
     }).then((res) => {
