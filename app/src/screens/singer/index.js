@@ -105,6 +105,25 @@ class Singer extends React.Component {
         // await TrackPlayer.play();
     };
 
+    onPlayAllPress = async () => {
+        const datas = this.state.lists;
+        await TrackPlayer.reset();
+        await datas.map((track) => {
+            TrackPlayer.add({
+                id: track.id,
+                url: track.download_url,
+                title: track.name,
+                artist: track.singer,
+                artwork: track.image310,
+                album: track.album ? track.album : "Chưa xác định",
+                genre: track.genre ? track.genre : "Chưa xác định",
+                description: track.lyric
+                // duration: song.duration,
+            });
+        });
+        await TrackPlayer.play();
+    };
+
     renderItem = ({item}) => (
         <ListItem style={{marginLeft: 13}} thumbnail key={item.id}>
             <Left>
@@ -247,7 +266,7 @@ class Singer extends React.Component {
                 </ParallaxScrollView>
                 <Footer>
                     <FooterTab>
-                        <Button active full>
+                        <Button onPress={this.onPlayAllPress} active full>
                             <Text>Nghe tất cả</Text>
                         </Button>
                     </FooterTab>

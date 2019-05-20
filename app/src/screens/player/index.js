@@ -450,12 +450,12 @@ class Player extends Component {
                                        {/*style={{color: variables.playerTextColor, marginLeft: 5}} size={24}/>*/}
                             {/*</Button>*/}
                         {/*</View>*/}
-                        <View style={{alignSelf: "center", alignItems: "center", paddingTop: 15}}>
+                        <View style={{alignSelf: "center", alignItems: "center", paddingTop: 15, paddingHorizontal: 40}}>
                             <TextTicker
                                 duration={5000}
                                 loop
                                 bounce
-                                repeatSpacer={10}
+                                repeatSpacer={100}
                                 marqueeDelay={0}
                                 style={{color: variables.playerTextColor, fontSize: 16}}
                                 // onPress={() => NavigationService.navigate('Player')}>{this.state.currentTrack.title}</TextTicker>
