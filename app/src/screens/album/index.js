@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
     Container,
     Header,
@@ -16,9 +16,9 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
 import MiniPlayer from "../../components/miniPlayer";
-import { connect } from "react-redux"
+import {connect} from "react-redux"
 import TextTicker from "react-native-text-ticker";
-import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
+import {miniPlayerState, syncCurrentTrack} from "../../redux/actions";
 import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
@@ -28,33 +28,40 @@ const albumUrl = "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/get
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import axios from "axios";
 import TrackPlayer from "../../components/trackPlayer";
-import {window, AVATAR_SIZE, ROW_HEIGHT, PARALLAX_HEADER_HEIGHT, STICKY_HEADER_HEIGHT, parallaxStyles} from "../../components/parallaxStyles";
+import {
+    window,
+    AVATAR_SIZE,
+    ROW_HEIGHT,
+    PARALLAX_HEADER_HEIGHT,
+    STICKY_HEADER_HEIGHT,
+    parallaxStyles
+} from "../../components/parallaxStyles";
 import Spinner from "react-native-spinkit";
 
 
 class Album extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-      this.state = {
-          lists: [],
-          loading: true,
-          albumInfo: []
-      };
-  };
+    constructor(props) {
+        super(props);
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+        this.state = {
+            lists: [],
+            loading: true,
+            albumInfo: []
+        };
+    };
 
     _isMounted = false;
 
     componentDidMount() {
         this._isMounted = true;
-        const { navigation } = this.props;
+        const {navigation} = this.props;
         const identify = navigation.getParam('identify');
         const url = albumUrl + identify;
         axios.get(url)
             .then((res) => {
-                this._isMounted && this.setState({ lists: res.data.data.list_item });
-                this._isMounted && this.setState({ albumInfo: res.data.data });
-                this._isMounted && this.setState({ loading: false });
+                this._isMounted && this.setState({lists: res.data.data.list_item});
+                this._isMounted && this.setState({albumInfo: res.data.data});
+                this._isMounted && this.setState({loading: false});
             });
     };
 
@@ -108,11 +115,11 @@ class Album extends React.Component {
         await TrackPlayer.play();
     };
 
-    renderItem = ({ item }) => (
-        <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
+    renderItem = ({item}) => (
+        <ListItem style={{marginLeft: 13}} thumbnail key={item.id}>
             <Left>
                 <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-                    <Thumbnail square source={{ uri: item.image }} style={{borderRadius: 6}}/>
+                    <Thumbnail square source={{uri: item.image}} style={{borderRadius: 6}}/>
                 </TouchableScale>
             </Left>
             <Body>
@@ -125,7 +132,7 @@ class Album extends React.Component {
                 </Text>
             </TouchableScale>
             </Body>
-            <Right style={{ flexDirection: "row", alignItems: "center" }}>
+            <Right style={{flexDirection: "row", alignItems: "center"}}>
                 <TouchableScale onPress={this.onAddNowPlayingPress(item)}>
                     <Icon name="playlist-plus" size={28}/>
                 </TouchableScale>
@@ -133,142 +140,152 @@ class Album extends React.Component {
         </ListItem>
     );
 
-  componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-  }
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
 
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
-      this._isMounted = false;
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+        this._isMounted = false;
 
-  }
+    }
 
-  async handleBackButtonClick() {
-    await this.props.navigation.goBack();
-    // await this.props.dispatch(miniPlayerState(true));
-    let self = this;
-    // setTimeout(await function () {
-    //   self.props.dispatch(miniPlayerState(true));
-    // }, 100);
-    return true;
-  }
+    async handleBackButtonClick() {
+        await this.props.navigation.goBack();
+        // await this.props.dispatch(miniPlayerState(true));
+        let self = this;
+        // setTimeout(await function () {
+        //   self.props.dispatch(miniPlayerState(true));
+        // }, 100);
+        return true;
+    }
 
-  // renderChart = ({ item }) => (
-  //   <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
-  //     <Left>
-  //       <Thumbnail square source={{ uri: item.image }} />
-  //     </Left>
-  //     <Body>
-  //       <Text>
-  //         {item.name}
-  //       </Text>
-  //       <Text numberOfLines={1} note>
-  //         {item.singer}
-  //       </Text>
-  //     </Body>
-  //     <Right style={{ flexDirection: "row", alignItems: "center" }}>
-  //       <Icon name="control-play" size={20} style={{ marginRight: 15 }} />
-  //       <Icon name="plus" size={20} />
-  //     </Right>
-  //   </ListItem>
-  // );
+    // renderChart = ({ item }) => (
+    //   <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
+    //     <Left>
+    //       <Thumbnail square source={{ uri: item.image }} />
+    //     </Left>
+    //     <Body>
+    //       <Text>
+    //         {item.name}
+    //       </Text>
+    //       <Text numberOfLines={1} note>
+    //         {item.singer}
+    //       </Text>
+    //     </Body>
+    //     <Right style={{ flexDirection: "row", alignItems: "center" }}>
+    //       <Icon name="control-play" size={20} style={{ marginRight: 15 }} />
+    //       <Icon name="plus" size={20} />
+    //     </Right>
+    //   </ListItem>
+    // );
 
-  render() {
-    const { navigation } = this.props;
-    const identify = navigation.getParam('identify');
+    render() {
+        const {navigation} = this.props;
+        const identify = navigation.getParam('identify');
 
-      const datas = this.state.lists;
-      const albumCover = this.state.albumInfo.cover ? this.state.albumInfo.cover : this.state.albumInfo.image310;
-      const albumTitle = this.state.albumInfo.name;
-      const singer = this.state.albumInfo.singer;
+        const datas = this.state.lists;
+        const albumCover = this.state.albumInfo.cover ? this.state.albumInfo.cover : this.state.albumInfo.image310;
+        const albumTitle = this.state.albumInfo.name;
+        const singer = this.state.albumInfo.singer;
 
-    return (
-      <Container style={styles.container}>
-        <ParallaxScrollView
-            ref="ScrollView"
-            backgroundColor="#30d453"
-            headerBackgroundColor="#333"
-            stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
-            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
-            backgroundSpeed={10}
-            // style={{paddingBottom: 50}}
-            renderBackground={() => (
-                <View key="background">
-                  <Image source={{uri: albumCover,
-                    width: window.width,
-                    height: PARALLAX_HEADER_HEIGHT}}/>
-                  <View style={{position: 'absolute',
-                    top: 0,
-                    width: window.width,
-                    backgroundColor: 'rgba(0,0,0,.4)',
-                    height: PARALLAX_HEADER_HEIGHT}}/>
-                </View>
-            )}
+        return (
+            <Container style={styles.container}>
+                <ParallaxScrollView
+                    ref="ScrollView"
+                    backgroundColor="#30d453"
+                    headerBackgroundColor="#333"
+                    stickyHeaderHeight={STICKY_HEADER_HEIGHT}
+                    parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
+                    backgroundSpeed={10}
+                    // style={{paddingBottom: 50}}
+                    renderBackground={() => (
+                        <View key="background">
+                            <Image source={{
+                                uri: albumCover,
+                                width: window.width,
+                                height: PARALLAX_HEADER_HEIGHT
+                            }}/>
+                            <View style={{
+                                position: 'absolute',
+                                top: 0,
+                                width: window.width,
+                                backgroundColor: 'rgba(0,0,0,.4)',
+                                height: PARALLAX_HEADER_HEIGHT
+                            }}/>
+                        </View>
+                    )}
 
-            renderForeground={() => (
-                <View key="parallax-header" style={ parallaxStyles.parallaxHeader }>
-                    <Image style={ parallaxStyles.avatar } source={{
-                    uri: albumCover,
-                    width: AVATAR_SIZE,
-                    height: AVATAR_SIZE
-                  }}/>
-                  <Text style={ parallaxStyles.sectionSpeakerText }>
-                      {albumTitle}
-                  </Text>
-                  <Text style={ parallaxStyles.sectionTitleText }>
-                      {singer}
-                  </Text>
-                </View>
-            )}
+                    renderForeground={() => (
+                        <View key="parallax-header" style={parallaxStyles.parallaxHeader}>
+                            <Image style={parallaxStyles.avatar} source={{
+                                uri: albumCover,
+                                width: AVATAR_SIZE,
+                                height: AVATAR_SIZE
+                            }}/>
+                            <Text style={parallaxStyles.sectionSpeakerText}>
+                                {albumTitle}
+                            </Text>
+                            <Text style={parallaxStyles.sectionTitleText}>
+                                {singer}
+                            </Text>
+                            <TouchableScale activeScale={0.98} onPress={this.onPlayAllPress}>
+                                <Text style={{
+                                    color: 'white',
+                                    fontSize: 15,
+                                    paddingVertical: 5,
+                                    textAlign: "center",
+                                    textDecorationLine: "underline"
+                                }}>
+                                    Nghe tất cả
+                                </Text>
+                            </TouchableScale>
+                        </View>
+                    )}
 
-            renderStickyHeader={() => (
-                <View key="sticky-header" style={parallaxStyles.stickySection}>
-                  {/*<Text style={styles.stickySectionText}>Rich Hickey Talks</Text>*/}
-                    <Button transparent onPress={() => this.props.navigation.goBack()}>
-                        <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 15, paddingBottom: 8 }} size={24} />
-                    </Button>
-                </View>
-            )}
+                    renderStickyHeader={() => (
+                        <View key="sticky-header" style={parallaxStyles.stickySection}>
+                            {/*<Text style={styles.stickySectionText}>Rich Hickey Talks</Text>*/}
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Icon name="arrow-left-thick" style={{color: "#FFF", marginLeft: 15, paddingBottom: 8}}
+                                      size={24}/>
+                            </Button>
+                        </View>
+                    )}
 
-            renderFixedHeader={() => (
-                <View key="fixed-header" style={parallaxStyles.fixedSection}>
-                  <Icon name="format-align-top" style={parallaxStyles.fixedSectionText}
-                        onPress={() => this.refs.ScrollView.scrollTo({ x: 0, y: 0 })}>
-                  </Icon>
+                    renderFixedHeader={() => (
+                        <View key="fixed-header" style={parallaxStyles.fixedSection}>
+                            <Icon name="format-align-top" style={parallaxStyles.fixedSectionText}
+                                  onPress={() => this.refs.ScrollView.scrollTo({x: 0, y: 0})}>
+                            </Icon>
 
-                </View>
-            )}>
-            {!this.state.loading && <FlatList
-              style={{paddingBottom: 50}}
-              data={datas}
-              initialNumToRender={10}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-          />}
-            {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>}
+                        </View>
+                    )}>
+                    {!this.state.loading && <FlatList
+                        style={{paddingBottom: 50}}
+                        data={datas}
+                        initialNumToRender={10}
+                        renderItem={this.renderItem}
+                        keyExtractor={(item, index) => index.toString()}
+                    />}
+                    {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green"
+                                                    style={{alignSelf: "center", paddingTop: 150}}/>}
 
-            {/*</ParallaxScrollView>*/}
+                    {/*</ParallaxScrollView>*/}
 
-        {/*/!*<ScrollView  style={{paddingBottom: 50}}>*!/*/}
-            {/*<AlbumItem identify={identify} />*/}
-          {/*/!*</ScrollView>*!/*/}
-        {/*</Content>*/}
-        </ParallaxScrollView>
-        <Footer>
-          <FooterTab>
-            <Button onPress={this.onPlayAllPress} active full>
-              <Text>Nghe tất cả</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-        {/*<MiniPlayer/>*/}
-      </Container>
-    );
-  }
+                    {/*/!*<ScrollView  style={{paddingBottom: 50}}>*!/*/}
+                    {/*<AlbumItem identify={identify} />*/}
+                    {/*/!*</ScrollView>*!/*/}
+                    {/*</Content>*/}
+                </ParallaxScrollView>
+                {/*<MiniPlayer/>*/}
+            </Container>
+        );
+    }
 }
 
 const mapDispatchToProps = dispatch => ({
-  dispatch: dispatch
+    dispatch: dispatch
 });
 
 export default connect(mapDispatchToProps)(Album);

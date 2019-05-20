@@ -9,7 +9,7 @@ import {
     Right,
     Body,
     Footer, FooterTab,
-    Text, ListItem, Thumbnail
+    Text, ListItem, Thumbnail, Fab
 } from "native-base";
 import {View, ScrollView, BackHandler, Image, FlatList} from "react-native";
 import styles from "./styles";
@@ -214,6 +214,18 @@ class Chart extends React.Component {
                             <Text style={parallaxStyles.sectionSpeakerText}>
                                 {this.getTitle()}
                             </Text>
+                            <TouchableScale activeScale={0.98} onPress={this.onPlayAllPress}>
+                                <Text style={{
+                                    color: 'white',
+                                    fontSize: 15,
+                                    paddingVertical: 5,
+                                    textAlign: "center",
+                                    textDecorationLine: "underline"
+                                }}>
+                                    Nghe tất cả
+                                </Text>
+                            </TouchableScale>
+
                         </View>
                     )}
 
@@ -232,6 +244,7 @@ class Chart extends React.Component {
                                   onPress={() => this.refs.ScrollView.scrollTo({x: 0, y: 0})}>
                             </Icon>
 
+
                         </View>
                     )}>
                     {!this.state.loading && <FlatList
@@ -239,18 +252,12 @@ class Chart extends React.Component {
                         data={datas}
                         renderItem={({item, index}) => this.renderChart(item, index)}
                         keyExtractor={(item, index) => index.toString()}
-                    />}
+                    />
+                    }
                     {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green"
                                                     style={{alignSelf: "center", paddingTop: 150}}/>}
 
                 </ParallaxScrollView>
-                <Footer>
-                    <FooterTab>
-                        <Button active full onPress={this.onPlayAllPress}>
-                            <Text>Nghe tất cả</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
                 {/*<MiniPlayer/>*/}
             </Container>
         );

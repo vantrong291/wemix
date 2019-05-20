@@ -170,16 +170,16 @@ class OfflinePlaylist extends Component {
     const localSongs = this.state.localSongs;
     return (
       <Container style={styles.container}>
-          <Header
-          // style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}
-          androidStatusBarColor={variables.secondaryColor}
-          iosBarStyle="light-content"
-        // span
-        >
-          <Body style={{ alignItems: "center", justifyContent: "center" }}>
-            <Title style={{ color: "#FFF" }}>Danh sánh nhạc</Title>
-          </Body>
-          </Header>
+          {/*<Header*/}
+          {/*// style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}*/}
+          {/*androidStatusBarColor={variables.secondaryColor}*/}
+          {/*iosBarStyle="light-content"*/}
+        {/*// span*/}
+        {/*>*/}
+          {/*<Body style={{ alignItems: "center", justifyContent: "center" }}>*/}
+            {/*<Title style={{ color: "#FFF" }}>Danh sánh nhạc</Title>*/}
+          {/*</Body>*/}
+          {/*</Header>*/}
 
         <Content padder>
           <ScrollView style={{ paddingBottom: 50 }}>

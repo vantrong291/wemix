@@ -16,7 +16,7 @@ export default {
     height: 50,
     backgroundColor: "#fff",
     left: 0,
-    bottom: 55,
+    bottom: 0,
     // elevation: 3,
     borderTopColor: "#888",
     borderTopWidth: 0.5,

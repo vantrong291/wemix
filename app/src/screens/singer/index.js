@@ -233,6 +233,17 @@ class Singer extends React.Component {
                             <Text style={parallaxStyles.sectionTitleText}>
                                 {singerName}
                             </Text>
+                            <TouchableScale activeScale={0.98} onPress={this.onPlayAllPress}>
+                                <Text style={{
+                                    color: 'white',
+                                    fontSize: 15,
+                                    paddingVertical: 5,
+                                    textAlign: "center",
+                                    textDecorationLine: "underline"
+                                }}>
+                                    Nghe tất cả
+                                </Text>
+                            </TouchableScale>
                         </View>
                     )}
 
@@ -263,13 +274,7 @@ class Singer extends React.Component {
                     />}
                     {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>}
                 </ParallaxScrollView>
-                <Footer>
-                    <FooterTab>
-                        <Button onPress={this.onPlayAllPress} active full>
-                            <Text>Nghe tất cả</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
+
             </Container>
         );
     }

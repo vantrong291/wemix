@@ -77,13 +77,13 @@ const Switcher = createMaterialTopTabNavigator(
     },
     {
         initialRouteName: "Home",
-        order: ["BXH", "Search", "Home", "OfflinePlaylist", "Personal"],
+        order: ["Home", "BXH", "Search", "OfflinePlaylist", "Personal"],
         // activeTintColor: "#e91d62",
         // barStyle: { backgroundColor: '#f5f5f5' },
         // shifting:true
 
         // tabBarComponent: MyTabBar,
-        tabBarPosition: "bottom",
+        tabBarPosition: "top",
         swipeEnabled: true,
         animationEnabled: true,
         optimizationsEnabled: true,
@@ -103,14 +103,15 @@ const Switcher = createMaterialTopTabNavigator(
                 backgroundColor: "#fff",
                 borderTopWidth: 0.5,
                 borderTopColor: "grey",
-                height: 55,
+                height: 50,
                 // elevation: 3,
             },
             iconStyle: {},
             indicatorStyle: {
                 height: 0
             },
-            showIcon: true
+            showIcon: true,
+            showLabel: false
         }
     }
 );

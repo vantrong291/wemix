@@ -176,27 +176,10 @@ class PersonalInfo extends React.Component {
 
                         </Form>
                     </View>
-
-
                     }
                     {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green"
                                                     style={{alignSelf: "center", paddingTop: 150}}/>}
-
-                    {/*</ParallaxScrollView>*/}
-
-                    {/*/!*<ScrollView  style={{paddingBottom: 50}}>*!/*/}
-                    {/*<AlbumItem identify={identify} />*/}
-                    {/*/!*</ScrollView>*!/*/}
-                    {/*</Content>*/}
                 </ParallaxScrollView>
-                <Footer>
-                    <FooterTab>
-                        <Button onPress={this.onPlayAllPress} active full>
-                            <Text>Nghe tất cả</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
-                {/*<MiniPlayer/>*/}
             </Container>
         );
     }

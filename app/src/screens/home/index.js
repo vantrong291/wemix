@@ -116,25 +116,25 @@ class Home extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <Header
-          // style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}
-          androidStatusBarColor={variables.secondaryColor}
-          iosBarStyle="light-content"
-        >
-          {/*<Left>*/}
-          {/*<Button transparent onPress={() => this.props.navigation.openDrawer()}>*/}
-          {/*<Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24} />*/}
-          {/*</Button>*/}
-          {/*</Left>*/}
-          <Body style={{ alignItems: "center", justifyContent: "center" }}>
-            <Title style={{ color: "#FFF" }}>Trang chủ</Title>
-          </Body>
-          {/*<Right>*/}
-          {/*<Button transparent>*/}
-          {/*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />*/}
-          {/*</Button>*/}
-          {/*</Right>*/}
-        </Header>
+        {/*<Header*/}
+          {/*// style={{ backgroundColor: variables.primaryColor, borderBottomLeftRadius: 400, borderBottomRightRadius: 400, height: 100 }}*/}
+          {/*androidStatusBarColor={variables.secondaryColor}*/}
+          {/*iosBarStyle="light-content"*/}
+        {/*>*/}
+          {/*/!*<Left>*!/*/}
+          {/*/!*<Button transparent onPress={() => this.props.navigation.openDrawer()}>*!/*/}
+          {/*/!*<Icon name="menu-fold" style={{ color: "#FFF", marginLeft: 5 }} size={24} />*!/*/}
+          {/*/!*</Button>*!/*/}
+          {/*/!*</Left>*!/*/}
+          {/*<Body style={{ alignItems: "center", justifyContent: "center" }}>*/}
+            {/*<Title style={{ color: "#FFF" }}>Trang chủ</Title>*/}
+          {/*</Body>*/}
+          {/*/!*<Right>*!/*/}
+          {/*/!*<Button transparent>*!/*/}
+          {/*/!*<Icon name="profile" style={{ color: "#FFF", marginRight: 5 }} size={24} />*!/*/}
+          {/*/!*</Button>*!/*/}
+          {/*/!*</Right>*!/*/}
+        {/*</Header>*/}
 
         <Content padder>
           <ScrollView
