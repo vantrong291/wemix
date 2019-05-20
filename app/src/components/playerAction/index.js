@@ -22,7 +22,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 var BUTTONS = [
   { text: "Tải xuống", icon: "md-download", iconColor: "#2c8ef4" },
-  { text: "Thêm vào playlist", icon: "ios-list", iconColor: "#f42ced" },
+  { text: "Thêm vào offlinePlaylist", icon: "ios-list", iconColor: "#f42ced" },
   { text: "Đóng", icon: "close", iconColor: "#25de5b" }
 ];
 var DESTRUCTIVE_INDEX = 2;

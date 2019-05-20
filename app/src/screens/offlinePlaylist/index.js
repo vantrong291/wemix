@@ -27,7 +27,7 @@ import {CoordinatorLayout, BackdropBottomSheet, BottomSheetBehavior, BottomSheet
 
 const defaltCover = require('../../assets/defaultCover.jpeg');
 
-class Playlist extends Component {
+class OfflinePlaylist extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -227,10 +227,11 @@ const mapDispatchToProps = dispatch => ({
   dispatch: dispatch
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
+export default connect(mapStateToProps, mapDispatchToProps)(OfflinePlaylist);
+
 
 //
-// // export default Playlist;
+// // export default OfflinePlaylist;
 
 
 // import React, { Component } from 'react'
@@ -292,7 +293,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
 //     longitudeDelta: 0.0421,
 // }
 //
-// class Playlist extends Component {
+// class OfflinePlaylist extends Component {
 //     static contextTypes = {
 //         openDrawer: PropTypes.func,
 //     };
@@ -960,4 +961,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(Playlist);
 //     },
 // })
 //
-// export default Playlist
+// export default OfflinePlaylist

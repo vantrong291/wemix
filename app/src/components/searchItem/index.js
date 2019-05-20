@@ -79,7 +79,7 @@ class SearchItem extends Component {
       console.log(item.identify);
       NavigationService.navigate('Album', {"identify": item.identify});
     }
-    // else if (type === "playlist") {
+    // else if (type === "offlinePlaylist") {
     //   console.log(item.full_name);
     // }
   };

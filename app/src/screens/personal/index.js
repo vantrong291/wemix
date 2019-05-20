@@ -23,13 +23,13 @@ const drawerImage = require("../../assets/logo-kitchen-sink.png");
 const datas = [
   {
     name: "Trang cá nhân",
-    route: "Anatomy",
+    route: "PersonalInfo",
     icon: "user-circle",
     bg: "#C5F442"
   },
   {
     name: "Cài đặt",
-    route: "Header",
+    route: "MyPlaylist",
     icon: "dharmachakra",
     bg: "#477EEA",
     types: "11"
