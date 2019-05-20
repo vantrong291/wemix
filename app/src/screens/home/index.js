@@ -10,6 +10,7 @@ import MusicFiles from "react-native-get-music-files";
 import {connect} from "react-redux";
 import AlbumHot from "../../components/albumHot";
 import SingerHot from "../../components/singerHot";
+import SongHot from "../../components/songHot";
 
 
 const logo = require("../../assets/logo.png");
@@ -143,6 +144,8 @@ class Home extends Component {
                 onRefresh={this._onRefresh}
               />
             }>
+            <Text style={{paddingLeft: 10, paddingVertical: 10, fontSize: 20, fontWeight: "bold"}}>Bài hát Hot</Text>
+            <SongHot/>
             <Text style={{paddingLeft: 10, paddingVertical: 10, fontSize: 20, fontWeight: "bold"}}>Album Hot</Text>
             <AlbumHot/>
             <Text style={{paddingLeft: 10, paddingVertical: 10, fontSize: 20, fontWeight: "bold"}}>Ca sỹ Hot</Text>

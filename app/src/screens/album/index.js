@@ -16,7 +16,6 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
 import MiniPlayer from "../../components/miniPlayer";
-import AlbumItem from "../../components/albumItem";
 import { connect } from "react-redux"
 import TextTicker from "react-native-text-ticker";
 import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";

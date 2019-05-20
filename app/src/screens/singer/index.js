@@ -16,7 +16,6 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
 import MiniPlayer from "../../components/miniPlayer";
-import SingerItem from "../../components/singerItem";
 import {connect} from "react-redux"
 import {miniPlayerState, syncCurrentTrack} from "../../redux/actions";
 import axios from "axios";
