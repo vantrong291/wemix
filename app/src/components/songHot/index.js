@@ -60,7 +60,7 @@ class SongHot extends Component {
             artwork: item.image310,
             album: item.album ? item.album : "Chưa xác định",
             genre: item.genre ? item.genre : "Chưa xác định",
-            description: item.lyric
+            // description: item.lyric
             // duration: song.duration,
         });
         await TrackPlayer.play();
@@ -78,7 +78,7 @@ class SongHot extends Component {
         const datas = this.state.lists;
 
         return (this.state.loading) ? (
-            <ContentLoader height={160} width={335} primaryColor="#f5f5f5" secondaryColor="#dddddd">
+            <ContentLoader height={200} width={335} primaryColor="#f5f5f5" secondaryColor="#dddddd">
                 <Rect x="10" y="0" rx="5" ry="5" width="150" height="150"/>
                 <Rect x="20" y="155" rx="4" ry="4" width="130" height="15"/>
                 <Rect x="25" y="175" rx="4" ry="4" width="120" height="10"/>

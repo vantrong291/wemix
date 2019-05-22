@@ -10,7 +10,7 @@ import {
     // ScrollView,
     ImageBackground,
     TouchableOpacity,
-    BackHandler
+    BackHandler, AsyncStorage, FlatList, Animated, TouchableHighlight
 } from "react-native";
 import {
     Button,
@@ -25,8 +25,12 @@ import {
     Content,
     Container,
     Tab,
-    Tabs
+    Tabs,
+    Card,
+    CardItem, Form, Item
 } from "native-base";
+import { Input } from 'react-native-elements';
+
 import {MaterialTopTabBar, BottomTabBar, withNavigation} from "react-navigation";
 import {connect} from "react-redux";
 import TextTicker from "react-native-text-ticker";
@@ -52,6 +56,7 @@ import LyricView from "../../components/lyricView";
 import NowPlaying from "../../components/nowPlaying";
 import {ButtonGroup} from 'react-native-elements';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import { ListItem } from 'react-native-elements'
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 const playerBackground = require("../../assets/1-iphone-5-wallpaper.png");
@@ -84,7 +89,12 @@ import {
     BottomSheetBehavior,
     FloatingActionButton,
     ScrollingAppBarLayout,
-} from 'react-native-bottom-sheet-behavior'
+} from 'react-native-bottom-sheet-behavior';
+
+import Modal from 'react-native-root-modal';
+
+import API_URL from "../../api/apiUrl";
+import axios from "axios";
 
 const {width, height} = Dimensions.get('window');
 
@@ -121,6 +131,8 @@ class Player extends Component {
             presentPosition: 10,
             duration: 0,
             playerStartValue: 0,
+            playlistVisible: false,
+            trackInfoVisible: false,
 
             hidden: false,
             viewPagerSelected: 0,
@@ -262,7 +274,18 @@ class Player extends Component {
         // setTimeout(await function () {
         self._isMounted && self.setState({loading: false});
         // }, 500);
+
+
     }
+
+
+    renderPlaylists = ({item}) => (
+        <ListItem
+            title={item.name}
+            // subtitle={item.subtitle}
+            // leftAvatar={{ source: { uri: item.avatar_url } }}
+        />
+    );
 
     renderPlayerPlayPause = (playState, style) => {
         return (this.state.playerState === 3)
@@ -444,12 +467,6 @@ class Player extends Component {
 
                 <View style={{height: contentHeight}}>
                     <View noShadow transparent style={{height: 70, paddingTop: 0 }}>
-                        {/*<View style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15}}>*/}
-                            {/*<Button transparent onPress={this.goBack}>*/}
-                                {/*<EIcon name="chevron-thin-down"*/}
-                                       {/*style={{color: variables.playerTextColor, marginLeft: 5}} size={24}/>*/}
-                            {/*</Button>*/}
-                        {/*</View>*/}
                         <View style={{alignSelf: "center", alignItems: "center", paddingTop: 15, paddingHorizontal: 40}}>
                             <TextTicker
                                 duration={5000}
@@ -478,7 +495,7 @@ class Player extends Component {
                                 </View>
                                 <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
                                     <TouchableOpacity style={playerStyles.toolbarButton}>
-                                        <MaterialCommunityIcons name="heart-outline" style={playerStyles.toolbarIcon}/>
+                                        <MaterialCommunityIcons name="playlist-plus" style={playerStyles.toolbarIcon} onPress={() => this.props.navigation.navigate("AddToPlaylist", {"track": JSON.stringify(currentTrack)})}/>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
@@ -506,7 +523,10 @@ class Player extends Component {
                                   onPress={this.onSkipNext}/>
                     </TouchableOpacity>
                 </View>
+
             </View>
+
+
 
         )
     };
@@ -849,7 +869,46 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-})
+
+
+    modal: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)'
+    },
+    button: {
+        backgroundColor: '#ccc',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10
+    },
+    close: {
+        position: 'absolute',
+        right: 10,
+        top: 10,
+    },
+    modalContainer: {
+        borderRadius: 6,
+        height: "60%",
+        width: "80%",
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        backgroundColor: "#fff"
+    },
+    text: {
+        color: '#fff'
+    },
+    playlistCard: {
+        marginBottom: 15,
+        width: "100%",
+        height: "100%"
+    }
+});
 
 
 const mapDispatchToProps = dispatch => ({

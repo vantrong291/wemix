@@ -1,4 +1,3 @@
-
 const window = Dimensions.get('window');
 
 const AVATAR_SIZE = 120;
@@ -83,5 +82,26 @@ export default {
   },
   rowText: {
     fontSize: 20
+  },
+  searchInput: {
+    // borderRadius: 100,
+    borderWidth: 2,
+    paddingTop: 10,
+    paddingBottom: 2,
+    paddingLeft: 15,
+    paddingRight: 15,
+    elevation: 1,
+    height: 45,
+    backgroundColor: "#fff",
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+  },
+  searchContainer: {
+    height: 70,
+    backgroundColor: "#f9f9f9",
+    alignItems: "center",
+    alignSelf: "center"
+
   }
 };

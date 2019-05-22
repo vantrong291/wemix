@@ -76,7 +76,7 @@ class Chart extends React.Component {
             artwork: item.image310,
             album: item.album ? item.album : "Chưa xác định",
             genre: item.genre ? item.genre : "Chưa xác định",
-            description: item.lyric
+            // description: item.lyric
             // duration: song.duration,
         });
         await TrackPlayer.play();
@@ -91,7 +91,7 @@ class Chart extends React.Component {
             artwork: item.image310,
             album: item.album ? item.album : "Chưa xác định",
             genre: item.genre ? item.genre : "Chưa xác định",
-            description: item.lyric
+            // description: item.lyric
             // duration: song.duration,
         });
         // await TrackPlayer.play();
@@ -109,7 +109,7 @@ class Chart extends React.Component {
                 artwork: track.image310,
                 album: track.album ? track.album : "Chưa xác định",
                 genre: track.genre ? track.genre : "Chưa xác định",
-                description: track.lyric
+                // description: track.lyric
                 // duration: song.duration,
             });
         });

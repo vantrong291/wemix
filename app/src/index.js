@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Root, Button} from "native-base";
-import {SafeAreaView} from "react-native";
+import {SafeAreaView, Text} from "react-native";
 import {
     createDrawerNavigator,
     createStackNavigator,
@@ -22,10 +22,13 @@ import Singer from "./screens/singer";
 import PersonalInfo from "./screens/personalInfo";
 import MyPlaylist from "./screens/myPlaylist";
 import MyPlaylistItem from "./screens/myPlaylistItem";
+import AddToPlaylist from "./screens/addToPlaylist";
+
 
 import MiniPlayer from "./components/miniPlayer";
 import Player from "./screens/player";
 import variables from "./theme/variables/custom"
+// import {Text} from "react-native-paper";
 
 const Switcher = createMaterialTopTabNavigator(
     {
@@ -134,7 +137,8 @@ const AppStackNavigator = createStackNavigator(
         Singer: {screen: Singer},
         PersonalInfo: {screen: PersonalInfo},
         MyPlaylist: {screen: MyPlaylist},
-        MyPlaylistItem: {screen: MyPlaylistItem}
+        MyPlaylistItem: {screen: MyPlaylistItem},
+        AddToPlaylist: {screen: AddToPlaylist}
     },
     {
         initialRouteName: "Main",
@@ -156,6 +160,7 @@ const AppSwitchNavigator = createSwitchNavigator(
 
 export default () =>
     <Root>
+        {/*<Text>dfsjkng</Text>*/}
         <AppSwitchNavigator ref={navigatorRef => {
             NavigationService.setTopLevelNavigator(navigatorRef);
         }}/>

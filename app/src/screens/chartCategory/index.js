@@ -26,7 +26,7 @@ import {
 } from "../../components/parallaxStyles";
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 const drawerCover = require("../../assets/482216347x.jpg");
-const chartAvatar = require("../../assets/How-to-maintain-keyword-ranking-once-you-reach-the-top.jpg");
+const chartAvatar = require("../../assets/background-with-circle-colored-musical-notes_23-2147635161.jpg");
 
 
 

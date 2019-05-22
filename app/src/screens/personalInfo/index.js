@@ -11,9 +11,9 @@ import {
     Footer, FooterTab,
     Text, ListItem, Thumbnail
 } from "native-base";
-import { Form, Item, Input, Label } from 'native-base';
+import {Form, Item, Input, Label} from 'native-base';
 
-import {View, ScrollView, BackHandler, Image, FlatList, Dimensions} from "react-native";
+import {View, ScrollView, BackHandler, Image, FlatList, Dimensions, ToastAndroid} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
@@ -67,7 +67,7 @@ class PersonalInfo extends React.Component {
         //     .then((res) => {
         //         this._isMounted && this.setState({ lists: res.data.data.list_item });
         //         this._isMounted && this.setState({ albumInfo: res.data.data });
-                this._isMounted && this.setState({ loading: false });
+        this._isMounted && this.setState({loading: false});
         //     });
     };
 
@@ -91,6 +91,22 @@ class PersonalInfo extends React.Component {
         return true;
     }
 
+    updateProfile = () => {
+        let user = this.props.auth.user;
+        console.log(user);
+        user.updateProfile({
+            displayName: this.state.displayName,
+        }).then(() => {
+            user.updateEmail(this.state.email).then(() => {
+                ToastAndroid.show("Cập nhật thành công.Thông tin sẽ được load lại ở lần đăng nhập sau", ToastAndroid.SHORT)
+            }).catch((err) => {
+                ToastAndroid.show(err.toString(), ToastAndroid.SHORT)
+            })
+        }, (error) => {
+            ToastAndroid.show(error.toString(), ToastAndroid.SHORT)
+        });
+    };
+
 
     render() {
         const user = this.props.auth.user._auth._user;
@@ -109,10 +125,10 @@ class PersonalInfo extends React.Component {
                     renderBackground={() => (
                         <View key="background">
                             <Image source={drawerCover}
-                            style={{
-                                width: window.width,
-                                height: 220
-                            }}/>
+                                   style={{
+                                       width: window.width,
+                                       height: 220
+                                   }}/>
                             <View style={{
                                 position: 'absolute',
                                 top: 0,
@@ -157,28 +173,29 @@ class PersonalInfo extends React.Component {
 
                         </View>
                     )}>
-                    {!this.state.loading && <View>
+                    <View>
                         <Form>
                             <Item stackedLabel>
                                 <Label>Tên hiển thị:</Label>
                                 <Input
                                     value={this.state.displayName}
-                                    onChangeText={displayName => this.setState({ displayName })}
+                                    onChangeText={displayName => this.setState({displayName})}
                                 />
                             </Item>
                             <Item stackedLabel>
                                 <Label>Email:</Label>
                                 <Input
                                     value={this.state.email}
-                                    onChangeText={email => this.setState({ email })}
+                                    onChangeText={email => this.setState({email})}
                                 />
                             </Item>
-
+                            <View style={{marginHorizontal: 80, marginVertical: 30}}>
+                                <Button block active success rounded onPress={this.updateProfile}>
+                                    <Text>Cập nhật</Text>
+                                </Button>
+                            </View>
                         </Form>
                     </View>
-                    }
-                    {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green"
-                                                    style={{alignSelf: "center", paddingTop: 150}}/>}
                 </ParallaxScrollView>
             </Container>
         );

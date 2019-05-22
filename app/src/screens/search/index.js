@@ -97,7 +97,7 @@ class Search extends Component {
         { cancelable: true }
       );
     }
-  }
+  };
 
   onUpdate = (keyword) => {
     const url = "http://testrec.keeng.net/solr/media/select/?wt=json&fl=id,score,listen_no,type,full_name,full_singer,is_singer,search_info,url,slug,identify,image&sort=score%20desc,%20listen_no%20desc&indent=true&fq=type:song&rows=20&start=0&";

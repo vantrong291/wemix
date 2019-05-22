@@ -63,7 +63,7 @@ class ChartItem extends Component {
       artwork: item.image310,
       album: item.album ? item.album : "Chưa xác định",
       genre: item.genre ? item.genre : "Chưa xác định",
-      description: item.lyric
+      // description: item.lyric
       // duration: song.duration,
     });
     await TrackPlayer.play();
@@ -78,7 +78,7 @@ class ChartItem extends Component {
       artwork: item.image310,
       album: item.album ? item.album : "Chưa xác định",
       genre: item.genre ? item.genre : "Chưa xác định",
-      description: item.lyric
+      // description: item.lyric
       // duration: song.duration,
     });
     // await TrackPlayer.play();

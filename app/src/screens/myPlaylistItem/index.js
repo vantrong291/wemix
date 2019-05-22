@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
     Container,
     Header,
@@ -9,266 +9,334 @@ import {
     Right,
     Body,
     Footer, FooterTab,
-    Text, ListItem, Thumbnail
+    Text, Thumbnail, ListItem, Accordion
 } from "native-base";
-import {View, ScrollView, BackHandler, Image, FlatList, Dimensions} from "react-native";
+import {Form, Item, Input, Label} from 'native-base';
+
+import {View, ScrollView, BackHandler, Image, FlatList, Dimensions, ToastAndroid, AsyncStorage, Alert} from "react-native";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import variables from "../../theme/variables/custom"
 import MiniPlayer from "../../components/miniPlayer";
-import { connect } from "react-redux"
+import {connect} from "react-redux"
 import TextTicker from "react-native-text-ticker";
-import { miniPlayerState, syncCurrentTrack } from "../../redux/actions";
+import {miniPlayerState, syncCurrentTrack} from "../../redux/actions";
 import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
 
 const imgUrl = "http://vip.img.cdn.keeng.vn";
 const mediaUrl = "http://cdn1.keeng.net/bucket-audio-keeng";
-const albumUrl = "http://vip.service.keeng.vn:8080/KeengWSRestful//ws/common/getAlbumInfo?identify=";
+const drawerCover = require("../../assets/cover-personal.jpeg");
+const playlistAvatar = require("../../assets/defaultCover.jpeg");
+const avatar = require('../../assets/background-with-circle-colored-musical-notes_23-2147635161.jpg');
+
 
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import axios from "axios";
 import TrackPlayer from "../../components/trackPlayer";
-import {window, AVATAR_SIZE, ROW_HEIGHT, PARALLAX_HEADER_HEIGHT, STICKY_HEADER_HEIGHT, parallaxStyles} from "../../components/parallaxStyles";
+import {
+    window,
+    AVATAR_SIZE,
+    ROW_HEIGHT,
+    PARALLAX_HEADER_HEIGHT,
+    STICKY_HEADER_HEIGHT,
+    parallaxStyles
+} from "../../components/parallaxStyles";
 import Spinner from "react-native-spinkit";
+import API_URL from "../../api/apiUrl";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 
-class MyPlaylistItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-      this.state = {
-          lists: [],
-          loading: true,
-          albumInfo: []
-      };
-  };
+class MyPlaylist extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+        this.state = {
+            loading: true,
+            lists: [],
+        };
+    };
 
     _isMounted = false;
 
-    componentDidMount() {
+    async componentDidMount() {
         this._isMounted = true;
-        const { navigation } = this.props;
-        const identify = navigation.getParam('identify');
-        const url = albumUrl + identify;
-        axios.get(url)
+
+        const {navigation} = this.props;
+        const playlistId = navigation.getParam('playlistId');
+
+        const url = API_URL + `/playlistDetail/${playlistId}`;
+        let jsonTrack = [];
+
+        await axios.get(url)
             .then((res) => {
-                this._isMounted && this.setState({ lists: res.data.data.list_item });
-                this._isMounted && this.setState({ albumInfo: res.data.data });
-                this._isMounted && this.setState({ loading: false });
+                const rawTracks = res.data.tracks;
+                const arrayTrack = rawTracks.split("//EDGE//");
+                for(let i = 0; i < arrayTrack.length; i++){
+                    if ( arrayTrack[i] !== '') {
+                        jsonTrack.push(JSON.parse(arrayTrack[i]))
+                    }
+                }
+                console.log(jsonTrack);
             });
+        await this._isMounted && this.setState({lists: jsonTrack});
+        this._isMounted && this.setState({loading: false});
+        // this.addToPlaylist(1);
     };
 
-    onItemPress = (item) => async () => {
-        await TrackPlayer.reset();
-        await TrackPlayer.add({
-            id: item.id,
-            url: item.download_url,
-            title: item.name,
-            artist: item.singer,
-            artwork: item.image310,
-            album: item.album ? item.album : "Chưa xác định",
-            genre: item.genre ? item.genre : "Chưa xác định",
-            description: item.lyric
-            // duration: song.duration,
-        });
-        await TrackPlayer.play();
-    };
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
 
-    onAddNowPlayingPress = (item) => async () => {
-        await TrackPlayer.add({
-            id: item.id,
-            url: item.download_url,
-            title: item.name,
-            artist: item.singer,
-            artwork: item.image310,
-            album: item.album ? item.album : "Chưa xác định",
-            genre: item.genre ? item.genre : "Chưa xác định",
-            description: item.lyric
-            // duration: song.duration,
-        });
-        // await TrackPlayer.play();
-    };
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+        this._isMounted = false;
 
-    onPlayAllPress = async () => {
-        const datas = this.state.lists;
-        await TrackPlayer.reset();
-        await datas.map((track) => {
-            TrackPlayer.add({
-                id: track.id,
-                url: track.download_url,
-                title: track.name,
-                artist: track.singer,
-                artwork: track.image310,
-                album: track.album ? track.album : "Chưa xác định",
-                genre: track.genre ? track.genre : "Chưa xác định",
-                description: track.lyric
-                // duration: song.duration,
-            });
-        });
-        await TrackPlayer.play();
-    };
+    }
 
-    renderItem = ({ item }) => (
-        <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id}>
-            <Left>
-                <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
-                    <Thumbnail square source={{ uri: item.image }} style={{borderRadius: 6}}/>
-                </TouchableScale>
-            </Left>
-            <Body>
-            <TouchableScale activeScale={0.98} onPress={this.onItemPress(item)}>
+
+    async handleBackButtonClick() {
+        await this.props.navigation.goBack();
+        // await this.props.dispatch(miniPlayerState(true));
+        let self = this;
+        // setTimeout(await function () {
+        //   self.props.dispatch(miniPlayerState(true));
+        // }, 100);
+        return true;
+    }
+
+
+    keyExtractor = (item, index) => index.toString();
+
+    renderItem = ({item}) => (
+        <ListItem style={{marginLeft: 13}} thumbnail>
+                <Left>
+                    <Thumbnail square style={{borderRadius: 6}} source={{uri: item.artwork}}/>
+                </Left>
+                <Body>
                 <Text numberOfLines={1}>
-                    {item.name}
+                    {item.title}
                 </Text>
                 <Text numberOfLines={1} note>
-                    {item.singer}
+                    {item.artist}
                 </Text>
-            </TouchableScale>
-            </Body>
-            <Right style={{ flexDirection: "row", alignItems: "center" }}>
-                <TouchableScale onPress={this.onAddNowPlayingPress(item)}>
-                    <Icon name="playlist-plus" size={28}/>
-                </TouchableScale>
-            </Right>
+                </Body>
+                <Right style={{flexDirection: "row", alignItems: "center"}}>
+                    <TouchableScale activeScale={0.95} onPress={this.onPlay(item)}>
+                        <MaterialCommunityIcons name="play" size={28} style={{marginLeft: 15}}/>
+                    </TouchableScale>
+                    <TouchableScale activeScale={0.95} onPress={this.addToNowPlaying(item)}>
+                        <MaterialCommunityIcons name="playlist-play" size={28} style={{marginLeft: 15}}/>
+                    </TouchableScale>
+                    <TouchableScale activeScale={0.95} onPress={this.onAskForDeleting(item)}>
+                        <MaterialCommunityIcons name="delete-sweep" size={28} style={{marginLeft: 15, color: "red"}}/>
+                    </TouchableScale>
+                </Right>
         </ListItem>
     );
 
-  componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-  }
+    onPlay = (track) => async () => {
+      TrackPlayer.reset();
+      await TrackPlayer.add(track);
+      await TrackPlayer.play();
+    };
 
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
-      this._isMounted = false;
+    addToNowPlaying = (track) => () => {
+        TrackPlayer.add(track);
+    };
 
-  }
+    onPlayAll = async () => {
+      const list = this.state.lists;
+      await TrackPlayer.reset();
+      await list.map((item)=> {
+          TrackPlayer.add(item);
+      });
+      await TrackPlayer.play();
+    };
 
-  async handleBackButtonClick() {
-    await this.props.navigation.goBack();
-    // await this.props.dispatch(miniPlayerState(true));
-    let self = this;
-    // setTimeout(await function () {
-    //   self.props.dispatch(miniPlayerState(true));
-    // }, 100);
-    return true;
-  }
+    onAskForDeletePlaylist = () => {
+        const {navigation} = this.props;
+        const playlistName = navigation.getParam('playlistName');
+        Alert.alert(
+            "Xác nhận xóa",
+            `Bạn có chắc chắn muốn xóa playlist \"${playlistName}\"?`,
+            [
+                {
+                    text: 'Hủy',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {text: 'OK', onPress: this.onDeletePlaylist},
+            ],
+            {cancelable: false},
+        );
+    };
 
-  // renderChart = ({ item }) => (
-  //   <ListItem style={{ marginLeft: 13 }} thumbnail key={item.id} onPress={() => console.log("Pressed")}>
-  //     <Left>
-  //       <Thumbnail square source={{ uri: item.image }} />
-  //     </Left>
-  //     <Body>
-  //       <Text>
-  //         {item.name}
-  //       </Text>
-  //       <Text numberOfLines={1} note>
-  //         {item.singer}
-  //       </Text>
-  //     </Body>
-  //     <Right style={{ flexDirection: "row", alignItems: "center" }}>
-  //       <Icon name="control-play" size={20} style={{ marginRight: 15 }} />
-  //       <Icon name="plus" size={20} />
-  //     </Right>
-  //   </ListItem>
-  // );
+    onDeletePlaylist = () => {
+        const {navigation} = this.props;
+        const playlistId = navigation.getParam('playlistId');
+        const playlistName = navigation.getParam('playlistName');
+        const url = API_URL + "/playlist";
+        axios.delete(url,{data: {"id": playlistId}}).then((res) => {
+            // console.log(res);
+            ToastAndroid.show(`Đã xóa thành công playlist \"${playlistName}\"`, ToastAndroid.SHORT);
+            this.props.navigation.goBack();
+            this.props.navigation.state.params.reload();
 
-  render() {
-    const { navigation } = this.props;
-    const identify = navigation.getParam('identify');
+        }).catch((err) => {
+            console.log(err);
+        })
+    };
 
-      const datas = this.state.lists;
-      const albumCover = this.state.albumInfo.cover ? this.state.albumInfo.cover : this.state.albumInfo.image310;
-      const albumTitle = this.state.albumInfo.name;
-      const singer = this.state.albumInfo.singer;
+    onAskForDeleting = (track) => () => {
+        Alert.alert(
+            "Xác nhận xóa",
+            `Bạn có chắc chắn muốn xóa \"${track.title}\" khỏi playlist?`,
+            [
+                {
+                    text: 'Hủy',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {text: 'OK', onPress: this.onDeleteFromPlaylist(track)},
+            ],
+            {cancelable: false},
+        );
+    };
 
-    return (
-      <Container style={styles.container}>
-        <ParallaxScrollView
-            ref="ScrollView"
-            backgroundColor="#30d453"
-            headerBackgroundColor="#333"
-            stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
-            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
-            backgroundSpeed={10}
-            // style={{paddingBottom: 50}}
-            renderBackground={() => (
-                <View key="background">
-                  <Image source={{uri: albumCover,
-                    width: window.width,
-                    height: PARALLAX_HEADER_HEIGHT}}/>
-                  <View style={{position: 'absolute',
-                    top: 0,
-                    width: window.width,
-                    backgroundColor: 'rgba(0,0,0,.4)',
-                    height: PARALLAX_HEADER_HEIGHT}}/>
-                </View>
-            )}
+    onDeleteFromPlaylist = (track) => () => {
+        let strTrack = JSON.stringify(track);
+        const {navigation} = this.props;
+        const playlistId = navigation.getParam('playlistId');
+        const url = API_URL + "/removeFromPlaylist";
+        axios.post(url, {
+            playlist_id: playlistId,
+            track: JSON.stringify(track).replace('"', '\"')
+        }).then(async (res) => {
+            // console.log(res);
+            ToastAndroid.show(`Đã xóa thành công \"${track.title}\"`, ToastAndroid.SHORT);
+            const {navigation} = this.props;
+            const playlistId = navigation.getParam('playlistId');
 
-            renderForeground={() => (
-                <View key="parallax-header" style={ parallaxStyles.parallaxHeader }>
-                    <Image style={ parallaxStyles.avatar } source={{
-                    uri: albumCover,
-                    width: AVATAR_SIZE,
-                    height: AVATAR_SIZE
-                  }}/>
-                  <Text style={ parallaxStyles.sectionSpeakerText }>
-                      {albumTitle}
-                  </Text>
-                  <Text style={ parallaxStyles.sectionTitleText }>
-                      {singer}
-                  </Text>
-                </View>
-            )}
+            const url = API_URL + `/playlistDetail/${playlistId}`;
+            let jsonTrack = [];
 
-            renderStickyHeader={() => (
-                <View key="sticky-header" style={parallaxStyles.stickySection}>
-                  {/*<Text style={styles.stickySectionText}>Rich Hickey Talks</Text>*/}
-                    <Button transparent onPress={() => this.props.navigation.goBack()}>
-                        <Icon name="arrow-left-thick" style={{ color: "#FFF", marginLeft: 15, paddingBottom: 8 }} size={24} />
-                    </Button>
-                </View>
-            )}
+            await axios.get(url)
+                .then((res) => {
+                    const rawTracks = res.data.tracks;
+                    const arrayTrack = rawTracks.split("//EDGE//");
+                    for(let i = 0; i < arrayTrack.length; i++){
+                        if ( arrayTrack[i] !== '') {
+                            jsonTrack.push(JSON.parse(arrayTrack[i]))
+                        }
+                    }
+                    console.log(jsonTrack);
+                });
+            await this._isMounted && this.setState({lists: jsonTrack});
 
-            renderFixedHeader={() => (
-                <View key="fixed-header" style={parallaxStyles.fixedSection}>
-                  <Icon name="format-align-top" style={parallaxStyles.fixedSectionText}
-                        onPress={() => this.refs.ScrollView.scrollTo({ x: 0, y: 0 })}>
-                  </Icon>
+        }).catch((err) => {
+            console.log(err)
+        });
+        // console.log(strTrack);
+    };
 
-                </View>
-            )}>
-            {!this.state.loading && <FlatList
-              style={{paddingBottom: 50}}
-              data={datas}
-              initialNumToRender={10}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-          />}
-            {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>}
 
-            {/*</ParallaxScrollView>*/}
+    render() {
+        const user = this.props.auth.user._auth._user;
+        const photoUrl = user.photoURL ? user.photoURL : "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png";
 
-        {/*/!*<ScrollView  style={{paddingBottom: 50}}>*!/*/}
-            {/*<AlbumItem identify={identify} />*/}
-          {/*/!*</ScrollView>*!/*/}
-        {/*</Content>*/}
-        </ParallaxScrollView>
-        <Footer>
-          <FooterTab>
-            <Button onPress={this.onPlayAllPress} active full>
-              <Text>Nghe tất cả</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-        {/*<MiniPlayer/>*/}
-      </Container>
-    );
-  }
+        const lists = this.state.lists;
+        const {navigation} = this.props;
+        const playlistName = navigation.getParam('playlistName');
+
+        return (
+            <Container style={styles.container}>
+                <ParallaxScrollView
+                    ref="ScrollView"
+                    backgroundColor="#30d453"
+                    headerBackgroundColor="#333"
+                    stickyHeaderHeight={STICKY_HEADER_HEIGHT}
+                    parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
+                    backgroundSpeed={10}
+                    // style={{paddingBottom: 50}}
+                    renderBackground={() => (
+                        <View key="background">
+                            <Image source={drawerCover}
+                                   style={{
+                                       width: window.width,
+                                       height: PARALLAX_HEADER_HEIGHT
+                                   }}/>
+                            <View style={{
+                                position: 'absolute',
+                                top: 0,
+                                width: window.width,
+                                backgroundColor: 'rgba(0,0,0,.4)',
+                                height: PARALLAX_HEADER_HEIGHT
+                            }}/>
+                        </View>
+                    )}
+
+                    renderForeground={() => (
+                        <View key="parallax-header" style={parallaxStyles.parallaxHeader}>
+                            <Image style={[parallaxStyles.avatar, {
+                                width: AVATAR_SIZE,
+                                height: AVATAR_SIZE
+                            }]} source={avatar}/>
+                            <Text style={parallaxStyles.sectionSpeakerText}>
+                                {playlistName}
+                            </Text>
+                            <View style={{flexDirection: "row", paddingTop: 10}}>
+                                <Button success style={{borderRadius: 6, marginRight: 3}} onPress={this.onPlayAll}>
+                                    <Text style={{fontSize: 12}}>Phát tất cả</Text>
+                                </Button>
+                                <Button warning style={{borderRadius: 6, marginLeft: 3}} onPress={this.onAskForDeletePlaylist}>
+                                    <Text style={{fontSize: 12}}>Xóa playlist</Text>
+                                </Button>
+                            </View>
+
+                        </View>
+                    )}
+
+                    renderStickyHeader={() => (
+                        <View key="sticky-header" style={parallaxStyles.stickySection}>
+                            {/*<Text style={styles.stickySectionText}>Rich Hickey Talks</Text>*/}
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Icon name="arrow-left-thick" style={{color: "#FFF", marginLeft: 15, paddingBottom: 8}}
+                                      size={24}/>
+                            </Button>
+                        </View>
+                    )}
+
+                    renderFixedHeader={() => (
+                        <View key="fixed-header" style={parallaxStyles.fixedSection}>
+                            <Icon name="format-align-top" style={parallaxStyles.fixedSectionText}
+                                  onPress={() => this.refs.ScrollView.scrollTo({x: 0, y: 0})}>
+                            </Icon>
+
+                        </View>
+                    )}>
+                    <View>
+                        {!this.state.loading && <FlatList
+                            keyExtractor={this.keyExtractor}
+                            data={lists}
+                            renderItem={this.renderItem}
+                            style={{paddingBottom: 53}}
+                        />}
+                        {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green"
+                                                        style={{alignSelf: "center", paddingTop: 150}}/>}
+                    </View>
+                </ParallaxScrollView>
+            </Container>
+        );
+    }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch: dispatch
+const mapStateToProps = state => ({
+    auth: state.user
 });
 
-export default connect(mapDispatchToProps)(MyPlaylistItem);
+
+const mapDispatchToProps = dispatch => ({
+    dispatch: dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyPlaylist);

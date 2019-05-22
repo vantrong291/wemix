@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ImageBackground, Alert } from "react-native";
+import { View, ImageBackground, Alert, AsyncStorage } from "react-native";
 import {
   Content,
   Text,
@@ -16,23 +16,32 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import NavigationService from "../../NavigationService";
 import { loginSuccess, logoutSuccess, miniPlayerState, syncNavigationProps } from "../../redux/actions";
+import axios from 'axios';
+import API_URL from "../../api/apiUrl";
 const drawerCover = require("../../assets/cover-personal.jpeg");
 const drawerImage = require("../../assets/logo-kitchen-sink.png");
 
 
 const datas = [
   {
-    name: "Trang cá nhân",
+    name: "Thông tin cá nhân",
     route: "PersonalInfo",
     icon: "user-circle",
     bg: "#C5F442"
+  },
+  {
+    name: "Playlist của tôi",
+    route: "MyPlaylist",
+    icon: "list-ul",
+    bg: "#477EEA",
+    // types: "11"
   },
   {
     name: "Cài đặt",
     route: "MyPlaylist",
     icon: "dharmachakra",
     bg: "#477EEA",
-    types: "11"
+    // types: "11"
   },
 
 ];
@@ -92,6 +101,13 @@ class Personal extends React.PureComponent {
     this._isMounted = true;
     // this.updateMiniPlayerState(this.state.drawerState);
     // this._isMounted && this.setState({drawerState: !this.props.navigation.state.isDrawerOpen});
+    const user = this.props.auth.user._auth._user;
+    const url = API_URL + `/userFromToken/${user.uid}`;
+    axios.get(url).then((res) => {
+      AsyncStorage.setItem("userId", JSON.stringify(res.data[0].id))
+    }).catch((err) => {
+      console.log(err);
+    })
   }
 
   componentWillUnmount(){
