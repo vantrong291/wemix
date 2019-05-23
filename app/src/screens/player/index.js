@@ -57,6 +57,8 @@ import NowPlaying from "../../components/nowPlaying";
 import {ButtonGroup} from 'react-native-elements';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { ListItem } from 'react-native-elements'
+import RNFetchBlob from 'rn-fetch-blob'
+
 
 const defaultArtwork = require("../../assets/defaultCover.jpeg");
 const playerBackground = require("../../assets/1-iphone-5-wallpaper.png");
@@ -490,7 +492,7 @@ class Player extends Component {
                                 <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
                                     <TouchableOpacity style={playerStyles.toolbarButton}>
                                         <MaterialCommunityIcons name="information-outline"
-                                                                style={playerStyles.toolbarIcon}/>
+                                                                style={playerStyles.toolbarIcon} onPress={this.download}/>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
@@ -502,7 +504,10 @@ class Player extends Component {
                                     <PlayerMode/>
                                 </View>
                                 <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
-                                    <PlayerAction/>
+                                    <TouchableOpacity style={playerStyles.toolbarButton}>
+                                        <MaterialCommunityIcons name="download"
+                                                                style={playerStyles.toolbarIcon} onPress={this.download}/>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </ScrollView>
@@ -547,6 +552,33 @@ class Player extends Component {
             </ScrollingAppBarLayout>
         )
     }
+
+    download = () => {
+        const currentTrack = this.state.currentTrack;
+        var url = currentTrack.url;
+        var ext = this.extention(url);
+        ext = "." + ext[0];
+        const { config, fs } = RNFetchBlob;
+        let MusicDir = fs.dirs.MusicDir;
+        let options = {
+            fileCache: true,
+            addAndroidDownloads : {
+                useDownloadManager : true,
+                notification : true,
+                title : '@Wemix: Tải file',
+                path:  MusicDir + "/" + currentTrack.title + ext,
+                description : 'Đang tải xuống...',
+                mime: "Audio/mp3"
+            }
+        };
+        config(options).fetch('GET', url).then((res) => {
+            Alert.alert("Tải xuống hoàn tất");
+        });
+    };
+
+    extention = (filename) => {
+        return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+    };
 
     render() {
         return (

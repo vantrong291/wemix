@@ -95,6 +95,8 @@ class Home extends Component {
 
   async componentDidMount() {
     await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+
     this._isMounted = true;
     // Permission.request('storage').then(response => {
     //   this.setState({ storagePermission: response })
