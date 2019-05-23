@@ -272,7 +272,7 @@ class Singer extends React.Component {
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
                     />}
-                    {this.state.loading && `<Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>`}
+                    {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>}
                 </ParallaxScrollView>
 
             </Container>
