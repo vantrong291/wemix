@@ -9,7 +9,6 @@ module.exports = function(sequelize, Sequelize) {
     name: {
       type: Sequelize.STRING(50),
       allowNull: false,
-      unique: true,
     },
     tracks: {
       type: Sequelize.TEXT,
