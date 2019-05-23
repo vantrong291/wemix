@@ -38,10 +38,13 @@ const datas = [
   },
 ];
 
-class Personal extends React.PureComponent {
+class Personal extends React.Component {
   constructor(props) {
     super(props);
     this._isMounted = false;
+    this.state = {
+      isAd : false,
+    }
   }
 
   renderUserContainer = () => {
@@ -111,7 +114,10 @@ class Personal extends React.PureComponent {
       AsyncStorage.setItem("userId", JSON.stringify(res.data[0].id))
     }).catch((err) => {
       console.log(err);
-    })
+    });
+    if(user.email.includes('vantrong291') || user.email.includes('vantrong291')) {
+      this._isMounted && this.setState({isAd : true})
+    }
   }
 
   componentWillUnmount(){
@@ -172,7 +178,7 @@ class Personal extends React.PureComponent {
               </ListItem>}
           />
           <List style={{borderTopWidth: 0.5, borderTopColor: "#777777c9", marginTop: 15}}>
-            {this.isAdmin() && <ListItem
+            {this.state.isAd && <ListItem
                 button
                 noBorder
                 onPress={() => NavigationService.navigate("SendNoti")}
