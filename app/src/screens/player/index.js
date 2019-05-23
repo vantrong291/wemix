@@ -238,7 +238,6 @@ class Player extends Component {
             // self._isMounted && self.setState({ loading: false });
         });
 
-
         TrackPlayer.addEventListener("playback-track-changed", async (data) => {
             if (data.nextTrack) {
                 const track = await TrackPlayer.getTrack(data.nextTrack);
@@ -492,7 +491,7 @@ class Player extends Component {
                                 <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
                                     <TouchableOpacity style={playerStyles.toolbarButton}>
                                         <MaterialCommunityIcons name="information-outline"
-                                                                style={playerStyles.toolbarIcon} onPress={this.download}/>
+                                                                style={playerStyles.toolbarIcon}/>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
@@ -556,24 +555,29 @@ class Player extends Component {
     download = () => {
         const currentTrack = this.state.currentTrack;
         var url = currentTrack.url;
-        var ext = this.extention(url);
-        ext = "." + ext[0];
-        const { config, fs } = RNFetchBlob;
-        let MusicDir = fs.dirs.MusicDir;
-        let options = {
-            fileCache: true,
-            addAndroidDownloads : {
-                useDownloadManager : true,
-                notification : true,
-                title : '@Wemix: Tải file',
-                path:  MusicDir + "/" + currentTrack.title + ext,
-                description : 'Đang tải xuống...',
-                mime: "Audio/mp3"
-            }
-        };
-        config(options).fetch('GET', url).then((res) => {
-            Alert.alert("Tải xuống hoàn tất");
-        });
+        if(url.includes("http://")) {
+            var ext = this.extention(url);
+            ext = "." + ext[0];
+            const {config, fs} = RNFetchBlob;
+            let MusicDir = fs.dirs.MusicDir;
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    title: '@Wemix: Tải file',
+                    path: MusicDir + "/" + currentTrack.title + ext,
+                    description: 'Đang tải xuống...',
+                    mime: "Audio/mp3"
+                }
+            };
+            config(options).fetch('GET', url).then((res) => {
+                Alert.alert("Tải xuống hoàn tất");
+            });
+        }
+        else {
+            ToastAndroid.show("Đây là nhạc local", ToastAndroid.SHORT);
+        }
     };
 
     extention = (filename) => {

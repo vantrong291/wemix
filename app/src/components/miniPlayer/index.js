@@ -127,12 +127,13 @@ class MiniPlayer extends Component {
     let self = this;
     TrackPlayer.addEventListener("playback-track-changed", async (data) => {
       if (data.nextTrack) {
+        // console.log(data);
         const track = await TrackPlayer.getTrack(data.nextTrack);
         this._isMounted && this.setState({ currentTrack: track });
 
         setTimeout(() => {
           TrackPlayer.getDuration().then((duration) => {
-            console.log("dr " + duration);
+            // console.log("dr " + duration);
             this._isMounted && this.setState({ duration: duration });
           })
         }, 2000);

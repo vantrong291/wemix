@@ -223,10 +223,10 @@ class Album extends React.Component {
                                 width: AVATAR_SIZE,
                                 height: AVATAR_SIZE
                             }}/>
-                            <Text style={parallaxStyles.sectionSpeakerText}>
+                            <Text style={parallaxStyles.sectionSpeakerText} numberOfLines={1}>
                                 {albumTitle}
                             </Text>
-                            <Text style={parallaxStyles.sectionTitleText}>
+                            <Text style={parallaxStyles.sectionTitleText} numberOfLines={1}>
                                 {singer}
                             </Text>
                             <TouchableScale activeScale={0.98} onPress={this.onPlayAllPress}>

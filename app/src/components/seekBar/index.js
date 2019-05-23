@@ -41,6 +41,23 @@ class SeekBar extends Component {
         this._isMounted && this.setState({ presentPosition: position });
       })
     },1000);
+
+    // TrackPlayer.addEventListener("playback-track-changed", async (data) => {
+    //   if (data.nextTrack) {
+    //     // const track = await TrackPlayer.getTrack(data.nextTrack);
+    //     // this._isMounted && this.setState({currentTrack: track});
+    //     // console.log(track)
+    //
+    //     TrackPlayer.getDuration().then((duration) => {
+    //       console.log(duration);
+    //       this._isMounted && this.setState({duration: duration});
+    //     });
+    //
+    //     // setTimeout(await function() {
+    //     //   self._isMounted && self.setState({ loading: false });
+    //     // }, 1000);
+    //   }
+    // });
   };
 
   shouldComponentUpdate(nextProps, nextState) {

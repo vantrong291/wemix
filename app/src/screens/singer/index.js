@@ -227,10 +227,10 @@ class Singer extends React.Component {
                                 width: AVATAR_SIZE,
                                 height: AVATAR_SIZE
                             }}/>
-                            <Text style={parallaxStyles.sectionSpeakerText}>
+                            <Text style={parallaxStyles.sectionSpeakerText} numberOfLines={1}>
                                 {singerName}
                             </Text>
-                            <Text style={parallaxStyles.sectionTitleText}>
+                            <Text style={parallaxStyles.sectionTitleText} numberOfLines={1}>
                                 {singerName}
                             </Text>
                             <TouchableScale activeScale={0.98} onPress={this.onPlayAllPress}>
@@ -272,7 +272,7 @@ class Singer extends React.Component {
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
                     />}
-                    {this.state.loading && <Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>}
+                    {this.state.loading && `<Spinner type="WanderingCubes" size={30} color="green" style={{alignSelf: "center", paddingTop: 150}}/>`}
                 </ParallaxScrollView>
 
             </Container>
