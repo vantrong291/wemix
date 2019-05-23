@@ -1,5 +1,15 @@
 import React from "react";
-import { StyleSheet, Alert, StatusBar, ImageBackground, View, TextInput, ScrollView, Image } from "react-native";
+import {
+  StyleSheet,
+  Alert,
+  StatusBar,
+  ImageBackground,
+  View,
+  TextInput,
+  ScrollView,
+  Image,
+  AsyncStorage
+} from "react-native";
 import {
   Container,
   Header,
@@ -20,6 +30,8 @@ import { Keyboard } from "react-native";
 import SocialLogin from "../../components/socialLogin";
 import { connect } from "react-redux";
 import { loginSuccess, syncAuthStatus } from "../../redux/actions";
+import API_URL from "../../api/apiUrl";
+import axios from "axios";
 
 const launchscreenBg = require("../../assets/bg.jpg");
 const emotion = require("../../assets/undraw_walk_in_the_city_1ma6.png");
@@ -36,7 +48,7 @@ class Login extends React.Component {
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
     this.state = {
       loaded: false,
-      email: "123@gmail.com",
+      email: "vnc@gmail.com",
       password: "123456",
       errorMessage: null,
       loading: false,
@@ -74,6 +86,17 @@ class Login extends React.Component {
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then( async (res) => {
           // console.log(res);
+
+
+          const user = res.user._auth._user;
+          const url = API_URL + `/userFromToken/${user.uid}`;
+          axios.get(url).then((res) => {
+            AsyncStorage.setItem("userId", JSON.stringify(res.data[0].id))
+          }).catch((err) => {
+            console.log(err);
+          });
+
+
           await this.props.dispatch(loginSuccess(res.user));
           await this._isMounted && this.setState({ loading: false });
           await this.props.navigation.navigate("Main");

@@ -488,21 +488,22 @@ class Player extends Component {
                             </View>
                             <SeekBar duration={duration}/>
                             <View style={{flexDirection: "row", height: 80}}>
-                                <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
-                                    <TouchableOpacity style={playerStyles.toolbarButton}>
-                                        <MaterialCommunityIcons name="information-outline"
-                                                                style={playerStyles.toolbarIcon}/>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
+                                {/*<View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>*/}
+                                    {/*<TouchableOpacity style={playerStyles.toolbarButton}>*/}
+                                        {/*<MaterialCommunityIcons name="information-outline"*/}
+                                                                {/*style={playerStyles.toolbarIcon}/>*/}
+                                    {/*</TouchableOpacity>*/}
+                                {/*</View>*/}
+                                <View style={{width: "50%", alignItems: "center", alignSelf: "center"}}>
                                     <TouchableOpacity style={playerStyles.toolbarButton}>
                                         <MaterialCommunityIcons name="playlist-plus" style={playerStyles.toolbarIcon} onPress={() => this.props.navigation.navigate("AddToPlaylist", {"track": JSON.stringify(currentTrack)})}/>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
-                                    <PlayerMode/>
-                                </View>
-                                <View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>
+                                {/*<View style={{width: "25%", alignItems: "center", alignSelf: "center"}}>*/}
+                                    {/*<PlayerMode/>*/}
+                                {/*</View>*/}
+
+                                <View style={{width: "50%", alignItems: "center", alignSelf: "center"}}>
                                     <TouchableOpacity style={playerStyles.toolbarButton}>
                                         <MaterialCommunityIcons name="download"
                                                                 style={playerStyles.toolbarIcon} onPress={this.download}/>
@@ -810,6 +811,7 @@ const styles = StyleSheet.create({
         color: 'grey',
         marginHorizontal: 12,
     },
+
     comment: {
         paddingTop: 24,
         flexDirection: 'row',

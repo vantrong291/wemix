@@ -23,6 +23,7 @@ import PersonalInfo from "./screens/personalInfo";
 import MyPlaylist from "./screens/myPlaylist";
 import MyPlaylistItem from "./screens/myPlaylistItem";
 import AddToPlaylist from "./screens/addToPlaylist";
+import SendNoti from "./screens/sendNoti";
 
 
 import MiniPlayer from "./components/miniPlayer";
@@ -138,7 +139,8 @@ const AppStackNavigator = createStackNavigator(
         PersonalInfo: {screen: PersonalInfo},
         MyPlaylist: {screen: MyPlaylist},
         MyPlaylistItem: {screen: MyPlaylistItem},
-        AddToPlaylist: {screen: AddToPlaylist}
+        AddToPlaylist: {screen: AddToPlaylist},
+        SendNoti: {screen: SendNoti}
     },
     {
         initialRouteName: "Main",

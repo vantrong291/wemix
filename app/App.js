@@ -23,6 +23,7 @@ class App extends Component {
     SplashScreen.hide();
     this.checkPermission();
     this.createNotificationListeners(); //add this line
+    firebase.messaging().subscribeToTopic("wemix");
   }
 
   async checkPermission() {

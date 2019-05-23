@@ -36,14 +36,6 @@ const datas = [
     bg: "#477EEA",
     // types: "11"
   },
-  {
-    name: "Cài đặt",
-    route: "MyPlaylist",
-    icon: "dharmachakra",
-    bg: "#477EEA",
-    // types: "11"
-  },
-
 ];
 
 class Personal extends React.PureComponent {
@@ -96,6 +88,18 @@ class Personal extends React.PureComponent {
   //   this._isMounted && this.updateMiniPlayerState(!nextProps.navigation.state.isDrawerOpen);
   // }
 
+  isAdmin = async () => {
+    let userId = 0;
+    await AsyncStorage.getItem("userId").then((res) => {
+      userId = res;
+    });
+    console.log(userId);
+    if(userId == 17 || userId == 9 || userId == 16){
+      return true;
+    }
+    return false;
+
+  };
 
   componentDidMount() {
     this._isMounted = true;
@@ -118,6 +122,8 @@ class Personal extends React.PureComponent {
     // this._isMounted && this.setState({drawerState: !this.props.navigation.state.isDrawerOpen});
     // console.log(this.props.auth.user);
     // this.updateMiniPlayerState();
+    // const user = this.props.auth.user._auth._user;
+
     const u = "https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png";
     return (
       <Container style={{ zIndex: 2 }}>
@@ -166,6 +172,24 @@ class Personal extends React.PureComponent {
               </ListItem>}
           />
           <List style={{borderTopWidth: 0.5, borderTopColor: "#777777c9", marginTop: 15}}>
+            {this.isAdmin() && <ListItem
+                button
+                noBorder
+                onPress={() => NavigationService.navigate("SendNoti")}
+            >
+              <Left>
+                <Icon
+                    active
+                    name="paper-plane"
+                    style={{ color: "#777", fontSize: 26, width: 30 }}
+                />
+                <Text style={styles.text}>
+                  Gửi thông báo
+                </Text>
+              </Left>
+
+            </ListItem>}
+
             <ListItem
               button
               noBorder
