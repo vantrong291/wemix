@@ -109,7 +109,6 @@ CREATE TABLE `playlists` (
   `tracks` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `belong_to_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
   KEY `belong_to_user` (`belong_to_user`),
   CONSTRAINT `playlists_ibfk_1` FOREIGN KEY (`belong_to_user`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
