@@ -115,7 +115,7 @@ class Personal extends React.Component {
     }).catch((err) => {
       console.log(err);
     });
-    if(user.email.includes('vantrong291') || user.email.includes('vantrong291')) {
+    if(user.email.includes('vantrong291') || user.email.includes('vungocchi8')) {
       this._isMounted && this.setState({isAd : true})
     }
   }
